@@ -55,33 +55,6 @@ class Create extends Component
         'signature_path.mimes' => 'The Signature must be a PNG image only.',
     ];
 
-    public function mount(): void
-    {
-        // // Populate Employee fields
-        // $this->fname = $employee->fname;
-        // $this->mname = $employee->mname;
-        // $this->lname = $employee->lname;
-        // $this->suffix = $employee->suffix;
-        // $this->dob = $employee->dob;
-        // $this->status = $employee->status;
-        // $this->position = $employee->position;
-        // $this->empId = $employee->empId;
-        // $this->address = $employee->address;
-
-        // // Populate Emergency Contact fields
-        // $this->contact_name = $employee->contact_name;
-        // $this->contact_number = $employee->contact_number;
-
-        // // Populate Government ID fields
-        // $this->sss_no = $employee->sss_no;
-        // $this->pagibig_no = $employee->pagibig_no;
-        // $this->philhealth_no = $employee->philhealth_no;
-
-        // // Populate Image fields
-        // $this->picture_path = $employee->picture_path;
-        // $this->signature_path = $employee->signature_path;
-    }
-
     public function save()
     {
 
@@ -109,7 +82,7 @@ class Create extends Component
             'mname' => $this->mname,
             'lname' => $this->lname,
             'suffix' => $this->suffix,
-            'dob' => $this->dob,
+            'dob' => $this->dob ?: null,
             'status' => $this->status,
             'position' => $this->position,
             'address' => $this->address,
@@ -148,6 +121,10 @@ class Create extends Component
         $this->dispatch('showAlert', type: 'success', message: 'Employee added successfully!');
 
         $this->reset();
+
+        session()->flash('success', 'Employee added successfully!');
+
+        return redirect()->route('employee.index');
     }
 
     public function render()

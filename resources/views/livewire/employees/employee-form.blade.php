@@ -7,7 +7,7 @@
     <div class="absolute bottom-0 right-0 w-80 h-80 bg-indigo-100 rounded-full opacity-50 blur-3xl"></div>
   </div>
 
-  <a href="{{ route('home') }}" 
+  <a href="{{ route('employee.index') }}" 
     class="absolute top-6 left-6 flex items-center gap-2 text-black/50 hover:text-black transition-colors duration-200">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -157,12 +157,18 @@
           <label class="text-xs font-medium text-slate-500">Profile Picture</label>
           <input type="file" wire:model="picture_path" accept="image/*"
             class="text-sm text-slate-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border file:border-slate-200 file:text-xs file:font-medium file:text-slate-600 file:bg-slate-50 hover:file:bg-slate-100 file:cursor-pointer cursor-pointer"/>
+             @error('empId')
+                <small class="text-red-500">{{ $message }}</small>
+            @enderror 
         </div>
 
         <div class="flex flex-col gap-1">
           <label class="text-xs font-medium text-slate-500">Signature</label>
           <input type="file" wire:model="signature_path" accept="image/*"
             class="text-sm text-slate-500 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border file:border-slate-200 file:text-xs file:font-medium file:text-slate-600 file:bg-slate-50 hover:file:bg-slate-100 file:cursor-pointer cursor-pointer"/>
+             @error('empId')
+                <small class="text-red-500">{{ $message }}</small>
+            @enderror 
         </div>
 
       </div>

@@ -2,7 +2,7 @@
 
     <x-employee.links />
 
-    <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
+    <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg w-full overflow-x-auto">
 
         <!-- Table -->
         <table class="min-w-full text-sm text-left">
@@ -47,11 +47,11 @@
                         <!-- Picture -->
                         <td class="px-6 py-4">
                             <center>
-                                @if($employee->images?->picture_path == '')
+                                @if($employee->image?->picture_path == '')
                                     <div class="w-14 h-14 bg-gray-300 dark:bg-gray-600 rounded-full border-2 border-gray-300 dark:border-gray-600 shadow"></div>
                                 @else
                                 <div class="flex justify-center">
-                                    <img src="{{ asset('storage/' . $employee->images?->picture_path) }}"
+                                    <img src="{{ asset('storage/' . $employee->image?->picture_path) }}"
                                         class="w-14 h-14 object-cover rounded-full border-2 border-gray-300 dark:border-gray-600 shadow">
                                 </div>
                                 @endif
@@ -60,11 +60,11 @@
 
                         <td>
                             <center>
-                                @if($employee->images?->signature_path == '')
+                                @if($employee->image?->signature_path == '')
                                     <div class="w-20 h-10 bg-gray-300 dark:bg-gray-600 rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow"></div>
                                 @else
                                 <div class="flex justify-center">
-                                    <img src="{{ asset('storage/' . $employee->images?->signature_path) }}"
+                                    <img src="{{ asset('storage/' . $employee->image?->signature_path) }}"
                                         class="w-20 h-10 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow">
                                 </div>
                                 @endif

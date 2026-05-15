@@ -30,9 +30,9 @@ class ShowId extends Component
         $this->suffix = $data->suffix;
         $this->position = $data->position;
 
-        $this->picture = $data->images->picture_path;
+        $this->picture = $data->image?->picture_path;
 
-        $this->signature = $data->images->signature_path;
+        $this->signature = $data->image?->signature_path;
         $this->employeeId = $data->empId;
         $this->address = $data->address;
         $this->iceName = $data->emergency?->contact_name ?? 'N/A';

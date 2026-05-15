@@ -31,7 +31,7 @@
                     {{$employeeId}}
                 </div>
 
-                <div style="overflow:hidden; width:90%;" class="mx-auto">
+                <div style="overflow:hidden; width:95%;" class="mx-auto">
                     <span
                         style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:20px;"
                         x-data
@@ -46,7 +46,7 @@
                         "
                     >
                          {{strtoupper($fname)}} {{strtoupper(substr($mname, 0, 1))}}. {{strtoupper($lname)}} 
-                         @if($suffix) {{strtoupper($suffix)}}. @endif asdf asdf asdf a asd asd
+                         @if($suffix) {{strtoupper($suffix)}}. @endif
 
                     </span>
                 </div>

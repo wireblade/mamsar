@@ -22,7 +22,7 @@ class Employee extends Model
         return $this->hasOne(EmployeeEmergencyContact::class);
     }
 
-    public function images()
+    public function image()
     {
         return $this->hasOne(EmployeeImage::class);
     }
