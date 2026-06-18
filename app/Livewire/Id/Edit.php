@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employees;
+namespace App\Livewire\Id;
 
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
@@ -161,11 +161,11 @@ class Edit extends Component
 
         session()->flash('message', 'Employee Updated Successfully!');
 
-        return redirect()->route('employee.index');
+        return redirect()->route('id.index');
     }
 
     public function render()
     {
-        return view('livewire.employees.employee-form');
+        return view('livewire.id.employee-form')->layout('components.layouts.app');;
     }
 }

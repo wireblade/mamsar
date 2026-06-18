@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employees;
+namespace App\Livewire\Id;
 
 use App\Models\Employee;
 use Livewire\Component;
@@ -11,6 +11,7 @@ class ShowId extends Component
     public $fname = '';
     public $mname = '';
     public $lname = '';
+    public $dob = '';
     public $suffix = '';
     public $position = '';
     public $address = '';
@@ -29,6 +30,7 @@ class ShowId extends Component
         $this->lname = $data->lname;
         $this->suffix = $data->suffix;
         $this->position = $data->position;
+        $this->dob = $data->dob;
 
         $this->picture = $data->image?->picture_path;
 
@@ -41,6 +43,6 @@ class ShowId extends Component
 
     public function render()
     {
-        return view('livewire.employees.show-id');
+        return view('livewire.id.show-id')->layout('components.layouts.app');;
     }
 }

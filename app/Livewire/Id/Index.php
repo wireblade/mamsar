@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employees;
+namespace App\Livewire\Id;
 
 use App\Models\Employee;
 use Livewire\Attributes\On;
@@ -32,8 +32,8 @@ class Index extends Component
         $employees = Employee::orderBy('lname', 'asc')
             ->paginate(10);
 
-        return view('livewire.employees.index', [
+        return view('livewire.id.index', [
             'employees' => $employees
-        ]);
+        ])->layout('components.layouts.app');
     }
 }

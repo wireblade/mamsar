@@ -7,7 +7,7 @@
         <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
 
             <div>
-                <flux:input wire:model="username" :label="__('Username')" type="text" required autof    cus autocomplete="username" />
+                <flux:input wire:model="username" :label="__('Username')" type="text" required autofocus autocomplete="username" />
 
             </div>
 

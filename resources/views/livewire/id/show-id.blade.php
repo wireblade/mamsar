@@ -60,7 +60,13 @@
         <!-- BACK -->
         <div class="relative" id="id-back" style="width: 272px; height: 430px; overflow: hidden;">
         <img src="{{ asset('storage/id_template/back.jpg') }}" style="width: 100%; height: 100%; display: block;">
-            <div class="absolute text-center" style="top:65px; left:0; right:0;">
+            <div class="absolute text-center" style="top:30px; left:0; right:0;">
+
+                <div style="font-size:16px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
+                     Date of Birth: {{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}
+                </div>
+                In case of emergency, please notify
+                
                 <div style="font-size:18px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
                     {{$iceName}}
                 </div>
@@ -85,7 +91,7 @@
                     class="absolute"
                     :style="`top:${y}px; left:${x}px; cursor:move;`"
                 >
-                <img src="{{ asset('storage/' . $signature) }}" class="w-30 object-cover pointer-events-none">
+                <img src="{{ asset('storage/' . $signature) }}" class="w-17 object-cover pointer-events-none">
             </div>
             
         </div>

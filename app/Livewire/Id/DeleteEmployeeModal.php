@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employees;
+namespace App\Livewire\Id;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -56,13 +56,13 @@ class DeleteEmployeeModal extends Component
 
         $this->openModal = false;
 
-        $this->dispatch('showAlert', type: 'success', message: 'Employee deleted successfully.');
+        $this->dispatch('showAlert', type: 'success', message: 'Employee deleted successfully!');
 
         $this->dispatch('refreshTable');
     }
 
     public function render()
     {
-        return view('livewire.employees.delete-employee-modal');
+        return view('livewire.id.delete-employee-modal');
     }
 }

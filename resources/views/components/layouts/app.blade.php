@@ -67,7 +67,7 @@
     
 
     <livewire:flash-alert />    
-    <livewire:employees.delete-employee-modal />
+    <livewire:id.delete-employee-modal />
 
 </body>
 

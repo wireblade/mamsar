@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Employees;
+namespace App\Livewire\Id;
 
 use Livewire\Component;
 
@@ -8,6 +8,6 @@ class Test extends Component
 {
     public function render()
     {
-        return view('livewire.employees.test');
+        return view('livewire.id.test');
     }
 }

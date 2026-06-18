@@ -1,6 +1,8 @@
 <div class="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6 h">
 
-    <x-employee.links />
+    <a href="{{ route('id.create') }}" class="bg-green-500 rounded-md px-3 py-2 hover:bg-green-700 text-white tansition duration-200 cursor-pointer">
+        <span class="fa fa-plus fa-sm"></span> Add Employee
+    </a>
 
     <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg w-full overflow-x-auto">
 
@@ -130,8 +132,13 @@
 
                             <div class="flex items-center gap-2">
 
-                                <a href="{{ route('show.id', $employee->id) }}"
+                                <a href="{{ route('id.edit', $employee->id) }}"
                                     class="px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition">
+                                    Edit
+                                </a>
+
+                                <a href="{{ route('show.id', $employee->id) }}"
+                                    class="px-3 py-1 text-xs font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
                                     View
                                 </a>
 
