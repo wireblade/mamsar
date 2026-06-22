@@ -34,6 +34,6 @@ class Index extends Component
 
         return view('livewire.id.index', [
             'employees' => $employees
-        ])->layout('components.layouts.app');
+        ])->layout('layouts.app.header');
     }
 }

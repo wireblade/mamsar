@@ -8,14 +8,18 @@
 
     <flux:menu>
         <div class="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
-            <flux:avatar
-                :name="auth()->user()->name"
+            {{-- <flux:avatar class="px-8"
+                :name="auth()->user()->username"
                 :initials="auth()->user()->initials()"
-            />
-            <div class="grid flex-1 text-start text-sm leading-tight">
-                <flux:heading class="truncate">{{ auth()->user()->name }}</flux:heading>
+            /> --}}
+
+            <h3 class="bg-amber-100 dark:bg-gray-800 rounded-lg px-2 py-2">{{ auth()->user()->username }}</h3> 
+            
+            {{-- <div class="grid flex-1 text-start text-sm leading-tight">
+                <flux:heading class="truncate">{{ auth()->user()->username }}</flux:heading>
                 <flux:text class="truncate">{{ auth()->user()->email }}</flux:text>
-            </div>
+            </div> --}}
+
         </div>
         <flux:menu.separator />
         <flux:menu.radio.group>

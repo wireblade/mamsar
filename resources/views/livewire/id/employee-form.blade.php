@@ -174,22 +174,12 @@
       </div>
 
       <!-- Actions -->
-      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
-        <button type="button"
-          class="text-sm text-slate-400 hover:text-slate-600 transition">
-          Clear form
-        </button>
-        <div class="flex gap-3">
-          <button type="button"
-            class="h-10 px-5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 bg-white hover:bg-slate-50 transition">
-            Save Draft
+      <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-end">
+      
+          <button class="px-4 py-2 {{$isEditing ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600' }} text-white text-sm font-medium rounded-lg  transition duration-200" wire:click="save">
+              {{ $isEditing ? 'Save Changes' : 'Register Employee' }}
           </button>
-          
-            <button wire:click="save">
-                {{ $isEditing ? 'Save Changes' : 'Register Employee' }}
-            </button>
 
-        </div>
       </div>
 
     </div>
