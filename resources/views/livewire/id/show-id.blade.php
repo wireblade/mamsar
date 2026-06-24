@@ -24,16 +24,18 @@
     <div class="print-area flex items-center justify-center gap-6">
         <!-- FRONT -->
         <div class="relative" id="id-front" style="width: 272px; height: 430px; overflow: hidden;">
-        <img src="{{ asset('storage/id_template/front.jpg') }}" style="width: 100%; height: 100%; display: block;">
-            <img src="{{ asset('storage/' . $picture) }}" class="absolute object-cover" style="top:119px; left:67px; width:140.3px; height:137px;">
-            <div class="absolute text-center" style="top:255px; left:0; right:0;">
-                <div style="font-size:12px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
+        
+            <img src="{{ asset('storage/id_template/front.jpg') }}" style="width: 100%; height: 100%; display: block;">
+            <img src="{{ asset('storage/' . $picture) }}" class="absolute object-cover" style="top:121px; left:57px; width:158px; height:153.3px;">
+
+            <div class="absolute text-center" style="top:272px; left:0; right:0;">
+                <div style="font-size:10px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
                     {{$employeeId}}
                 </div>
 
                 <div style="overflow:hidden; width:95%;" class="mx-auto">
                     <span
-                        style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:20px;"
+                        style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:13px;"
                         x-data
                         x-init="
                             const el = $el;
@@ -51,7 +53,7 @@
                     </span>
                 </div>
 
-                <div style="font-size:14px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
+                <div style="font-size:10px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
                     {{$position}}
                 </div>
             </div>
@@ -59,26 +61,71 @@
 
         <!-- BACK -->
         <div class="relative" id="id-back" style="width: 272px; height: 430px; overflow: hidden;">
-        <img src="{{ asset('storage/id_template/back.jpg') }}" style="width: 100%; height: 100%; display: block;">
-            <div class="absolute text-center" style="top:30px; left:0; right:0;">
 
-                <div style="font-size:16px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
-                     Date of Birth: {{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}
+            <img src="{{ asset('storage/id_template/back.jpg') }}" style="width: 100%; height: 100%; display: block;">
+        
+            <div class="absolute text-center" style="top:20px; left:0; right:0;">
+
+                {{-- <div style="font-size:12px; color:#000000;">
+                    <header class="float-left px-6">Date of Birth</header>
+                    <colon class="float-left px-7">:</colon>
+                    <dob class="-ml-15">{{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}</dob>
                 </div>
-                In case of emergency, please notify
-                
-                <div style="font-size:18px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
-                    {{$iceName}}
+                <div style="font-size:12px; color:#000000;">
+                    <header class="float-left px-6">SSS</header>
+                    <colon class="float-left px-19">:</colon>
+                    <dob class="-ml-27">{{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}</dob>
+                </div> --}}
+
+                <div class="px-6 grid grid-cols-[120px_10px_1fr] text-[11px] text-black w-full font-semibold">
+                    <div class="text-left">Date of Birth</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5"> {{ \Carbon\Carbon::parse($dob)->format('F j, Y') }} </div>
+
+                    <div class="text-left">SSS</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $sss }}</div>
+
+                    <div class="text-left">TIN</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $tin }}</div>
+
+                    <div class="text-left">PhilHealth</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $philhealth }}</div>
+
+                    <div class="text-left">Civil Status</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $status }}</div>
+                </div>      
+                    
+                {{-- <div class="font-size:10px; float:center; line-height:1.5; margin-top:25px; color:#000000;"> --}}
+
+                <div class="text-[12px] mt-3 text-black font-medium leading-normal w-full">
+
+                    <div class="w-3/4 mx-auto text-center font-semibold"> {{$address}} </div>
+
+                    <div>Home Address</div>
+
                 </div>
-                <div style="font-size:14px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
-                    Home Address: {{$address}}
+
+                <div class="text-[12px] mt-2 text-black font-medium leading-normal w-full">
+                    IN CASE OF EMERGENCY, PLASE NOTIFY <br>
+                    <div class="mx-auto text-center font-bold">{{ $iceName }}</div>
+
+                    <div class="mx-auto text-center">Contact No.: {{ $iceNo }}</div>
                 </div>
-                <div style="font-size:14px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
-                    Contact No.: {{$iceNo}}
+
+                <div class="text-[11px] mt-2 text-black font-normal text-justify p-3 leading-normal w-full">
+                    This card is the property of <font class="font-extrabold">MAMSAR 
+                    CONSTRUCTION AND INDUSTRIAL
+                    CORPORATION</font> and must be surrendered 
+                    upon termination of employement.
                 </div>
+
             </div>
 
-            <div x-data="{ x: 85, y: 330, dragging: false }"
+            {{-- <div x-data="{ x: 85, y: 330, dragging: false }"
                     @mousedown="dragging = true"
                     @mouseup.window="dragging = false"
                     @mousemove.window="
@@ -92,8 +139,62 @@
                     :style="`top:${y}px; left:${x}px; cursor:move;`"
                 >
                 <img src="{{ asset('storage/' . $signature) }}" class="w-17 object-cover pointer-events-none">
-            </div>
+            </div> --}}
             
+            <div 
+                x-data="{ 
+                    x: 85, y: 330, 
+                    w: 68, h: 68,
+                    dragging: false,
+                    resizing: false,
+                    startX: 0, startY: 0,
+                    startW: 0, startH: 0
+                }"
+                @mousedown.self="dragging = true; startX = $event.clientX; startY = $event.clientY;"
+                @mouseup.window="dragging = false; resizing = false"
+                @mousemove.window="
+                    if (resizing) {
+                        let dx = $event.clientX - startX;
+                        let dy = $event.clientY - startY;
+                        w = Math.max(30, startW + dx);
+                        h = Math.max(30, startH + dy);
+                    } else if (dragging) {
+                        let rect = $el.parentElement.getBoundingClientRect();
+                        x = $event.clientX - rect.left - (w / 2);
+                        y = $event.clientY - rect.top - (h / 2);
+                    }
+                "
+                            class="absolute"
+                            :style="`top:${y}px; left:${x}px; width:${w}px; height:${h}px; cursor:move; position:absolute;  overflow:hidden;`"
+                        >
+                <img 
+                    src="{{ asset('storage/' . $signature) }}" 
+                    class="pointer-events-none"
+                    style="height:100%; object-fit:contain;"
+                >
+
+                <!-- Resize handle (bottom-right corner) -->
+                <div class="resize-handle"
+                    style="
+                    position: absolute;
+                    bottom: 0px; right: 0px;
+                    width: 14px; height: 14px;
+                    background: white;
+                    border: 2px solid #555;
+                    border-radius: 3px;
+                    cursor: se-resize;
+                                "
+                            @mousedown.stop="
+                    resizing = true;
+                    startX = $event.clientX;
+                    startY = $event.clientY;
+                    startW = w;
+                    startH = h;
+                "
+                            >
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -156,6 +257,14 @@
                     return false;
                 },
                 onclone: function(clonedDoc) {
+                     // Hide resize handles
+                    clonedDoc.querySelectorAll('.resize-handle').forEach(el => el.style.display = 'none');
+
+                     // Fix the signature container — remove the extra space caused by the handle sticking outside
+                    clonedDoc.querySelectorAll('[style*="cursor:move"]').forEach(el => {
+                        el.style.overflow = 'hidden';
+                        el.style.position = 'absolute';
+            });
                     // Fix oklch in the cloned document
                     const allCloned = clonedDoc.querySelectorAll('*');
                     allCloned.forEach(el => {

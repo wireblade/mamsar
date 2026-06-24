@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->string('sss_no')->nullable();
+            $table->string('tin_no')->nullable();
             $table->string('pagibig_no')->nullable();
             $table->string('philhealth_no')->nullable();
             $table->timestamps();
