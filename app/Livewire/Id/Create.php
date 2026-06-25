@@ -33,6 +33,7 @@ class Create extends Component
 
     // Government ID fields
     public $sss_no = '';
+    public $tin_no = '';
     public $pagibig_no = '';
     public $philhealth_no = '';
 
@@ -70,6 +71,7 @@ class Create extends Component
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
             'sss_no' => 'nullable|string|max:255',
+            'tin_no' => 'nullable|string|max:255',
             'pagibig_no' => 'nullable|string|max:255',
             'philhealth_no' => 'nullable|string|max:255',
             'picture_path' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
@@ -99,6 +101,7 @@ class Create extends Component
         EmployeeGovernmentId::create([
             'employee_id' => $employee->id,
             'sss_no' => $this->sss_no,
+            'tin_no' => $this->tin_no,
             'pagibig_no' => $this->pagibig_no,
             'philhealth_no' => $this->philhealth_no,
         ]);

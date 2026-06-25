@@ -3,15 +3,10 @@
     <div class="min-h-screen py-10 px-4">
         <!-- Background decoration -->
 
-        {{-- <div class="fixed inset-0 -z-10 overflow-hidden">
-            <div class="absolute -top-32 -left-32 w-96 h-96 bg-blue-100 rounded-full opacity-60 blur-3xl"></div>
-            <div class="absolute bottom-0 right-0 w-80 h-80 bg-indigo-100 rounded-full opacity-50 blur-3xl"></div>
-        </div> --}}
-
         <div class="max-w-3xl mx-auto">
 
             <a href="{{ route('id.index') }}"
-                class="absolute top-6 left-6 flex items-center gap-2 text-black/50 hover:text-black transition-colors duration-200">
+                class="absolute top-4 left-6 flex items-center gap-2 text-black/50 hover:text-black dark:text-white transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -28,8 +23,10 @@
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                 </div>
-                <h1 class="text-2xl font-semibold text-slate-800 tracking-tight">Employee Registration</h1>
-                <p class="text-sm text-slate-500 mt-1">Complete all fields to register a new employee record</p>
+                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">Employee Registration
+                </h1>
+                <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Complete all fields to register a new employee
+                    record</p>
             </div>
 
             <div
@@ -41,40 +38,14 @@
                         class="text-xs font-600 font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest">
                         Personal Information</h2>
                 </div>
+
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-                    <x-form.input label="ID No." autofocus name="empId" placeholder="Employee ID" type="text" />
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Date of Birth</label>
-                        <input type="date" wire:model="dob"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">First Name</label>
-                        <input type="text" wire:model="fname" placeholder="Enter first name"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Middle Name</label>
-                        <input type="text" wire:model="mname" placeholder="Enter middle name"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Last Name</label>
-                        <input type="text" wire:model="lname" placeholder="Enter last name"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Suffix</label>
-                        <input type="text" wire:model="suffix" placeholder="Enter suffix"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
+                    <x-form.input label="ID No." autofocus model="empId" placeholder="Employee ID" />
+                    <x-form.input type="date" label=" Date of Birth" model="dob" placeholder="Date of Birth" />
+                    <x-form.input label="First Name" model="fname" placeholder="Enter first name" />
+                    <x-form.input label="Middle Name" model="mname" placeholder="Enter middle name" />
+                    <x-form.input label="Last Name" model="lname" placeholder="Enter last name" />
+                    <x-form.input label="Suffix" model="suffix" placeholder="Enter suffix" />
                     <div class="flex flex-col gap-1">
                         <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Civil Status</label>
                         <select wire:model="status"
@@ -86,19 +57,8 @@
                             <option>Separated</option>
                         </select>
                     </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Position</label>
-                        <input type="text" wire:model="position" placeholder="Enter position"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1 sm:col-span-2">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Address</label>
-                        <input type="text" wire:model="address" placeholder="Enter full address"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
+                    <x-form.input label="Position" model="position" placeholder="Enter position" />
+                    <x-form.input label="Address" model="address" placeholder="Enter full address" />
                 </div>
 
                 <!-- Section: Government IDs -->
@@ -107,25 +67,13 @@
                         Government IDs
                     </h2>
                 </div>
+
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">SSS No.</label>
-                        <input type="text" wire:model="sss_no" placeholder="XX-XXXXXXX-X"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">PhilHealth (PHIC)</label>
-                        <input type="text" wire:model="philhealth_no" placeholder="XXXX-XXXX-XXXX"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
-
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Pag-IBIG (HDMF)</label>
-                        <input type="text" wire:model="pagibig_no" placeholder="XXXX-XXXX-XXXX"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
+                    <x-form.input label="SSS No." model="sss_no" placeholder="XX-XXXXXXX-X" />
+                    <x-form.input label="TIN No." model="tin_no" placeholder="XXX-XXX-XXX" />
+                    <x-form.input label="PhilHealth (PHIC)" model="philhealth_no" placeholder="XXXX-XXXX-XXXX" />
+                    <x-form.input label="Pag-IBIG (HDMF)" model="pagibig_no" placeholder="XXXX-XXXX-XXXX" />
 
                 </div>
 
@@ -137,18 +85,11 @@
                 </div>
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">EC Name</label>
-                        <input type="text" wire:model="contact_name" placeholder="Enter emergency contact name"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
+                    <x-form.input label="Emergency Contact" model="contact_name"
+                        placeholder="Enter emergency contact name" />
 
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">EC Number</label>
-                        <input type="text" wire:model="contact_number"
-                            placeholder="Enter emergency contact number"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
-                    </div>
+                    <x-form.input label="Contact Number" model="contact_number"
+                        placeholder="Enter emergency contact number" />
 
                 </div>
 

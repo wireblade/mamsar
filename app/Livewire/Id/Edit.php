@@ -34,6 +34,7 @@ class Edit extends Component
 
     // Government ID fields
     public $sss_no;
+    public $tin_no;
     public $pagibig_no;
     public $philhealth_no;
 
@@ -62,6 +63,7 @@ class Edit extends Component
 
         // Populate Government ID fields
         $this->sss_no = $employee->govid?->sss_no;
+        $this->tin_no = $employee->govid?->tin_no;
         $this->pagibig_no = $employee->govid?->pagibig_no;
         $this->philhealth_no = $employee->govid?->philhealth_no;
 
@@ -104,7 +106,7 @@ class Edit extends Component
             'address' => $this->address,
         ]);
 
-        EmployeeEmergencyContact::updateOrCreate(
+        $emergency = EmployeeEmergencyContact::updateOrCreate(
             ['employee_id' => $employee->id],
             [
                 'contact_name' => $this->contact_name,
@@ -112,10 +114,11 @@ class Edit extends Component
             ]
         );
 
-        EmployeeGovernmentId::updateOrCreate(
+        $government = EmployeeGovernmentId::updateOrCreate(
             ['employee_id' => $employee->id],
             [
                 'sss_no' => $this->sss_no,
+                'tin_no' => $this->tin_no,
                 'pagibig_no' => $this->pagibig_no,
                 'philhealth_no' => $this->philhealth_no,
             ]
@@ -134,7 +137,7 @@ class Edit extends Component
             $picture = $this->picture_path->store('employee_pictures/' . $this->empId . '-' . $this->fname . '-' . $this->lname, 'public');
 
             // Update or create the employee image record
-            EmployeeImage::updateOrCreate(
+           $img =  EmployeeImage::updateOrCreate(
                 ['employee_id' => $employee->id],
                 ['picture_path' => $picture]
             );
@@ -153,13 +156,27 @@ class Edit extends Component
             // Store the new signature
             $signature = $this->signature_path->store('employee_pictures/' . $this->empId . '-' . $this->fname . '-' . $this->lname, 'public');
             // Update or create the employee image record
-            EmployeeImage::updateOrCreate(
+            $sig = EmployeeImage::updateOrCreate(
                 ['employee_id' => $employee->id],
                 ['signature_path' => $signature]
             );
         }
 
-        session()->flash('message', 'Employee Updated Successfully!');
+        // $hasChanges = 
+        // $employee->isDirty() ||
+        // $emergency->isDirty() ||
+        // $government->isDirty() ||
+        // (isset($img) && $img->wasChanged()) ||
+        // (isset($sig) && $sig->wasChanged());
+
+
+        // if(! $hasChanges) {
+        //     session()->flash('error', 'No changes were made to the employee record.');
+        //     return redirect()->route('id.index');
+        // }
+
+
+        session()->flash('success', 'Employee Updated Successfully!');
 
         return redirect()->route('id.index');
     }

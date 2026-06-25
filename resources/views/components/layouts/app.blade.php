@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>
-    {{ filled($title ?? null) ? $title.' - '.config('app.name', 'Laravel') : config('app.name', 'Laravel') }}
+        {{ filled($title ?? null) ? $title . ' - ' . config('app.name', 'Laravel') : config('app.name', 'Laravel') }}
     </title>
 
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -18,55 +19,58 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxAppearance
 
     <style>
-    @media print {
-    @page {
-        size: landscape;
-        margin: 0;
-    }
-    
-    .id-card {
-        width: 75mm;   /* smaller than real size */
-        height: 47mm;  /* keep ratio */
-    }
+        @media print {
+            @page {
+                size: landscape;
+                margin: 0;
+            }
 
-    body {
-        margin: 0;
-    }
+            .id-card {
+                width: 75mm;
+                /* smaller than real size */
+                height: 47mm;
+                /* keep ratio */
+            }
 
-    body * {
-        visibility: hidden;
-    }
+            body {
+                margin: 0;
+            }
 
-    .print-area, .print-area * {
-        visibility: visible;
-    }
+            body * {
+                visibility: hidden;
+            }
 
-    .print-area {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        display: flex;
-        gap: 20px;
-    }
-}
-</style>
+            .print-area,
+            .print-area * {
+                visibility: visible;
+            }
+
+            .print-area {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                gap: 20px;
+            }
+        }
+    </style>
 
 </head>
 
 <body>
 
-    {{$slot}}
+    {{ $slot }}
 
     @fluxScripts
-    
 
-    <livewire:flash-alert />    
+
+    <livewire:flash-alert />
     <livewire:id.delete-employee-modal />
 
 </body>
