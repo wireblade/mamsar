@@ -1,6 +1,6 @@
 <div class="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6 h">
 
-    <a href="{{ route('id.create') }}" class="bg-green-500 rounded-md px-3 py-2 hover:bg-green-700 text-white tansition duration-200 cursor-pointer">
+    <a href="{{ route('id.create') }}" class="bg-blue-600 rounded-md px-3 py-2 hover:bg-blue-700 text-white tansition duration-200 cursor-pointer">
         <span class="fa fa-plus fa-sm"></span> Add Employee
     </a>
 
@@ -12,20 +12,20 @@
             <!-- Header -->
             <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs uppercase tracking-wider">
                 <tr>
-                    <th class="px-6 py-4">No</th>
-                    <th class="px-6 py-4">ID No.</th>
-                    <th class="px-6 py-4 text-center">Picture</th>
-                    <th class="px-6 py-4 text-center">Signature</th>
-                    <th class="px-6 py-4">Name</th>
-                    <th class="px-6 py-4">Position</th>
-                    <th class="px-6 py-4">Civil Status</th>
-                    <th class="px-6 py-4">Address</th>
-                    <th class="px-6 py-4">EC Name</th>
-                    <th class="px-6 py-4">EC Number</th>
-                    <th class="px-6 py-4">SSS</th>
-                    <th class="px-6 py-4">PHIC</th>
-                    <th class="px-6 py-4">HDMF</th>
-                    <th class="px-6 py-4 text-center">Action</th>
+                    <th class="px-6 py-1">No</th>
+                    <th class="px-6 py-1">ID No.</th>
+                    <th class="px-6 py-1 text-center">Picture</th>
+                    <th class="px-6 py-1 text-center">Signature</th>
+                    <th class="px-6 py-1">Name</th>
+                    <th class="px-6 py-1">Position</th>
+                    <th class="px-6 py-1">Civil Status</th>
+                    <th class="px-6 py-1">Address</th>
+                    <th class="px-6 py-1">EC Name</th>
+                    <th class="px-6 py-1">EC Number</th>
+                    <th class="px-6 py-1">SSS</th>
+                    <th class="px-6 py-1">PHIC</th>
+                    <th class="px-6 py-1">HDMF</th>
+                    <th class="px-6 py-1 text-center">Action</th>
                 </tr>
             </thead>
 
@@ -67,7 +67,7 @@
                                 @else
                                 <div class="flex justify-center">
                                     <img src="{{ asset('storage/' . $employee->image?->signature_path) }}"
-                                        class="w-20 h-10 object-cover rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow">
+                                        class="w-20 h-10 object-cover rounded-lg border-2 border-gray-300 dark:bg-white dark:border-gray-600 shadow"> 
                                 </div>
                                 @endif
                             </center>
@@ -84,7 +84,7 @@
 
                         <!-- Position -->
                         <td class="px-6 py-4">
-                            <span class="px-2 py-1 text-xs rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                            <span class="px-1 py-1 text-xs rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
                                 {{$employee->position}}
                             </span>
                         </td>

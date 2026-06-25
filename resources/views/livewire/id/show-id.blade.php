@@ -143,8 +143,8 @@
             
             <div 
                 x-data="{ 
-                    x: 85, y: 330, 
-                    w: 68, h: 68,
+                    x: 100, y: 320, 
+                    w: 68, h: 110,
                     dragging: false,
                     resizing: false,
                     startX: 0, startY: 0,
@@ -167,10 +167,10 @@
                             class="absolute"
                             :style="`top:${y}px; left:${x}px; width:${w}px; height:${h}px; cursor:move; position:absolute;  overflow:hidden;`"
                         >
-                <img 
+                <img
                     src="{{ asset('storage/' . $signature) }}" 
                     class="pointer-events-none"
-                    style="height:100%; object-fit:contain;"
+                    style="object-fit:contain;"
                 >
 
                 <!-- Resize handle (bottom-right corner) -->

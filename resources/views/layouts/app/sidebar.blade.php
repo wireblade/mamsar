@@ -26,6 +26,7 @@
             <flux:spacer />
 
             <flux:sidebar.nav>
+                
                 {{-- <flux:sidebar.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
                     {{ __('Repository') }}
                 </flux:sidebar.item>
@@ -37,6 +38,7 @@
                  <flux:sidebar.item icon="home" :href="route('id.index')" :current="request()->routeIs('id.index')" wire:navigate>
                         {{ __('Company ID') }}
                     </flux:sidebar.item>
+
             </flux:sidebar.nav>
 
             <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
