@@ -50,10 +50,10 @@ class ShowId extends Component
         $this->dob = $data->dob;
 
         // Government IDs
-        $this->sss = $data->govid?->sss_no ?? 'N/A';
-        $this->tin = $data->govid?->tin_no ?? 'N/A';
-        $this->philhealth = $data->govid?->philhealth_no ?? 'N/A';
-        $this->pagibig = $data->govid?->pagibig_no ?? 'N/A';
+        $this->sss = $data->govid?->sss_no ?: 'N/A';
+        $this->tin = $data->govid?->tin_no ?: 'N/A';
+        $this->philhealth = $data->govid?->philhealth_no ?:'N/A';
+        $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
 
         // Employee Image
         $this->picture = $data->image?->picture_path;

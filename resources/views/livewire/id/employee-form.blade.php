@@ -40,12 +40,15 @@
                 </div>
 
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <x-form.input label="ID No." autofocus model="empId" placeholder="Employee ID" />
-                    <x-form.input type="date" label=" Date of Birth" model="dob" placeholder="Date of Birth" />
-                    <x-form.input label="First Name" model="fname" placeholder="Enter first name" />
-                    <x-form.input label="Middle Name" model="mname" placeholder="Enter middle name" />
-                    <x-form.input label="Last Name" model="lname" placeholder="Enter last name" />
-                    <x-form.input label="Suffix" model="suffix" placeholder="Enter suffix" />
+                    <x-form.masked-input label="ID No." autofocus model="empId" placeholder="Employee ID"
+                        :maxdigits="9" :mask="[2, 2, 4]" />
+
+                    <x-form.text-input type="date" label=" Date of Birth" model="dob"
+                        placeholder="Date of Birth" />
+                    <x-form.text-input label="First Name" model="fname" placeholder="Enter first name" />
+                    <x-form.text-input label="Middle Name" model="mname" placeholder="Enter middle name" />
+                    <x-form.text-input label="Last Name" model="lname" placeholder="Enter last name" />
+                    <x-form.text-input label="Suffix" model="suffix" placeholder="Enter suffix" />
                     <div class="flex flex-col gap-1">
                         <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Civil Status</label>
                         <select wire:model="status"
@@ -57,8 +60,8 @@
                             <option>Separated</option>
                         </select>
                     </div>
-                    <x-form.input label="Position" model="position" placeholder="Enter position" />
-                    <x-form.input label="Address" model="address" placeholder="Enter full address" />
+                    <x-form.text-input label="Position" model="position" placeholder="Enter position" />
+                    <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
                 </div>
 
                 <!-- Section: Government IDs -->
@@ -70,10 +73,17 @@
 
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
 
-                    <x-form.input label="SSS No." model="sss_no" placeholder="XX-XXXXXXX-X" />
-                    <x-form.input label="TIN No." model="tin_no" placeholder="XXX-XXX-XXX" />
-                    <x-form.input label="PhilHealth (PHIC)" model="philhealth_no" placeholder="XXXX-XXXX-XXXX" />
-                    <x-form.input label="Pag-IBIG (HDMF)" model="pagibig_no" placeholder="XXXX-XXXX-XXXX" />
+                    <x-form.masked-input label="SSS No." model="sss_no" :mask="[2, 7, 1]" :maxdigits="10"
+                        placeholder="XX-XXXXXXX-X" />
+
+                    <x-form.masked-input label="TIN No." model="tin_no" :mask="[3, 3, 3]" :maxdigits="9"
+                        placeholder="XXX-XXX-XXX" />
+
+                    <x-form.masked-input label="PhilHealth (PHIC)" model="philhealth_no" :mask="[2, 9, 1]"
+                        :maxdigits="12" placeholder="XX-XXXXXXXX-X" />
+
+                    <x-form.masked-input label="Pag-IBIG (HDMF)" model="pagibig_no" :mask="[4, 4, 4]" :maxdigits="12"
+                        placeholder="XXXX-XXXX-XXXX" />
 
                 </div>
 
@@ -85,10 +95,10 @@
                 </div>
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                    <x-form.input label="Emergency Contact" model="contact_name"
+                    <x-form.text-input label="Emergency Contact" model="contact_name"
                         placeholder="Enter emergency contact name" />
 
-                    <x-form.input label="Contact Number" model="contact_number"
+                    <x-form.text-input label="Contact Number" model="contact_number"
                         placeholder="Enter emergency contact number" />
 
                 </div>
