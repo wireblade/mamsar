@@ -83,7 +83,7 @@
                         :maxdigits="12" placeholder="XX-XXXXXXXX-X" />
 
                     <x-form.masked-input label="Pag-IBIG (HDMF)" model="pagibig_no" :mask="[4, 4, 4]" :maxdigits="12"
-                        placeholder="XXXX-XXXX-XXXX" />
+                        placeholder="XXXX-XXXX-XXXX (optional)" />
 
                 </div>
 
@@ -109,25 +109,12 @@
                         Documents &
                         Media</h2>
                 </div>
+
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Profile Picture</label>
-                        <input type="file" wire:model="picture_path" accept="image/*"
-                            class="text-sm text-slate-500 dark:text-gray-400 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border file:border-slate-200 dark:file:border-gray-600 file:text-xs file:font-medium file:text-slate-600 dark:file:text-gray-300 file:bg-slate-50 dark:file:bg-gray-700 hover:file:bg-slate-100 dark:hover:file:bg-gray-600 file:cursor-pointer cursor-pointer" />
-                        @error('picture_path')
-                            <small class="text-red-500">{{ $message }}</small>
-                        @enderror
-                    </div>
+                    <x-form.text-input label="Profile Picture" type="file" model="picture_path" />
 
-                    <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Signature</label>
-                        <input type="file" wire:model="signature_path" accept="image/*"
-                            class="text-sm text-slate-500 dark:text-gray-400 file:mr-3 file:py-1.5 file:px-4 file:rounded-lg file:border file:border-slate-200 dark:file:border-gray-600 file:text-xs file:font-medium file:text-slate-600 dark:file:text-gray-300 file:bg-slate-50 dark:file:bg-gray-700 hover:file:bg-slate-100 dark:hover:file:bg-gray-600 file:cursor-pointer cursor-pointer" />
-                        @error('signature_path')
-                            <small class="text-red-500">{{ $message }}</small>
-                        @enderror
-                    </div>
+                    <x-form.text-input label="Signature" type="file" model="signature_path" />
 
                 </div>
 

@@ -10,7 +10,6 @@ use App\Livewire\Id\Test;
 
 use App\Livewire\PersonalProfile\Index as ProfileIndex;
 
-
 Route::redirect('/', 'login');
 Route::get('/test', Test::class)->name('test');
 
@@ -23,6 +22,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // This is for the ID Management
     Route::get('/id/', IdIndex::class)->name('id.index');
+    
     Route::get('/id/add-employee', IdCreate::class)->name('id.create');
     Route::get('/id/{employee}/edit', IdEdit::class)->name('id.edit');
     Route::get('/id/{id}/view', ShowId::class)->name('show.id');

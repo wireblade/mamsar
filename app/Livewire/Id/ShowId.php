@@ -33,6 +33,7 @@ class ShowId extends Component
     public $picture = '';
     public $signature = '';
 
+
     public function mount(int $id): void
     {
 
