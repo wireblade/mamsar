@@ -70,8 +70,7 @@
     @fluxScripts
 
 
-    <livewire:flash-alert />
-    <livewire:id.delete-employee-modal />
+
 
 </body>
 

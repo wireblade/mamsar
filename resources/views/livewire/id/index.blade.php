@@ -1,9 +1,21 @@
 <div
     class="min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6 h">
 
-    <a href="{{ @route('id.create') }}">
-        <button class="px-2 py-2 rounded-md bg-blue-500 hover:bg-blue-600 transition duration-200">Add Employee</button>
-    </a>
+    <div class="flex justify-between item-center mb-4">
+
+        <a href="{{ @route('id.create') }}">
+            <button class="px-2 py-1.5 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition duration-200">Add
+                Employee</button>
+        </a>
+
+        <div class="flex justify-end">
+            <div class="w-72">
+                <input type="text" wire:model.live="search" placeholder="search"
+                    class="w-full px-4 py-1.5 border text-gray-900 bg-gray-100 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400 dark:text-gray-100 dark:bg-gray-700 dark:shadow-black dark:focus:ring-400 dark:focu:border-blue-400 dark:placeholder-gray-500 transition duration-200">
+            </div>
+        </div>
+    </div>
+
 
     <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg w-full overflow-x-auto">
 
@@ -122,7 +134,11 @@
 
                         <!-- SSS -->
                         <td class="px-6 py-4">
-                            {{ $employee->govId?->sss_no ?? 'N/A' }}
+                            {{-- {{ $employee->govId?->sss_no ?? 'N/A' }} --}}
+
+                            <button
+                                class="px-2 py-2 bg-blue-500 border rounded-md text-white hover:bg-blue-700 transition duration-200"
+                                wire:click="openGovIdModal({{ $employee->id }})">open government Ids</button>
                         </td>
 
                         <!-- PHIC -->

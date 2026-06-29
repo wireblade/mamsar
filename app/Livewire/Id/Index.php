@@ -12,15 +12,17 @@ class Index extends Component
 
     use WithPagination;
 
+    public $search  = '';
+
     #[On('refreshTable')]
     public function refreshTable()
     {
         // This method is intentionally left empty. It serves as a trigger for Livewire to refresh the component.
     }
 
-    public function openAddEmployeeModal()
+    public function openGovIdModal($id)
     {
-        $this->dispatch('open-add-employee-modal');
+        $this->dispatch('open-gov-id-modal', id: $id);
     }
 
     public function openDeleteEmployeeModal($id)
@@ -30,8 +32,10 @@ class Index extends Component
 
     public function render()
     {
-        $employees = Employee::orderBy('lname', 'asc')
-            ->paginate(10);
+        $employees = Employee::where(function ($query){
+            $query->where('fname', 'like', '%' . $this->search . '%')
+            ->orWhere('lname', 'like', '%' . $this->search . '%');
+        })->orderBy('lname', 'asc')->paginate(1);
 
         return view('livewire.id.index', [
             'employees' => $employees

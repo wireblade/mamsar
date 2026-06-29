@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Notification;
 
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -39,6 +39,6 @@ class FlashAlert extends Component
 
     public function render()
     {
-        return view('livewire.flash-alert');
+        return view('livewire.notification.flash-alert');
     }
 }

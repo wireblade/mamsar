@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Id;
+namespace App\Livewire\Id\Modals;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -63,6 +63,6 @@ class DeleteEmployeeModal extends Component
 
     public function render()
     {
-        return view('livewire.id.delete-employee-modal');
+        return view('livewire.id.modals.delete-employee-modal');
     }
 }

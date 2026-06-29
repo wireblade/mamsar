@@ -59,8 +59,9 @@
 
     {{ $slot }}
 
-    <livewire:flash-alert />
-    <livewire:id.delete-employee-modal />
+    <livewire:notification.flash-alert />
+    <livewire:id.modals.delete-employee-modal />
+    <livewire:id.modals.gov-id-modal />
 
     @fluxScripts
 </body>
