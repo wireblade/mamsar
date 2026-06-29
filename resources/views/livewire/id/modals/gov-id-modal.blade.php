@@ -20,7 +20,7 @@
                 <div
                     class="inline-flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-full px-3 py-1 text-sm text-gray-600">
                     <div
-                        class="w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-medium">
+                        class="w-10 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-medium">
                         {{ $this->getFirstInitials(1) . $this->getMiddleInitials(1) . $this->getLastInitials(1) }}
                     </div>
                     {{ $this->getFullName() }}
@@ -34,7 +34,7 @@
                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-1.5">
                     <div class="flex items-center gap-2.5 mb-1">
                         <div
-                            class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center flex-shrink-0">
+                            class="w-9 h-9 rounded-lg bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
                             <x-heroicon-o-building-office-2 class="w-5 h-5" />
                         </div>
                         <div>
@@ -57,7 +57,7 @@
                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-1.5">
                     <div class="flex items-center gap-2.5 mb-1">
                         <div
-                            class="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0">
+                            class="w-9 h-9 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
                             <x-heroicon-o-receipt-percent class="w-5 h-5" />
                         </div>
                         <div>
@@ -81,7 +81,7 @@
                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-1.5">
                     <div class="flex items-center gap-2.5 mb-1">
                         <div
-                            class="w-9 h-9 rounded-lg bg-green-50 text-green-700 flex items-center justify-center flex-shrink-0">
+                            class="w-9 h-9 rounded-lg bg-green-50 text-green-700 flex items-center justify-center shrink-0">
                             <x-heroicon-o-heart class="w-5 h-5" />
                         </div>
                         <div>
@@ -105,7 +105,7 @@
                 <div class="bg-white border border-gray-200 rounded-xl p-4 flex flex-col gap-1.5">
                     <div class="flex items-center gap-2.5 mb-1">
                         <div
-                            class="w-9 h-9 rounded-lg bg-pink-50 text-pink-700 flex items-center justify-center flex-shrink-0">
+                            class="w-9 h-9 rounded-lg bg-pink-50 text-pink-700 flex items-center justify-center shrink-0">
                             <x-heroicon-o-home class="w-5 h-5" />
                         </div>
                         <div>

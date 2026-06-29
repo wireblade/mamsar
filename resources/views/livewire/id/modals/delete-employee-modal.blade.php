@@ -1,5 +1,4 @@
-<div wire:ignore.self x-data="{ open: @entangle('openModal') }" x-cloak @keyup.escape.window="open = false"
-    x-init="$watch('open', value => { if(value) $nextTick(() => $refs.focusInput.focus()) })"
+<div wire:ignore.self x-data="{ open: @entangle('openModal') }" x-cloak @keyup.escape.window="open = false" x-init="$watch('open', value => { if (value) $nextTick(() => $refs.focusInput.focus()) })"
     wire:keydown.enter="deleteEmployee">
 
     <div x-show="open" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0"
@@ -16,13 +15,13 @@
 
             <h2 class="text-lg font-bold mb-3">Confirm Deletion</h2>
 
-            <p>Are you sure you want to delete ID: <b>{{$empId}}</b> <small>({{$fullname}})</small> ?</p>
+            <p>Are you sure you want to delete ID: <b>{{ $empId }}</b> <small>({{ $fullname }})</small> ?</p>
             <br>
 
             <div class="space-y-3">
 
                 <div class="mt-4 flex justify-end space-x-2">
-  
+
                     <button wire:click="$set('openModal', false)"> cancel</button>
 
                     <button wire:click="deleteEmployee">Delete</button>
