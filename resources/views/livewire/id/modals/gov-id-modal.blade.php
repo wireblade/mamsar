@@ -68,7 +68,7 @@
                     </div>
                     <hr class="border-gray-100">
                     <p class="text-[11px] font-medium uppercase tracking-wide text-gray-400">ID Number</p>
-                    <p class="text-lg font-medium font-mono tracking-wide text-gray-900">{{ $tin_no ?? '—' }}
+                    <p class="text-lg font-medium font-mono tracking-wide text-gray-900">{{ $tin_no }}
                     </p>
                     <div class="flex items-center justify-between mt-1">
                         <span class="text-xs text-gray-400">BIR registered</span>
@@ -116,7 +116,7 @@
                     <hr class="border-gray-100">
                     <p class="text-[11px] font-medium uppercase tracking-wide text-gray-400">ID Number</p>
                     <p class="text-lg font-medium font-mono tracking-wide text-gray-900">
-                        {{ $pagibig_no ?? '—' }}</p>
+                        {{ $pagibig_no }}</p>
                     <div class="flex items-center justify-between mt-1">
                         <span class="text-xs text-gray-400">HDMF registered</span>
                         <span
@@ -125,12 +125,10 @@
                 </div>
 
 
-                <div class="space-y-3">
-                    <div class="mt-4 flex justify-end space-x-2">
-                        <button wire:click="$set('openModal', false)"> cancel</button>
-                    </div>
-                </div>
+            </div>
 
+            <div class="mt-4 flex justify-end space-x-2">
+                <button wire:click="$set('openModal', false)"> cancel</button>
             </div>
 
         </div>

@@ -56,7 +56,7 @@ class Edit extends Component
         $this->position = $employee->position;
         $this->empId = $employee->empId;
         $this->address = $employee->address;
-
+ 
         // Populate Emergency Contact fields
         $this->contact_name = $employee->emergency?->contact_name;
         $this->contact_number = $employee->emergency?->contact_number;
@@ -113,7 +113,7 @@ class Edit extends Component
                 'contact_number' => $this->contact_number,
             ]
         );
-
+    
         $government = EmployeeGovernmentId::updateOrCreate(
             ['employee_id' => $employee->id],
             [

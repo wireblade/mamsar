@@ -28,9 +28,9 @@ class GovIdModal extends Component
 
         $data = Employee::findOrFail($id);
 
-        $this->sss_no = $data->govId?->sss_no;
-        $this->tin_no = $data->govId?->tin_no;
-        $this->pagibig_no = $data->govId?->pagibig_no;
+        $this->sss_no = $data->govId?->sss_no ?: 'N/A';
+        $this->tin_no = $data->govId?->tin_no ?: 'N/A';
+        $this->pagibig_no = $data->govId?->pagibig_no ;
         $this->philhealth_no = $data->govId?->philhealth_no ?: 'N/A';
 
         $this->firstName = strtoupper($data->fname);
@@ -39,7 +39,8 @@ class GovIdModal extends Component
         $this->fullName = strtoupper($data->fname). ' ' . strtoupper(substr($data->mname, 0, 1)) . '. ' . strtoupper($data->lname);
         
     }
-
+    
+    
     public function getFirstInitials(int $length = 1): string
     {
         return strtoupper(substr($this->firstName, 0, $length));
@@ -54,14 +55,13 @@ class GovIdModal extends Component
     {
         return strtoupper(substr($this->lastName, 0, $length));
     }
-    
-    public function getFullName()
+        public function getFullName()
     {
         $middle = $this->getMiddleInitials() != '' ? $this->getMiddleInitials(1) . '. ' : '';
 
-        return $this->firstName . $middle . $this->lastName;
+        return $this->firstName . ' '.  $middle . ' ' . $this->lastName;
     }
-
+    
     public function render()
     {
         return view('livewire.id.modals.gov-id-modal');
