@@ -40,7 +40,6 @@ class GovIdModal extends Component
         
     }
     
-    
     public function getFirstInitials(int $length = 1): string
     {
         return strtoupper(substr($this->firstName, 0, $length));
