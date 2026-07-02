@@ -91,13 +91,17 @@
                     <div class="text-center">:</div>
                     <div class="text-left ml-1.5">{{ $sss }}</div>
 
-                    <div class="text-left">TIN</div>
-                    <div class="text-center">:</div>
-                    <div class="text-left ml-1.5">{{ $tin }}</div>
-
                     <div class="text-left">PhilHealth</div>
                     <div class="text-center">:</div>
                     <div class="text-left ml-1.5">{{ $philhealth }}</div>
+
+                    <div class="text-left">Pag-ibig</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $pagibig }}</div>
+
+                    <div class="text-left">TIN</div>
+                    <div class="text-center">:</div>
+                    <div class="text-left ml-1.5">{{ $tin }}</div>
 
                     <div class="text-left">Civil Status</div>
                     <div class="text-center">:</div>
