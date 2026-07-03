@@ -35,13 +35,13 @@
                 style="top:121px; left:57px; width:158px; height:153.3px;">
 
             <div class="absolute text-center" style="top:272px; left:0; right:0;">
-                <div style="font-size:10px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
+                <div style="font-size:12px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
                     {{ $employeeId }}
                 </div>
 
                 <div style="overflow:hidden; width:95%;" class="mx-auto">
                     <span
-                        style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:13px;"
+                        style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:16px;"
                         x-data x-init="const el = $el;
                         const parent = el.parentElement;
                         if (el.offsetWidth > parent.offsetWidth) {
@@ -49,16 +49,14 @@
                             el.style.transform = 'scaleX(' + scale + ')';
                             el.style.transformOrigin = 'left center';
                         }">
-                        {{ strtoupper($fname) }} {{ strtoupper(substr($mname, 0, 1)) }}. {{ strtoupper($lname) }}
-                        @if ($suffix)
-                            {{ strtoupper($suffix) }}.
-                        @endif
+
+                        {{ $this->getFullNameProperty() }}
 
                     </span>
                 </div>
 
                 <div
-                    style="font-size:10px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
+                    style="font-size:13px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
                     {{ $position }}
                 </div>
             </div>
@@ -82,10 +80,10 @@
                     <dob class="-ml-27">{{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}</dob>
                 </div> --}}
 
-                <div class="px-6 grid grid-cols-[120px_10px_1fr] text-[11px] text-black w-full font-semibold">
+                <div class="px-6 grid grid-cols-[115px_10px_1fr] text-[11px] text-black w-full font-semibold">
                     <div class="text-left">Date of Birth</div>
                     <div class="text-center">:</div>
-                    <div class="text-left ml-1.5"> {{ \Carbon\Carbon::parse($dob)->format('F j, Y') }} </div>
+                    <div class="text-left ml-1.5"> {{ \Carbon\Carbon::parse($dob)->format('M j, Y') }} </div>
 
                     <div class="text-left">SSS</div>
                     <div class="text-center">:</div>

@@ -65,6 +65,15 @@ class ShowId extends Component
         $this->iceNo = $data->emergency?->contact_number ?? 'N/A';
     }
 
+    public function getFullNameProperty()
+    {
+        return strtoupper($this->fname). ' ' .
+        ($this->mname ? 
+        strtoupper(substr($this->mname, 0, 1)). '. '
+        : '' . ' ') . strtoupper($this->lname) . '' .
+        ($this->suffix ? ' ' . strtoupper($this->suffix). '.' : '');
+    }
+
     public function render()
     {
         return view('livewire.id.show-id')->layout('components.layouts.app');;

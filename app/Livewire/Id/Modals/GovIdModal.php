@@ -56,7 +56,7 @@ class GovIdModal extends Component
     }
         public function getFullName()
     {
-        $middle = $this->getMiddleInitials() != '' ? $this->getMiddleInitials(1) . '. ' : '';
+        $middle = $this->getMiddleInitials() != '' ? $this->getMiddleInitials() . '. ' : '';
 
         return $this->firstName . ' '.  $middle . ' ' . $this->lastName;
     }
