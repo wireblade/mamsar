@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('employee_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
-            $table->string('picture_path')->nullable();
-            $table->string('signature_path')->nullable();
+            $table->string('path')->nullable();
+            $table->string('pic')->nullable();
+            $table->string('sig')->nullable();
             $table->timestamps();
         });
     }

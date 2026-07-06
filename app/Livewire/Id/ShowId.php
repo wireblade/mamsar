@@ -57,9 +57,9 @@ class ShowId extends Component
         $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
 
         // Employee Image
-        $this->picture = $data->image?->picture_path;
-        $this->signature = $data->image?->signature_path;
-
+        $this->picture = $data->image?->path.'/'.$data->image?->pic;
+        $this->signature = $data->image?->path.'/'.$data->image?->sig;
+        
         // Emergency Contact
         $this->iceName = $data->emergency?->contact_name ?? 'N/A';
         $this->iceNo = $data->emergency?->contact_number ?? 'N/A';

@@ -36,9 +36,8 @@
                     <th class="px-6 py-1">Address</th>
                     <th class="px-6 py-1">EC Name</th>
                     <th class="px-6 py-1">EC Number</th>
-                    <th class="px-6 py-1">SSS</th>
-                    <th class="px-6 py-1">PHIC</th>
-                    <th class="px-6 py-1">HDMF</th>
+                    <th class="px-6 py-1">Government Id's</th>
+                  
                     <th class="px-6 py-1 text-center">Action</th>
                 </tr>
             </thead>
@@ -63,13 +62,13 @@
                         <!-- Picture -->
                         <td class="px-6 py-4">
                             <center>
-                                @if ($employee->image?->picture_path == '')
+                                @if ($employee->image?->path == '')
                                     <div
                                         class="w-14 h-14 bg-gray-300 dark:bg-gray-600 rounded-full border-2 border-gray-300 dark:border-gray-600 shadow">
                                     </div>
                                 @else
                                     <div class="flex justify-center">
-                                        <img src="{{ asset('storage/' . $employee->image?->picture_path) }}"
+                                        <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->pic) }}"
                                             class="w-14 h-14 object-cover rounded-full border-2 border-gray-300 dark:border-gray-600 shadow">
                                     </div>
                                 @endif
@@ -78,13 +77,13 @@
 
                         <td>
                             <center>
-                                @if ($employee->image?->signature_path == '')
+                                @if ($employee->image?->path == '')
                                     <div
                                         class="w-20 h-10 bg-gray-300 dark:bg-gray-600 rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow">
                                     </div>
                                 @else
                                     <div class="flex justify-center">
-                                        <img src="{{ asset('storage/' . $employee->image?->signature_path) }}"
+                                        <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->sig) }}"
                                             class="w-20 h-10 object-cover rounded-lg border-2 border-gray-300 dark:bg-white dark:border-gray-600 shadow">
                                     </div>
                                 @endif
@@ -141,15 +140,6 @@
                                 wire:click="openGovIdModal({{ $employee->id }})">open government Ids</button>
                         </td>
 
-                        <!-- PHIC -->
-                        <td class="px-6 py-4">
-                            {{ $employee->govId?->philhealth_no ?? 'N/A' }}
-                        </td>
-
-                        <!-- HDMF -->
-                        <td class="px-6 py-4">
-                            {{ $employee->govId?->pagibig_no ?? 'N/A' }}
-                        </td>
 
                         <!-- Action -->
                         <td class="px-6 py-4">
@@ -179,7 +169,7 @@
 
                 @empty
                     <tr>
-                        <td colspan="14" class="px-6 py-6 text-center text-gray-500">
+                        <td colspan="12" class="px-6 py-6 text-center text-gray-500">
                             No Employees found.
                         </td>
                     </tr>

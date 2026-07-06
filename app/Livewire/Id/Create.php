@@ -107,18 +107,25 @@ class Create extends Component
         ]);
 
         if ($this->picture_path) {
-            $picture = $this->picture_path->store('employee_pictures/' . $data['empId'] . '-' . $data['fname'] . '-' . $data['lname'], 'public');
+            $picture = $this->picture_path->store('employee_pictures/' . $data['empId'], 'public');
+
+            $storedPictureName = basename($picture);
         }
 
         if ($this->signature_path) {
-            $signature = $this->signature_path->store('employee_pictures/' . $data['empId'] . '-' . $data['fname'] . '-' . $data['lname'], 'public');
+            $signature = $this->signature_path->store('employee_pictures/' . $data['empId'], 'public');
+
+            $storedSignatureName = basename($signature);
         }
+    
+        $folderPath = 'employee_pictures/'. $data['empId'];
 
         EmployeeImage::create([
             'employee_id' => $employee->id,
-
-            'picture_path' => $picture ?? null,
-            'signature_path' => $signature ?? null,
+            'picture_path' => $folderPath ?? null,
+            'pic' => $storedPictureName ?? null,
+            'signature_path' => $folderPath ?? null,
+            'sig' => $storedSignatureName ?? null,
         ]);
 
         $this->reset();

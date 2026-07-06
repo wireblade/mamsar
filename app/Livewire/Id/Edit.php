@@ -70,6 +70,7 @@ class Edit extends Component
         // Populate Image fields
         $this->picture_path = null;
         $this->signature_path = null; // We don't want to pre-populate the signature path for security reasons
+
     }
 
     public function save()
@@ -94,17 +95,6 @@ class Edit extends Component
         // Update logic for editing an employee
         $employee = Employee::findOrFail($this->employee);
 
-        $employee->update([
-            'empId' => $this->empId,
-            'fname' => $this->fname,
-            'mname' => $this->mname,
-            'lname' => $this->lname,
-            'suffix' => $this->suffix,
-            'dob' => $this->dob ?: null,
-            'status' => $this->status,
-            'position' => $this->position,
-            'address' => $this->address,
-        ]);
 
         $emergency = EmployeeEmergencyContact::updateOrCreate(
             ['employee_id' => $employee->id],
@@ -123,58 +113,50 @@ class Edit extends Component
                 'philhealth_no' => $this->philhealth_no,
             ]
         );
+
+        $dir = 'employee_pictures/'. $employee->empId;
+
         // Handle picture upload
         if ($this->picture_path) {
-
-            // Delete old picture if it exists
-            $oldPicturePath = $employee->image?->picture_path ?? null;
-            // Check if the old picture path exists and delete it
-            if ($oldPicturePath && Storage::disk('public')->exists($oldPicturePath)) {
-                Storage::disk('public')->delete($oldPicturePath);
+            $oldPic = $dir.'/'.$employee->image?->pic;
+            if(Storage::disk('public')->exists($oldPic)){
+                Storage::disk('public')->delete($oldPic);
             }
-
-            // Store the new picture
-            $picture = $this->picture_path->store('employee_pictures/' . $this->empId . '-' . $this->fname . '-' . $this->lname, 'public');
-
-            // Update or create the employee image record
-           $img =  EmployeeImage::updateOrCreate(
-                ['employee_id' => $employee->id],
-                ['picture_path' => $picture]
-            );
+            $picture = $this->picture_path->store($dir, 'public');
+            $updates['pic'] = basename($picture);
         }
 
-        // Handle signature upload
-        if ($this->signature_path) {
+        //Handle signature upload
+        if($this->signature_path) {
+            $oldSig = $dir . '/' . $employee->image?->sig;
 
-            // Delete old signature if it exists
-            $oldSignaturePath = $employee->image?->signature_path ?? null;
-            // Check if the old signature path exists and delete it
-            if ($oldSignaturePath && Storage::disk('public')->exists($oldSignaturePath)) {
-                Storage::disk('public')->delete($oldSignaturePath);
+            if(Storage::disk('public')->exists($oldSig)){
+                Storage::disk('public')->delete($oldSig);
             }
 
-            // Store the new signature
-            $signature = $this->signature_path->store('employee_pictures/' . $this->empId . '-' . $this->fname . '-' . $this->lname, 'public');
-            // Update or create the employee image record
-            $sig = EmployeeImage::updateOrCreate(
-                ['employee_id' => $employee->id],
-                ['signature_path' => $signature]
-            );
+            $signature = $this->signature_path->store($dir, 'public');
+            $updates['sig'] = basename($signature);
         }
+        
 
-        // $hasChanges = 
-        // $employee->isDirty() ||
-        // $emergency->isDirty() ||
-        // $government->isDirty() ||
-        // (isset($img) && $img->wasChanged()) ||
-        // (isset($sig) && $sig->wasChanged());
-
-
-        // if(! $hasChanges) {
-        //     session()->flash('error', 'No changes were made to the employee record.');
-        //     return redirect()->route('id.index');
-        // }
-
+        if(!empty($updates)){
+            EmployeeImage::updateOrCreate(
+                ['employee_id' => $employee->id],
+                    $updates,
+                );
+        }
+    
+        $employee->update([
+            'empId' => $this->empId,
+            'fname' => $this->fname,
+            'mname' => $this->mname,
+            'lname' => $this->lname,
+            'suffix' => $this->suffix,
+            'dob' => $this->dob ?: null,
+            'status' => $this->status,
+            'position' => $this->position,
+            'address' => $this->address,
+        ]);
 
         session()->flash('success', 'Employee Updated Successfully!');
 
