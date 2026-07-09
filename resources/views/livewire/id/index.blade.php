@@ -37,7 +37,7 @@
                     <th class="px-6 py-1">EC Name</th>
                     <th class="px-6 py-1">EC Number</th>
                     <th class="px-6 py-1">Government Id's</th>
-                  
+
                     <th class="px-6 py-1 text-center">Action</th>
                 </tr>
             </thead>
@@ -184,4 +184,5 @@
         </div>
 
     </div>
+
 </div>

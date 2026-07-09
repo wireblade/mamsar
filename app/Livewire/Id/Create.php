@@ -122,9 +122,8 @@ class Create extends Component
 
         EmployeeImage::create([
             'employee_id' => $employee->id,
-            'picture_path' => $folderPath ?? null,
+            'path' => $folderPath ?? null,
             'pic' => $storedPictureName ?? null,
-            'signature_path' => $folderPath ?? null,
             'sig' => $storedSignatureName ?? null,
         ]);
 

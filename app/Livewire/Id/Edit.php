@@ -137,8 +137,11 @@ class Edit extends Component
             $signature = $this->signature_path->store($dir, 'public');
             $updates['sig'] = basename($signature);
         }
-        
 
+        if($this->picture_path || $this->signature_path){
+            $updates['path'] = $dir;
+        }
+        
         if(!empty($updates)){
             EmployeeImage::updateOrCreate(
                 ['employee_id' => $employee->id],
