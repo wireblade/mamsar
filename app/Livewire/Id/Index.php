@@ -20,6 +20,13 @@ class Index extends Component
         // This method is intentionally left empty. It serves as a trigger for Livewire to refresh the component.
     }
 
+    // If you're using Livewire pagination, it's good practice to reset to page 1 whenever the search changes
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+    // Otherwise, if the user is on page 5 and searches for something with only one page of results, they might see an empty table.
+
     public function openGovIdModal($id)
     {
         $this->dispatch('open-gov-id-modal', id: $id);
@@ -32,10 +39,18 @@ class Index extends Component
 
     public function render()
     {
-        $employees = Employee::where(function ($query){
-            $query->where('fname', 'like', '%' . $this->search . '%')
-            ->orWhere('lname', 'like', '%' . $this->search . '%');
-        })->orderBy('lname', 'asc')->paginate(10);
+        $employees = Employee::select('id', 'empId', 'fname', 'lname', 'position')
+        ->when($this->search, function($query) {
+            $query->where(function ($q) {
+                $q->where('id', 'like', "%{$this->search}%")
+                    ->orWhere('empId', 'like', "%{$this->search}%")
+                    ->orWhere('fname', 'like', "%{$this->search}%")
+                    ->orWhere('lname', 'like', "%{$this->search}%")
+                    ->orWhere('position', 'like', "%{$this->search}%");
+                });
+            })
+            ->orderBy('lname', 'asc')
+            ->paginate(10);
 
         return view('livewire.id.index', [
             'employees' => $employees
