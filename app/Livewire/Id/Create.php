@@ -23,6 +23,7 @@ class Create extends Component
     public $suffix = '';
     public $status = '';
     public $dob = '';
+    public $company = '';
     public $position = '';
     public $empId = '';
     public $address = '';
@@ -67,6 +68,7 @@ class Create extends Component
             'suffix' => 'nullable|string|max:255',
             'dob' => 'nullable|date',
             'position' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
@@ -87,6 +89,7 @@ class Create extends Component
             'dob' => $this->dob ?: null,
             'status' => $this->status,
             'position' => $this->position,
+            'company' => $this->company,
             'address' => $this->address,
         ];
 

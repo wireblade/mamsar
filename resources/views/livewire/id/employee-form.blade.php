@@ -62,6 +62,18 @@
                     </div>
                     <x-form.text-input label="Position" model="position" placeholder="Enter position" />
                     <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
+
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Company</label>
+                        <select wire:model="company"
+                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none">
+                            <option value="" disabled selected>Select Company</option>
+                            <option>Mamsar</option>
+                            <option>Zeman</option>
+
+                        </select>
+                    </div>
+
                 </div>
 
                 <!-- Section: Government IDs -->

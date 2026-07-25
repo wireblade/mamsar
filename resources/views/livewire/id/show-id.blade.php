@@ -30,7 +30,8 @@
         <!-- FRONT -->
         <div class="relative" id="id-front" style="width: 272px; height: 430px; overflow: hidden;">
 
-            <img src="{{ asset('storage/id_template/front.jpg') }}" style="width: 100%; height: 100%; display: block;">
+            <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
+                style="width: 100%; height: 100%; display: block;">
             <img src="{{ asset('storage/' . $picture) }}" class="absolute object-cover"
                 style="top:121px; left:57px; width:158px; height:153.3px;">
 
@@ -65,7 +66,8 @@
         <!-- BACK -->
         <div class="relative" id="id-back" style="width: 272px; height: 430px; overflow: hidden;">
 
-            <img src="{{ asset('storage/id_template/back.jpg') }}" style="width: 100%; height: 100%; display: block;">
+            <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
+                style="width: 100%; height: 100%; display: block;">
 
             <div class="absolute text-center" style="top:20px; left:0; right:0;">
 
