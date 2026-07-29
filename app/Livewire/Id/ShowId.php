@@ -18,6 +18,7 @@ class ShowId extends Component
     public $suffix = '';
     public $position = '';
     public $address = '';
+    public $company = '';
 
     // Government IDs
     public $sss = '';
@@ -49,6 +50,7 @@ class ShowId extends Component
         $this->address = $data->address;
         $this->position = $data->position;
         $this->dob = $data->dob;
+        $this->company = $data->company;
 
         // Government IDs
         $this->sss = $data->govid?->sss_no ?: 'N/A';
@@ -72,6 +74,11 @@ class ShowId extends Component
         strtoupper(substr($this->mname, 0, 1)). '. '
         : '' . ' ') . strtoupper($this->lname) . '' .
         ($this->suffix ? ' ' . strtoupper($this->suffix). '.' : '');
+    }
+
+    public function companyColor()
+    {
+        return $this->company == 'Mamsar' ? 'text-black' : 'text-white';
     }
 
     public function render()

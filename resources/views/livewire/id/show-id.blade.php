@@ -26,23 +26,29 @@
         <div style="width:60px; height:3px; background:#f0c040; margin:10px auto 0; border-radius:2px;"></div>
     </div>
 
-    <div class="print-area flex items-center justify-center gap-6">
+    <div class="print-area  flex items-center justify-center gap-6">
         <!-- FRONT -->
         <div class="relative" id="id-front" style="width: 272px; height: 430px; overflow: hidden;">
 
-            <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
-                style="width: 100%; height: 100%; display: block;">
+            @if ($company == 'Mamsar')
+                <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
+                    style="width: 100%; height: 100%; display: block;">
+            @else
+                <img src="{{ asset('storage/id_template/zeman_front.png') }}"
+                    style="width: 100%; height: 100%; display: block;">
+            @endif
+
             <img src="{{ asset('storage/' . $picture) }}" class="absolute object-cover"
                 style="top:121px; left:57px; width:158px; height:153.3px;">
 
-            <div class="absolute text-center" style="top:272px; left:0; right:0;">
-                <div style="font-size:12px; font-weight:700; padding:4px 8px; line-height:1.2; color:#000000;">
+            <div class="absolute text-center {{ $this->companyColor() }}" style="top:272px; left:0; right:0;">
+                <div style="font-size:12px; font-weight:700; padding:4px 8px; line-height:1.2; ">
                     {{ $employeeId }}
                 </div>
 
                 <div style="overflow:hidden; width:95%;" class="mx-auto">
                     <span
-                        style="font-weight:bold; line-height:2; color:#000000; white-space:nowrap; display:inline-block; font-size:16px;"
+                        style="font-weight:bold; line-height:2; white-space:nowrap; display:inline-block; font-size:16px;"
                         x-data x-init="const el = $el;
                         const parent = el.parentElement;
                         if (el.offsetWidth > parent.offsetWidth) {
@@ -56,20 +62,25 @@
                     </span>
                 </div>
 
-                <div
-                    style="font-size:13px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; color:#000000;">
+                <div style="font-size:13px; font-weight:700; padding:4px 8px; line-height:1.2; margin-top:-8px; ">
                     {{ $position }}
                 </div>
             </div>
         </div>
 
         <!-- BACK -->
-        <div class="relative" id="id-back" style="width: 272px; height: 430px; overflow: hidden;">
+        <div class="relative {{ $this->companyColor() }} id="id-back"
+            style="width: 272px; height: 430px; overflow: hidden;">
 
-            <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
-                style="width: 100%; height: 100%; display: block;">
-
-            <div class="absolute text-center" style="top:20px; left:0; right:0;">
+            @if ($company == 'Mamsar')
+                <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
+                    style="width: 100%; height: 100%; display: block;">
+            @else
+                <img src="{{ asset('storage/id_template/zeman_back.jpg') }}"
+                    style="width: 100%; height: 100%; display: block;">
+            @endif
+            <div class="absolute
+            text-center" style="top:20px; left:0; right:0;">
 
                 {{-- <div style="font-size:12px; color:#000000;">
                     <header class="float-left px-6">Date of Birth</header>
@@ -82,7 +93,7 @@
                     <dob class="-ml-27">{{ \Carbon\Carbon::parse($dob)->format('F j, Y') }}</dob>
                 </div> --}}
 
-                <div class="px-6 grid grid-cols-[115px_10px_1fr] text-[11px] text-black w-full font-semibold">
+                <div class="px-6 grid grid-cols-[115px_10px_1fr] text-[11px] w-full font-semibold">
                     <div class="text-left">Date of Birth</div>
                     <div class="text-center">:</div>
                     <div class="text-left ml-1.5"> {{ \Carbon\Carbon::parse($dob)->format('M j, Y') }} </div>
@@ -110,7 +121,7 @@
 
                 {{-- <div class="font-size:10px; float:center; line-height:1.5; margin-top:25px; color:#000000;"> --}}
 
-                <div class="text-[12px] mt-3 text-black font-medium leading-normal w-full">
+                <div class="text-[12px] mt-3 {{ $this->companyColor() }} font-medium leading-normal w-full">
 
                     <div class="w-3/4 mx-auto text-center font-semibold"> {{ $address }} </div>
 
@@ -118,19 +129,29 @@
 
                 </div>
 
-                <div class="text-[12px] mt-2 text-black font-medium leading-normal w-full">
+                <div class="text-[12px] mt-2 {{ $this->companyColor() }} text-black font-medium leading-normal w-full">
                     IN CASE OF EMERGENCY, PLASE NOTIFY <br>
                     <div class="mx-auto text-center font-bold">{{ $iceName }}</div>
 
                     <div class="mx-auto text-center">Contact No.: {{ $iceNo }}</div>
                 </div>
 
-                <div class="text-[11px] mt-2 text-black font-normal text-justify p-3 leading-normal w-full">
-                    This card is the property of <font class="font-extrabold">MAMSAR
-                        CONSTRUCTION AND INDUSTRIAL
-                        CORPORATION</font> and must be surrendered
-                    upon termination of employement.
-                </div>
+                @if ($company == 'Mamsar')
+                    <div class="text-[11px] mt-2 text-black font-normal text-justify p-3 leading-normal w-full">
+                        This card is the property of <font class="font-extrabold">MAMSAR
+                            CONSTRUCTION AND INDUSTRIAL
+                            CORPORATION</font> and must be surrendered
+                        upon termination of employement.
+                    </div>
+                @else
+                    <div
+                        class="text-[11px] mt-2 {{ $this->companyColor() }} font-normal text-center p-3 leading-normal w-full">
+                        This Card is the property of <br>
+                        ZEMAN MARINE LOGISTICS SERVICES INC. <br>
+                        and must be surendered upon <br>
+                        termination of employment
+                    </div>
+                @endif
 
             </div>
 
