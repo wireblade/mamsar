@@ -30,7 +30,7 @@
         <!-- FRONT -->
         <div class="relative" id="id-front" style="width: 272px; height: 430px; overflow: hidden;">
 
-            @if ($company == 'Mamsar')
+            @if ($company == 'Mamsar' || $company == null)
                 <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
                     style="width: 100%; height: 100%; display: block;">
             @else
@@ -72,13 +72,14 @@
         <div class="relative {{ $this->companyColor() }} id="id-back"
             style="width: 272px; height: 430px; overflow: hidden;">
 
-            @if ($company == 'Mamsar')
+            @if ($company == 'Mamsar' || $company == null)
                 <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
                     style="width: 100%; height: 100%; display: block;">
             @else
                 <img src="{{ asset('storage/id_template/zeman_back.jpg') }}"
                     style="width: 100%; height: 100%; display: block;">
             @endif
+
             <div class="absolute
             text-center" style="top:20px; left:0; right:0;">
 

@@ -78,7 +78,11 @@ class ShowId extends Component
 
     public function companyColor()
     {
-        return $this->company == 'Mamsar' ? 'text-black' : 'text-white';
+        return $this->company === null 
+        ? 'text-black' 
+        : ($this->company === 'Mamsar' ? 'text-black'
+        : ($this->company === 'Zeman'
+        ? 'text-white' : 'text-black'));
     }
 
     public function render()
