@@ -47,6 +47,7 @@
         </flux:sidebar.nav>
 
         <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
+
     </flux:sidebar>
 
     <!-- Mobile User Menu -->

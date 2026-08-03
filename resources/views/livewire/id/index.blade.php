@@ -18,134 +18,101 @@
 
     <div class="mt-6 bg-white dark:bg-gray-800 rounded-2xl shadow-lg w-full overflow-x-auto">
 
-        <!-- Table -->
-        <table class="min-w-full text-sm text-left">
+        <div class="grid gap-6
+            sm:grid-cols-1
+            md:grid-cols-2
+            xl:grid-cols-3 p-5">
+            @foreach ($employees as $employee)
+                <div class="bg-white rounded-xl shadow-md border border-gray-200 p-5">
 
-            <!-- Header -->
-            <thead
-                class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 text-xs uppercase tracking-wider">
-                <tr>
-                    <th class="px-6 py-2">No</th>
-                    <th class="px-6 py-2">ID No.</th>
-                    <th class="px-6 py-2 text-center">Picture</th>
-                    <th class="px-6 py-2 text-center">Signature</th>
-                    <th class="px-6 py-2">Name</th>
-                    <th class="px-6 py-2">Position</th>
-                    <th class="px-6 py-2 text-center">Government Id</th>
-                    <th class="px-6 py-2 text-center">Action</th>
-                </tr>
-            </thead>
+                    <div class="flex justify-between items-start">
+                        <div class="flex gap-4">
 
-            <!-- Body -->
-            <tbody class="text-gray-700 dark:text-gray-300">
+                            <!-- Picture -->
+                            <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->pic) }}"
+                                class="w-20 h-20 rounded-lg object-cover border">
 
-                @forelse ($employees as $employee)
-                    <tr
-                        class="border-b dark:border-gray-700 even:bg-gray-50 dark:even:bg-gray-900 hover:bg-blue-50 dark:hover:bg-gray-700 transition">
+                            <div>
+                                <p class="text-xs text-gray-500">
+                                    Employee #{{ $employee->empId }}
+                                </p>
 
-                        <!-- No -->
-                        <td class="px-6 py-4">
-                            {{ $employees->firstItem() + $loop->index }}
-                        </td>
+                                <h2 class="text-lg font-semibold">
+                                    {{ $employee->lname }},
+
+                                    {{ $employee->fname }}
+
+                                    @if ($employee->mname)
+                                        {{ strtoupper(substr($employee->mname, 0, 1)) }}.
+                                    @endif
+
+
+                                </h2>
+
+                                <p class="text-gray-500">
+                                    {{ $employee->position }}
+                                </p>
+                            </div>
+
+                        </div>
 
                         <!-- ID -->
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                            {{ $employee->empId }}
-                        </td>
+                        <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm font-medium">
+                            {{ $employees->firstItem() + $loop->index }}
+                        </span>
+                    </div>
 
-                        <!-- Picture -->
-                        <td class="px-6 py-4">
-                            <center>
-                                @if ($employee->image?->path == '')
-                                    <div
-                                        class="w-14 h-14 bg-gray-300 dark:bg-gray-600 rounded-full border-2 border-gray-300 dark:border-gray-600 shadow">
-                                    </div>
-                                @else
-                                    <div class="flex justify-center">
-                                        <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->pic) }}"
-                                            class="w-14 h-14 object-cover rounded-full border-2 border-gray-300 dark:border-gray-600 shadow">
-                                    </div>
-                                @endif
-                            </center>
-                        </td>
+                    <div class="grid grid-cols-2 gap-6 mt-5">
 
-                        <td>
-                            <center>
-                                @if ($employee->image?->path == '')
-                                    <div
-                                        class="w-20 h-10 bg-gray-300 dark:bg-gray-600 rounded-lg border-2 border-gray-300 dark:border-gray-600 shadow">
-                                    </div>
-                                @else
-                                    <div class="flex justify-center">
-                                        <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->sig) }}"
-                                            class="w-20 h-10 object-cover rounded-lg border-2 border-gray-300 dark:bg-white dark:border-gray-600 shadow">
-                                    </div>
-                                @endif
-                            </center>
-                        </td>
+                        <!-- Signature -->
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 mb-2">
+                                Signature
+                            </p>
 
-                        <!-- Name -->
-                        <td class="px-6 py-4 font-medium">
-                            {{ $employee->fname }}
-                            @if ($employee->mname)
-                                {{ strtoupper(substr($employee->mname, 0, 1)) }}.
-                            @endif
-                            {{ $employee->lname }}
-                        </td>
+                            <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->sig) }}"
+                                class="h-16 w-1/2 object-contain border rounded bg-gray-50">
+                        </div>
 
-                        <!-- Position -->
-                        <td class="px-6 py-4">
-                            <span
-                                class="px-1 py-1 text-xs rounded-lg bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
-                                {{ $employee->position }}
-                            </span>
-                        </td>
+                        <!-- Government ID -->
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 mb-2">
+                                Government IDs
+                            </p>
 
-                        <!-- SSS -->
-                        <td class="px-6 py-4 text-center">
-                            {{-- {{ $employee->govId?->sss_no ?? 'N/A' }} --}}
-                            <button
-                                class="px-2 py-2 border rounded-md text-black hover:bg-blue-700 transition duration-200"
-                                wire:click="openGovIdModal({{ $employee->id }})">
+                            <button wire:click="openGovIdModal({{ $employee->id }})"
+                                class="px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500 transition duration-200">
                                 <i class="fa fa-magnifying-glass"></i>
+                                View IDs
                             </button>
-                        </td>
+                        </div>
 
-                        <!-- Action -->
-                        <td class="px-6 py-4 text-center">
+                    </div>
 
+                    <div class="flex justify-end gap-2 mt-6 border-t pt-4">
 
-                            <a href="{{ route('id.edit', $employee->id) }}"
-                                class="m-1 px-3 py-1 text-xs font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 transition">
-                                Edit
-                            </a>
+                        <a href="{{ route('show.id', $employee->id) }}"
+                            class="px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200">
+                            View
+                        </a>
 
-                            <a href="{{ route('show.id', $employee->id) }}"
-                                class="m-1 px-3 py-1 text-xs font-semibold text-white bg-green-500 rounded-lg hover:bg-green-600 transition">
-                                View
-                            </a>
+                        <a href="{{ route('id.edit', $employee->id) }}"
+                            class="px-3 py-2 rounded-lg bg-amber-500 text-white hover:bg-amber-600">
+                            Edit
+                        </a>
 
-                            <button wire:click="openDeleteEmployeeModal({{ $employee->id }})"
-                                class="m-1 px-3 py-1 text-xs text-white cursor-pointer hover:bg-red-700 bg-red-500 rounded-lg transition duration-200">
-                                Delete
-                            </button>
+                        <button wire:click="openDeleteEmployeeModal({{ $employee->id }})"
+                            class="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+                            Delete
+                        </button>
 
+                    </div>
 
+                </div>
+            @endforeach
 
-                        </td>
+        </div>
 
-                    </tr>
-
-                @empty
-                    <tr>
-                        <td colspan="9" class="px-6 py-6 text-center text-gray-500">
-                            No Employees found.
-                        </td>
-                    </tr>
-                @endforelse
-
-            </tbody>
-        </table>
 
         <!-- Pagination -->
         <div class="p-4 bg-gray-50 dark:bg-gray-800 border-t dark:border-gray-700">

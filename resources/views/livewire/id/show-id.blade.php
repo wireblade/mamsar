@@ -69,7 +69,7 @@
         </div>
 
         <!-- BACK -->
-        <div class="relative {{ $this->companyColor() }} id="id-back"
+        <div class="relative {{ $this->companyColor() }}" id="id-back"
             style="width: 272px; height: 430px; overflow: hidden;">
 
             @if ($company == 'Mamsar' || $company == null)

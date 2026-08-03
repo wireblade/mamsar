@@ -6,8 +6,11 @@ use Livewire\Component;
 
 class Index extends Component
 {
+    public $title = 'MAMSAR';
     public function render()
     {
-        return view('livewire.dashboard.index');
+        $title = $this->title;
+
+        return view('livewire.dashboard.index')->with('title', $title);
     }
 }
