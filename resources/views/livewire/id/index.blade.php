@@ -5,7 +5,8 @@
 
         <a href="{{ @route('id.create') }}">
             <button
-                class="px-2 py-1.5 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition duration-200"></button>
+                class="px-2 py-1.5 rounded-md text-sm text-white bg-gray-400 hover:bg-blue-600 transition duration-200">Create
+                New ID</button>
         </a>
 
         <div class="flex justify-end">

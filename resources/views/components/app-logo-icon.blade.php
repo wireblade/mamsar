@@ -1,1 +1,1 @@
-<img src="{{ asset('storage/id_template/logo.svg') }}" alt="Logo" />
+<img src="{{ asset('storage/icons/logo.svg') }}" alt="Logo" />

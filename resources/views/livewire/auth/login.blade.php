@@ -1,4 +1,4 @@
-<x-layouts::auth :title="__('Log in')">
+<x-layouts::auth :title="__('Mamsar')" :description="__('Mamsar Construction and Industrial Corporation')">
     <div class="flex flex-col gap-4">
         <x-auth-header :title="__('MCIC')" :description="__('Mamsar Construction and Industrial Corporation')" />
 

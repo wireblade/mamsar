@@ -39,9 +39,9 @@
                     {{ __('Documentation') }}
                 </flux:sidebar.item> --}}
 
-            <flux:sidebar.item icon="home" :href="route('id.index')" :current="request()->routeIs('id.index')"
+            <flux:sidebar.item icon="user" :href="route('id.index')" :current="request()->routeIs('id.index')"
                 wire:navigate>
-                {{ __('Company ID') }}
+                {{ __('ID Management') }}
             </flux:sidebar.item>
 
         </flux:sidebar.nav>
@@ -50,7 +50,7 @@
     </flux:sidebar>
 
     <!-- Mobile User Menu -->
-    <flux:header class="lg:hidden">
+    {{-- <flux:header class="lg:hidden">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
         <flux:spacer />
@@ -91,7 +91,7 @@
                 </form>
             </flux:menu>
         </flux:dropdown>
-    </flux:header>
+    </flux:header> --}}
 
     {{ $slot }}
 
