@@ -21,11 +21,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('profile/{employee}/view', ShowId::class)->name('profile.show');
 
     // This is for the ID Management
-    Route::get('/id/', IdIndex::class)->name('id.index');
+    Route::get('id', IdIndex::class)->name('id.index');
     
-    Route::get('/id/add-employee', IdCreate::class)->name('id.create');
-    Route::get('/id/{employee}/edit', IdEdit::class)->name('id.edit');
-    Route::get('/id/{id}/view', ShowId::class)->name('show.id');
+    Route::get('id/add-employee', IdCreate::class)->name('id.create');
+    Route::get('id/{employee}/edit', IdEdit::class)->name('id.edit');
+    Route::get('id/{id}/view', ShowId::class)->name('show.id');
 
     Route::get('/home', DashboardIndex::class)->name('home');
 });

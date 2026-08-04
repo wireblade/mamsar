@@ -4,8 +4,8 @@
     <div class="flex justify-between item-center mb-4">
 
         <a href="{{ @route('id.create') }}">
-            <button class="px-2 py-1.5 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition duration-200">Add
-                Employee</button>
+            <button
+                class="px-2 py-1.5 rounded-md text-white bg-blue-500 hover:bg-blue-600 transition duration-200"></button>
         </a>
 
         <div class="flex justify-end">

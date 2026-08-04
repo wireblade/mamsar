@@ -139,6 +139,6 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.id.employee-form')->layout('layouts.app.header');;
+        return view('livewire.id.employee-form')->layout('components.layouts.app')->title('Add Employee');
     }
 }

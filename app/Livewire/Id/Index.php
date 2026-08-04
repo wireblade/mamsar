@@ -11,8 +11,6 @@ class Index extends Component
 {
 
     use WithPagination;
-    
-    public $title = 'ID Management';
     public $search  = '';
 
     #[On('refreshTable')]
@@ -40,9 +38,6 @@ class Index extends Component
 
     public function render()
     {
-
-    $title = $this->title;
-
         $employees = Employee::select('id', 'empId', 'fname', 'mname', 'lname', 'position')
         ->when($this->search, function($query) {
             $query->where(function ($q) {
@@ -55,11 +50,10 @@ class Index extends Component
                 });
             })
             ->orderBy('lname', 'asc')
-            ->paginate(10);
+            ->paginate(9);
 
         return view('livewire.id.index', [
-            'employees' => $employees,
-            'title' => $title,
-        ])->layout('layouts.app.header');
+            'employees' => $employees
+        ])->layout('layouts.app.header')->title('Mamsar | ID Management');
     }
 }

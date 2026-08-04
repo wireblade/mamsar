@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>
-        {{ filled($title ?? null) ? $title . ' - ' . config('app.name', 'Laravel') : config('app.name', 'Laravel') }}
+        {{ filled($title ?? null) ? $title : 'Mamsar' }}
     </title>
 
     <link rel="icon" href="/favicon.ico" sizes="any">
