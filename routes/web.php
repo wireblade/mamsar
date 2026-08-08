@@ -9,6 +9,7 @@ use App\Livewire\Id\ShowId;
 use App\Livewire\Id\Test;
 
 use App\Livewire\PersonalProfile\Index as ProfileIndex;
+use App\Livewire\PersonalProfile\Show as ShowProfile;
 
 Route::redirect('/', 'login');
 Route::get('/test', Test::class)->name('test');
@@ -18,7 +19,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // This is for the profile management
     Route::get('profile/', ProfileIndex::class)->name('profile.index');
-    Route::get('profile/{employee}/view', ShowId::class)->name('profile.show');
+    Route::get('profile/{employee}/view', ShowProfile::class)->name('profile.show');
 
     // This is for the ID Management
     Route::get('id', IdIndex::class)->name('id.index');

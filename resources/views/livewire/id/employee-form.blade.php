@@ -3,7 +3,7 @@
     <div class="min-h-screen py-10 px-4">
         <!-- Background decoration -->
 
-        <div class="max-w-3xl mx-auto">
+        <div class="max-w-3xl mx-auto bg-white p-5 boarder rounded-lg shadow-lg">
 
             <a href="{{ route('id.index') }}"
                 class="absolute top-4 left-6 flex items-center gap-2 text-black/50 hover:text-black dark:text-white transition-colors duration-200">
@@ -16,14 +16,17 @@
 
             <!-- Header -->
             <div div class="text-center mb-8">
-                <div div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-600 mb-4">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
+                <div div class="inline-flex items-center justify-center w-20 h-20 rounded-xl">
+                    {{-- <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
+                    </svg> --}}
+
+                    <img src="{{ asset('storage/icons/logo.svg') }}" alt="Logo">
+
                 </div>
-                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">Employee Registration
+                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">{{ $title }}
                 </h1>
                 <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Complete all fields to register a new employee
                     record</p>

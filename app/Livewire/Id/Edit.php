@@ -16,6 +16,7 @@ class Edit extends Component
 
     public $employee;
     public $isEditing = true;
+    public $title = 'Edit Employee';
 
     // Employee fields
     public $fname;
@@ -47,6 +48,7 @@ class Edit extends Component
     {
         $employee = Employee::findOrFail($employee);;
 
+        $title = $this->title;
         // Populate Employee fields
         $this->fname = $employee->fname;
         $this->mname = $employee->mname;

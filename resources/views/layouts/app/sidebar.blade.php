@@ -20,6 +20,10 @@
                     wire:navigate>
                     {{ __('Dashboard') }}
                 </flux:sidebar.item>
+                <flux:sidebar.item icon="user" :href="route('profile.index')"
+                    :current="request()->routeIs('profile.index')" wire:navigate>
+                    {{ __('Employee Profile') }}
+                </flux:sidebar.item>
 
 
 
@@ -39,7 +43,7 @@
                     {{ __('Documentation') }}
                 </flux:sidebar.item> --}}
 
-            <flux:sidebar.item icon="user" :href="route('id.index')" :current="request()->routeIs('id.index')"
+            <flux:sidebar.item icon="book-open-text" :href="route('id.index')" :current="request()->routeIs('id.index')"
                 wire:navigate>
                 {{ __('ID Management') }}
             </flux:sidebar.item>

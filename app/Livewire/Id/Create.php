@@ -14,6 +14,8 @@ class Create extends Component
 {
     public $isEditing = false;
 
+    public $title = 'Add Employee';
+
     use WithFileUploads;
 
     // Employee fields
@@ -56,6 +58,10 @@ class Create extends Component
         'picture_path.image' => 'The Picture must be an JPEG or PNG image.',
         'signature_path.mimes' => 'The Signature must be a PNG image only.',
     ];
+
+    public function mount(){
+        $title = $this->title;
+    }
 
     public function save()
     {

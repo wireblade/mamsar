@@ -61,6 +61,27 @@
         }
     </style>
 
+    <style>
+        body {
+            font-family: 'Instrument Sans', sans-serif;
+            position: relative;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.5;
+            /* Adjust from 0.0 to 1.0 */
+            z-index: -1;
+        }
+    </style>
+
 </head>
 
 <body>
