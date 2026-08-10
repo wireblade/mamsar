@@ -20,8 +20,8 @@
                     wire:navigate>
                     {{ __('Dashboard') }}
                 </flux:sidebar.item>
-                <flux:sidebar.item icon="user" :href="route('profile.index')"
-                    :current="request()->routeIs('profile.index')" wire:navigate>
+                <flux:sidebar.item icon="user" :href="route('employee.index')"
+                    :current="request()->routeIs('employee.index')" wire:navigate>
                     {{ __('Employee Profile') }}
                 </flux:sidebar.item>
 

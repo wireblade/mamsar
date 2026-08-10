@@ -1,13 +1,17 @@
 <?php
 
-namespace App\Livewire\PersonalProfile;
+namespace App\Livewire\EmployeeProfile;
 
 use Livewire\Component;
 use App\Models\Employee;
+use Livewire\Attributes\Url;
 
-class Show extends Component
+class Profile extends Component
 {
     public $employee = null;
+
+    #[Url()]
+    public $page = 1;
     
     // Employee Information
     public $empId;
@@ -45,6 +49,7 @@ class Show extends Component
 
     public $profile_photo;
 
+
     public function mount(int $employee)
     {
         $employee = Employee::findOrFail($employee);
@@ -72,6 +77,6 @@ class Show extends Component
 
     public function render()
     {
-        return view('livewire.personal-profile.show');
+        return view('livewire.employee-profile.profile');
     }
 }

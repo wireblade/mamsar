@@ -8,8 +8,8 @@ use App\Livewire\Id\Edit as IdEdit;
 use App\Livewire\Id\ShowId;
 use App\Livewire\Id\Test;
 
-use App\Livewire\PersonalProfile\Index as ProfileIndex;
-use App\Livewire\PersonalProfile\Show as ShowProfile;
+use App\Livewire\EmployeeProfile\Index as EmployeeIndex;
+use App\Livewire\EmployeeProfile\Profile as EmployeeShow;
 
 Route::redirect('/', 'login');
 Route::get('/test', Test::class)->name('test');
@@ -18,8 +18,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 
     // This is for the profile management
-    Route::get('profile/', ProfileIndex::class)->name('profile.index');
-    Route::get('profile/{employee}/view', ShowProfile::class)->name('profile.show');
+    Route::get('employee/', EmployeeIndex::class)->name('employee.index');
+    Route::get('employee/{employee}/view', EmployeeShow::class)->name('employee.show');
 
     // This is for the ID Management
     Route::get('id', IdIndex::class)->name('id.index');
