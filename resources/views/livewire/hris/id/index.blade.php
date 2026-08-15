@@ -5,7 +5,7 @@
 
         <a href="{{ @route('id.create') }}">
             <button
-                class="px-2 py-1.5 rounded-md text-sm text-white bg-gray-400 hover:bg-blue-600 transition duration-200">Create
+                class="px-2 py-1.5 rounded-md text-sm text-white bg-gray-600 hover:bg-gray-800 transition duration-200">Create
                 New ID</button>
         </a>
 

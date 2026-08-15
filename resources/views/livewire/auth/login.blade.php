@@ -1,11 +1,12 @@
 <x-layouts::auth :title="__('Mamsar')" :description="__('Mamsar Construction and Industrial Corporation')">
     <div class="flex flex-col gap-4">
-        <x-auth-header :title="__('MCIC')" :description="__('Mamsar Construction and Industrial Corporation')" />
+
+        <x-auth-header :title="__('asd')" :description="__('Mamsar Construction and Industrial Corporation')" />
 
         <!-- Session Status -->
         <x-auth-session-status class="text-center" :status="session('status')" />
 
-        <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
+        <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6 dark:text-black">
             @csrf
 
             <!-- Email Address -->

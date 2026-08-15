@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\EmployeeProfile;
+namespace App\Livewire\Hris\EmployeeProfile;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -42,6 +42,6 @@ class Index extends Component
             ->orderBy('lname', 'asc')
             ->paginate(10); 
 
-        return view('livewire.employee-profile.index', compact('employees'));
+        return view('livewire.hris.employee-profile.index', compact('employees'));
     }
 }

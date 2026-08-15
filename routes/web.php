@@ -2,17 +2,16 @@
 
 use App\Livewire\Dashboard\Index as DashboardIndex;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Id\Index as IdIndex;
-use App\Livewire\Id\Create as IdCreate;
-use App\Livewire\Id\Edit as IdEdit;
-use App\Livewire\Id\ShowId;
-use App\Livewire\Id\Test;
 
-use App\Livewire\EmployeeProfile\Index as EmployeeIndex;
-use App\Livewire\EmployeeProfile\Profile as EmployeeShow;
+use App\Livewire\Hris\Id\Index as IdIndex;
+use App\Livewire\Hris\Id\Create as IdCreate;
+use App\Livewire\Hris\Id\Edit as IdEdit;
+use App\Livewire\Hris\Id\ShowId;
+
+use App\Livewire\Hris\EmployeeProfile\Index as EmployeeIndex;
+use App\Livewire\Hris\EmployeeProfile\Profile as EmployeeShow;
 
 Route::redirect('/', 'login');
-Route::get('/test', Test::class)->name('test');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');

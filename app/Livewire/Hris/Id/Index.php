@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Id;
+namespace App\Livewire\Hris\Id;
 
 use App\Models\Employee;
 use Livewire\Attributes\On;
@@ -52,7 +52,7 @@ class Index extends Component
             ->orderBy('lname', 'asc')
             ->paginate(9);
 
-        return view('livewire.id.index', [
+        return view('livewire.hris.id.index', [
             'employees' => $employees
         ])->layout('layouts.app.header')->title('Mamsar | ID Management');
     }

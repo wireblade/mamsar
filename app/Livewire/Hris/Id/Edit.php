@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Id;
+namespace App\Livewire\Hris\Id;
 
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
@@ -174,6 +174,6 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.id.employee-form')->layout('components.layouts.app');;
+        return view('livewire.hris.id.employee-form')->layout('components.layouts.app');;
     }
 }

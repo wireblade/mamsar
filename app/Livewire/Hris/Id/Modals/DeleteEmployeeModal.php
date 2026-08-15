@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Id\Modals;
+namespace App\Livewire\Hris\Id\Modals;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -35,7 +35,7 @@ class DeleteEmployeeModal extends Component
     {
         $employee = Employee::findOrFail($this->deleteId);
 
-        $image = EmployeeImage::where('employee_id', $this->deleteId)->first();
+        $image = EmployeeImage::find('employee_id', $this->deleteId)->first();
 
         if ($image) {
             if ($image->picture_path) {
@@ -63,6 +63,6 @@ class DeleteEmployeeModal extends Component
 
     public function render()
     {
-        return view('livewire.id.modals.delete-employee-modal');
+        return view('livewire.hris.id.modals.delete-employee-modal');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Id\Modals;
+namespace App\Livewire\Hris\Id\Modals;
 
 use App\Models\Employee;
 use Livewire\Attributes\On;
@@ -62,6 +62,6 @@ class GovIdModal extends Component
     
     public function render()
     {
-        return view('livewire.id.modals.gov-id-modal');
+        return view('livewire.hris.id.modals.gov-id-modal');
     }
 }

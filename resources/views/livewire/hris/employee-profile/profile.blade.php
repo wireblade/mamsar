@@ -11,10 +11,10 @@
     <div class="mx-auto">
 
         {{-- header section --}}
-        @include('livewire.employee-profile.profile.header')
+        @include('livewire.hris.employee-profile.profile.header')
 
         {{-- employee information --}}
-        @include('livewire.employee-profile.profile.employee-info')
+        @include('livewire.hris.employee-profile.profile.employee-info')
 
 
         {{-- ============================================================ --}}
@@ -108,7 +108,7 @@
                 {{-- ==================================================== --}}
                 {{-- EMPLOYMENT HISTORY --}}
                 {{-- ==================================================== --}}
-                @include('livewire.employee-profile.profile.employments')
+                @include('livewire.hris.employee-profile.profile.employments')
 
 
 
@@ -116,7 +116,7 @@
                 {{-- PROJECT ASSIGNMENTS --}}
                 {{-- ==================================================== --}}
 
-                @include('livewire.employee-profile.profile.projects')
+                @include('livewire.hris.employee-profile.profile.projects')
 
             </div>
 

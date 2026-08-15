@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\EmployeeProfile;
+namespace App\Livewire\Hris\EmployeeProfile;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -77,6 +77,6 @@ class Profile extends Component
 
     public function render()
     {
-        return view('livewire.employee-profile.profile');
+        return view('livewire.hris.employee-profile.profile');
     }
 }
