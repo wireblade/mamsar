@@ -52,6 +52,7 @@ class Create extends Component
         'status.required' => 'The Status field is required.',
         'dob.required' => 'The Date of Birth field is required.',
         'position.required' => 'The Position field is required.',
+        'company.required' => 'Please select a company.',
         'address.required' => 'The Address field is required.',
         'contact_name.required' => 'The Emergency Contact Name field is required.',
         'contact_number.required' => 'The Emergency Contact Number field is required.',

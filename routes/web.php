@@ -11,23 +11,29 @@ use App\Livewire\Hris\Id\ShowId;
 use App\Livewire\Hris\EmployeeProfile\Index as EmployeeIndex;
 use App\Livewire\Hris\EmployeeProfile\Profile as EmployeeShow;
 
+use App\Livewire\Rover\Index as RoverIndex;
+use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
+
 Route::redirect('/', 'login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::view('hris/dashboard', 'dashboard')->name('dashboard');
 
     // This is for the profile management
-    Route::get('employee/', EmployeeIndex::class)->name('employee.index');
-    Route::get('employee/{employee}/view', EmployeeShow::class)->name('employee.show');
+    Route::get('hris/employee/', EmployeeIndex::class)->name('employee.index');
+    Route::get('hris/employee/{employee}/view', EmployeeShow::class)->name('employee.show');
 
     // This is for the ID Management
-    Route::get('id', IdIndex::class)->name('id.index');
-    
-    Route::get('id/add-employee', IdCreate::class)->name('id.create');
-    Route::get('id/{employee}/edit', IdEdit::class)->name('id.edit');
-    Route::get('id/{id}/view', ShowId::class)->name('show.id');
+    Route::get('hris/id', IdIndex::class)->name('id.index');
+    Route::get('hris/id/add-employee', IdCreate::class)->name('id.create');
+    Route::get('hris/id/{employee}/edit', IdEdit::class)->name('id.edit');
+    Route::get('hris/id/{id}/view', ShowId::class)->name('show.id');
 
     Route::get('/home', DashboardIndex::class)->name('home');
 });
+
+
+    Route::get('rover/', RoverIndex::class)->name('rover.index');
+    Route::get('rover/create-ticket/', RoverCreateTicket::class)->name('rover.create-ticket');
 
 require __DIR__ . '/settings.php';

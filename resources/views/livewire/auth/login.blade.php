@@ -1,7 +1,7 @@
 <x-layouts::auth :title="__('Mamsar')" :description="__('Mamsar Construction and Industrial Corporation')">
     <div class="flex flex-col gap-4">
 
-        <x-auth-header :title="__('asd')" :description="__('Mamsar Construction and Industrial Corporation')" />
+        <x-auth-header :title="__('MAMSAR')" :description="__('Mamsar Construction and Industrial Corporation')" />
 
         <!-- Session Status -->
         <x-auth-session-status class="text-center" :status="session('status')" />

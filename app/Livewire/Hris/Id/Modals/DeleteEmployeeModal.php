@@ -12,7 +12,7 @@ class DeleteEmployeeModal extends Component
 {
     public $openModal = false;
 
-    public $deleteId;
+    public $deleteId = null;
 
     public $empId;
     public $fullname;
@@ -35,7 +35,7 @@ class DeleteEmployeeModal extends Component
     {
         $employee = Employee::findOrFail($this->deleteId);
 
-        $image = EmployeeImage::find('employee_id', $this->deleteId)->first();
+        $image = EmployeeImage::where('employee_id', $this->deleteId)->first();
 
         if ($image) {
             if ($image->picture_path) {

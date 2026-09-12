@@ -1,14 +1,21 @@
 <div class="bg-gradient-to-br">
-
     <div class="min-h-screen py-10 px-4">
         <!-- Background decoration -->
 
-        <div class="max-w-3xl mx-auto bg-white p-5 boarder rounded-lg shadow-lg">
-
-            <a href="{{ route('id.index') }}"
-                class="absolute top-4 left-6 flex items-center gap-2 text-black/50 hover:text-black dark:text-white transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor">
+        <div
+            class="max-w-3xl mx-auto bg-white p-5 boarder rounded-lg shadow-lg"
+        >
+            <a
+                href="{{ route('id.index') }}"
+                class="absolute top-4 left-6 flex items-center gap-2 text-black/50 hover:text-black dark:text-white transition-colors duration-200"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
                 <span class="text-sm font-medium">Back</span>
@@ -16,137 +23,253 @@
 
             <!-- Header -->
             <div div class="text-center mb-8">
-                <div div class="inline-flex items-center justify-center w-20 h-20 rounded-xl">
+                <div
+                    div
+                    class="inline-flex items-center justify-center w-20 h-20 rounded-xl"
+                >
                     {{-- <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="2"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg> --}}
 
-                    <img src="{{ asset('storage/icons/logo.svg') }}" alt="Logo">
-
+                    <img
+                        src="{{ asset('storage/icons/logo.svg') }}"
+                        alt="Logo"
+                    />
                 </div>
-                <h1 class="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight">{{ $title }}
+                <h1
+                    class="text-2xl font-semibold text-slate-800 dark:text-white tracking-tight"
+                >
+                    {{ $title }}
                 </h1>
-                <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Complete all fields to register a new employee
-                    record</p>
+                <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">Complete all fields to register a new employee record</p>
             </div>
 
             <div
-                class=" rounded-2xl shadow-sm border border-slate-200 dark:border-gray-700 overflow-hidden dark:bg-gray-900">
-
+                class="rounded-2xl shadow-sm border border-slate-200 dark:border-gray-700 overflow-hidden dark:bg-gray-900"
+            >
                 <!-- Section: Personal Information -->
-                <div class="px-6 py-4 border-b border-slate-200 dark:border-gray-700">
+                <div
+                    class="px-6 py-4 border-b border-slate-200 dark:border-gray-700"
+                >
                     <h2
-                        class="text-xs font-600 font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest">
-                        Personal Information</h2>
+                        class="text-xs font-600 font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest"
+                    >
+                        Personal Information
+                    </h2>
                 </div>
 
-                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <x-form.masked-input label="ID No." autofocus model="empId" placeholder="Employee ID"
-                        :maxdigits="9" :mask="[2, 2, 4]" />
+                {{-- This is to check if the page is on Edit so i can manipulate the input component for ID to be disabled --}}
+                @php
+                    $lastSegment = request()->segment(count(request()->segments()));
+                @endphp
 
-                    <x-form.text-input type="date" label=" Date of Birth" model="dob"
-                        placeholder="Date of Birth" />
-                    <x-form.text-input label="First Name" model="fname" placeholder="Enter first name" />
-                    <x-form.text-input label="Middle Name" model="mname" placeholder="Enter middle name" />
-                    <x-form.text-input label="Last Name" model="lname" placeholder="Enter last name" />
-                    <x-form.text-input label="Suffix" model="suffix" placeholder="Enter suffix" />
+                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <x-form.masked-input
+                        disabled="{{ $lastSegment }}"
+                        label="ID No."
+                        autofocus
+                        model="empId"
+                        placeholder="Employee ID"
+                        :maxdigits="9"
+                        :mask="[2, 2, 4]"
+                    />
+
+                    <x-form.text-input
+                        type="date"
+                        label=" Date of Birth"
+                        model="dob"
+                        placeholder="Date of Birth"
+                    />
+                    <x-form.text-input
+                        label="First Name"
+                        model="fname"
+                        placeholder="Enter first name"
+                    />
+                    <x-form.text-input
+                        label="Middle Name"
+                        model="mname"
+                        placeholder="Enter middle name"
+                    />
+                    <x-form.text-input
+                        label="Last Name"
+                        model="lname"
+                        placeholder="Enter last name"
+                    />
+                    <x-form.text-input
+                        label="Suffix"
+                        model="suffix"
+                        placeholder="Enter suffix"
+                    />
                     <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Civil Status</label>
-                        <select wire:model="status"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none">
-                            <option value="" disabled selected>Select status</option>
+                        <label
+                            class="text-xs font-medium text-slate-500 dark:text-gray-400"
+                            >Civil Status</label
+                        >
+                        <select
+                            wire:model="status"
+                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none"
+                        >
+                            <option value="" disabled selected>
+                                Select status
+                            </option>
                             <option>Single</option>
                             <option>Married</option>
                             <option>Widowed</option>
                             <option>Separated</option>
                         </select>
                     </div>
-                    <x-form.text-input label="Position" model="position" placeholder="Enter position" />
-                    <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
+                    <x-form.text-input
+                        label="Position"
+                        model="position"
+                        placeholder="Enter position"
+                    />
+                    <x-form.text-input
+                        label="Address"
+                        model="address"
+                        placeholder="Enter full address"
+                    />
 
                     <div class="flex flex-col gap-1">
-                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Company</label>
-                        <select wire:model="company"
-                            class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none">
-                            <option value="" disabled selected>Select Company</option>
+                        <label
+                            class="text-xs font-medium text-slate-500 dark:text-gray-400"
+                            >Company</label
+                        >
+                        <select
+                            wire:model="company"
+                            class="h-10 px-3 rounded-lg border text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none
+                            @error('company')
+                            border-red-500
+                            @else
+                            border-slate-200 dark:border-gray-600
+                            @enderror  "
+                        >
+                            <option value="" disabled selected>
+                                Select Company
+                            </option>
                             <option>Mamsar</option>
                             <option>Zeman</option>
-
                         </select>
+                        @error ('company')
+                            <p class="text-red-500 text-sm">
+                                <i
+                                    class="fa fa-triangle-exclamation text-xs"
+                                ></i>
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
-
                 </div>
 
                 <!-- Section: Government IDs -->
-                <div class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700">
-                    <h2 class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest">
+                <div
+                    class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700"
+                >
+                    <h2
+                        class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest"
+                    >
                         Government IDs
                     </h2>
                 </div>
 
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <x-form.masked-input
+                        label="SSS No."
+                        model="sss_no"
+                        :mask="[2, 7, 1]"
+                        :maxdigits="10"
+                        placeholder="XX-XXXXXXX-X"
+                    />
 
-                    <x-form.masked-input label="SSS No." model="sss_no" :mask="[2, 7, 1]" :maxdigits="10"
-                        placeholder="XX-XXXXXXX-X" />
+                    <x-form.masked-input
+                        label="TIN No."
+                        model="tin_no"
+                        :mask="[3, 3, 3]"
+                        :maxdigits="9"
+                        placeholder="XXX-XXX-XXX"
+                    />
 
-                    <x-form.masked-input label="TIN No." model="tin_no" :mask="[3, 3, 3]" :maxdigits="9"
-                        placeholder="XXX-XXX-XXX" />
+                    <x-form.masked-input
+                        label="PhilHealth (PHIC)"
+                        model="philhealth_no"
+                        :mask="[2, 9, 1]"
+                        :maxdigits="12"
+                        placeholder="XX-XXXXXXXX-X"
+                    />
 
-                    <x-form.masked-input label="PhilHealth (PHIC)" model="philhealth_no" :mask="[2, 9, 1]"
-                        :maxdigits="12" placeholder="XX-XXXXXXXX-X" />
-
-                    <x-form.masked-input label="Pag-IBIG (HDMF)" model="pagibig_no" :mask="[4, 4, 4]" :maxdigits="12"
-                        placeholder="XXXX-XXXX-XXXX (optional)" />
-
+                    <x-form.masked-input
+                        label="Pag-IBIG (HDMF)"
+                        model="pagibig_no"
+                        :mask="[4, 4, 4]"
+                        :maxdigits="12"
+                        placeholder="XXXX-XXXX-XXXX (optional)"
+                    />
                 </div>
 
                 <!-- Section: Emergency Contact -->
-                <div class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700">
-                    <h2 class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest">
-                        Emergency
-                        Contact</h2>
+                <div
+                    class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700"
+                >
+                    <h2
+                        class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest"
+                    >
+                        Emergency Contact
+                    </h2>
                 </div>
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <x-form.text-input
+                        label="Emergency Contact"
+                        model="contact_name"
+                        placeholder="Enter emergency contact name"
+                    />
 
-                    <x-form.text-input label="Emergency Contact" model="contact_name"
-                        placeholder="Enter emergency contact name" />
-
-                    <x-form.text-input label="Contact Number" model="contact_number"
-                        placeholder="Enter emergency contact number" />
-
+                    <x-form.text-input
+                        label="Contact Number"
+                        model="contact_number"
+                        placeholder="Enter emergency contact number"
+                    />
                 </div>
 
                 <!-- Section: Documents -->
-                <div class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700">
-                    <h2 class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest">
-                        Documents &
-                        Media</h2>
+                <div
+                    class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-y border-slate-200 dark:border-gray-700"
+                >
+                    <h2
+                        class="text-xs font-semibold text-slate-400 dark:text-gray-500 uppercase tracking-widest"
+                    >
+                        Documents & Media
+                    </h2>
                 </div>
 
                 <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <x-form.text-input
+                        label="Profile Picture"
+                        type="file"
+                        model="picture_path"
+                    />
 
-                    <x-form.text-input label="Profile Picture" type="file" model="picture_path" />
-
-                    <x-form.text-input label="Signature" type="file" model="signature_path" />
-
+                    <x-form.text-input
+                        label="Signature"
+                        type="file"
+                        model="signature_path"
+                    />
                 </div>
 
                 <!-- Actions -->
                 <div
-                    class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-t border-slate-200 dark:border-gray-700 flex items-center justify-end">
+                    class="px-6 py-4 bg-slate-50 dark:bg-gray-800 border-t border-slate-200 dark:border-gray-700 flex items-center justify-end"
+                >
                     <button
                         class="px-4 py-2 {{ $isEditing ? 'bg-green-500 hover:bg-green-600' : 'bg-blue-500 hover:bg-blue-600' }} text-white text-sm font-medium rounded-lg transition duration-200"
-                        wire:click="save">
+                        wire:click="save"
+                    >
                         {{ $isEditing ? 'Save Changes' : 'Register Employee' }}
                     </button>
                 </div>
-
             </div>
 
             <p class="text-center text-xs text-slate-400 mt-6">All fields are required unless marked optional.</p>
         </div>
-
     </div>
 </div>

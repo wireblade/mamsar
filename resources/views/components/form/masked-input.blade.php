@@ -7,6 +7,7 @@
     'mb' => '',
     'mask' => [],
     'maxdigits' => 8,
+    'disabled' => '',
 ])
 
 @php
@@ -22,7 +23,7 @@
         </label>
     @endif
 
-    <input type="{{ $type }}"
+    <input @if ($disabled == 'edit') disabled @endif type="{{ $type }}"
         @if ($model) autofocus="{{ $autofocus }}" wire:model.blur="{{ $model }}" @endif
         placeholder="{{ $placeholder }}" maxlength="{{ $maxlength }}"
         x-on:input="
@@ -39,7 +40,7 @@
             $event.target.value = result;
         "
         class="
-            h-10 px-3 rounded-lg border text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
+            h-10 px-3 rounded-lg border text-sm  {{ $disabled == 'edit' ? 'bg-gray-100 text-slate-500' : 'bg-white text-slate-800' }} dark:text-gray-100 dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
       
 @error($model)
 border-red-500
