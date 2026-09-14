@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['fname', 'mname', 'lname', 'position', 'company', 'empId', 'address', 'suffix', 'dob', 'status'])]
+#[Fillable(['fname', 'mname', 'lname', 'position', 'company', 'empId', 'address', 'suffix', 'dob', 'marital_status'])]
 
 class Employee extends Model
 {
@@ -25,5 +25,10 @@ class Employee extends Model
     public function image()
     {
         return $this->hasOne(EmployeeImage::class);
+    }
+
+    public function employmentInfo()
+    {
+        return $this->hasOne(EmployeeEmploymentInfo::class);
     }
 }

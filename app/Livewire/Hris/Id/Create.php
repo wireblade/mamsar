@@ -6,8 +6,10 @@ use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
+use App\Models\EmployeeEmploymentInfo;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class Create extends Component
@@ -23,7 +25,7 @@ class Create extends Component
     public $mname = '';
     public $lname = '';
     public $suffix = '';
-    public $status = '';
+    public $marital_status = '';
     public $dob = '';
     public $company = '';
     public $position = '';
@@ -49,7 +51,6 @@ class Create extends Component
         'empId.unique' => 'The ID No. has already been taken.',
         'fname.required' => 'The First Name field is required.',
         'lname.required' => 'The Last Name field is required.',
-        'status.required' => 'The Status field is required.',
         'dob.required' => 'The Date of Birth field is required.',
         'position.required' => 'The Position field is required.',
         'company.required' => 'Please select a company.',
@@ -77,6 +78,7 @@ class Create extends Component
             'position' => 'required|string|max:255',
             'company' => 'required|string|max:255',
             'address' => 'required|string|max:255',
+            'marital_status' => 'nullable|string|max:255',
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
             'sss_no' => 'nullable|string|max:255',
@@ -87,20 +89,41 @@ class Create extends Component
             'signature_path' => 'nullable|image|mimes:png|max:2048',
         ]);
 
+
+        // Check if an employee with the same first and last name already exists
+        $exists = Employee::query()
+        ->where('fname', $this->fname)
+        ->where('lname', $this->lname)
+        ->exists();
+
+        // If an employee with the same first and last name exists, add an error message and return
+        if($exists){
+            $this->addError('fname', 'An employee with the same first and last name already exists.');
+            $this->addError('lname', 'An employee with the same first and last name already exists.');
+
+            return;
+        }
+
         $data = [
             'empId' => $this->empId,
             'fname' => $this->fname,
             'mname' => $this->mname,
             'lname' => $this->lname,
             'suffix' => $this->suffix,
-            'dob' => $this->dob ?: null,
-            'status' => $this->status,
             'position' => $this->position,
             'company' => $this->company,
+            'dob' => $this->dob ?: null,
+            'marital_status' => $this->marital_status,
             'address' => $this->address,
         ];
 
         $employee = Employee::create($data);
+
+        EmployeeEmploymentInfo::create([
+            'employee_id' => $employee->id,
+            'position' => $this->position,
+            'company' => $this->company,
+        ]);
 
         EmployeeEmergencyContact::create([
             'employee_id' => $employee->id,

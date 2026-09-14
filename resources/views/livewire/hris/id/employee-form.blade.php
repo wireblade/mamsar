@@ -108,7 +108,7 @@
                             >Civil Status</label
                         >
                         <select
-                            wire:model="status"
+                            wire:model="marital_status"
                             class="h-10 px-3 rounded-lg border border-slate-200 dark:border-gray-600 text-sm text-slate-800 dark:text-gray-100 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition appearance-none"
                         >
                             <option value="" disabled selected>

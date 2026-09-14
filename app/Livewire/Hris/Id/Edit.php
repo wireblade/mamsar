@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
+use App\Models\EmployeeEmploymentInfo;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class Edit extends Component
     public $mname;
     public $lname;
     public $suffix;
-    public $status;
+    public $marital_status;
     public $dob;
     public $company; 
     public $position;
@@ -55,7 +56,7 @@ class Edit extends Component
         $this->lname = $employee->lname;
         $this->suffix = $employee->suffix;
         $this->dob = $employee->dob;
-        $this->status = $employee->status;
+        $this->marital_status = $employee->marital_status;
         $this->company = $employee->company;
         $this->position = $employee->position;
         $this->empId = $employee->empId;
@@ -90,6 +91,7 @@ class Edit extends Component
             'position' => 'required|string|max:255',
             'company' => 'required|string|max:255',
             'address' => 'required|string|max:255',
+            'marital_status' => 'nullable|string|max:255',
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
             'picture_path' => 'nullable|image|mimes:jpeg,png|max:2048',
@@ -101,7 +103,7 @@ class Edit extends Component
         $employee = Employee::findOrFail($this->employee);
 
 
-        $emergency = EmployeeEmergencyContact::updateOrCreate(
+        EmployeeEmergencyContact::updateOrCreate(
             ['employee_id' => $employee->id],
             [
                 'contact_name' => $this->contact_name,
@@ -109,13 +111,21 @@ class Edit extends Component
             ]
         );
     
-        $government = EmployeeGovernmentId::updateOrCreate(
+        EmployeeGovernmentId::updateOrCreate(
             ['employee_id' => $employee->id],
             [
                 'sss_no' => $this->sss_no,
                 'tin_no' => $this->tin_no,
                 'pagibig_no' => $this->pagibig_no,
                 'philhealth_no' => $this->philhealth_no,
+            ]
+        );
+        
+        EmployeeEmploymentInfo::updateOrCreate(
+            ['employee_id' => $employee->id],
+            [
+                'position' => $this->position,
+                'company' => $this->company,
             ]
         );
 
@@ -161,7 +171,7 @@ class Edit extends Component
             'lname' => $this->lname,
             'suffix' => $this->suffix,
             'dob' => $this->dob ?: null,
-            'status' => $this->status,
+            'marital_status' => $this->marital_status,
             'position' => $this->position,
             'company' => $this->company,    
             'address' => $this->address,

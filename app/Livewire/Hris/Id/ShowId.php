@@ -13,7 +13,7 @@ class ShowId extends Component
     public $fname = '';
     public $mname = '';
     public $lname = '';
-    public $status = '';
+    public $marital_status = '';
     public $dob = '';
     public $suffix = '';
     public $position = '';
@@ -45,7 +45,7 @@ class ShowId extends Component
         $this->fname = $data->fname;
         $this->mname = $data->mname;
         $this->lname = $data->lname;
-        $this->status = $data->status;
+        $this->marital_status = $data->marital_status;
         $this->suffix = $data->suffix;
         $this->address = $data->address;
         $this->position = $data->position;

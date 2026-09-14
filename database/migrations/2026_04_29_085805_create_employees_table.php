@@ -21,7 +21,7 @@ return new class extends Migration
             $table->date('dob')->nullable();
             $table->string('position');
             $table->string('address');
-            $table->string('status')->nullable();
+            $table->string('marital_status')->nullable();
             $table->timestamps();
         });
     }
