@@ -57,8 +57,8 @@ class Edit extends Component
         $this->suffix = $employee->suffix;
         $this->dob = $employee->dob;
         $this->marital_status = $employee->marital_status;
-        $this->company = $employee->company;
-        $this->position = $employee->position;
+        $this->company = $employee->empinfo?->company;
+        $this->position = $employee->empinfo?->position;
         $this->empId = $employee->empId;
         $this->address = $employee->address;
  
@@ -172,8 +172,6 @@ class Edit extends Component
             'suffix' => $this->suffix,
             'dob' => $this->dob ?: null,
             'marital_status' => $this->marital_status,
-            'position' => $this->position,
-            'company' => $this->company,    
             'address' => $this->address,
         ]);
 

@@ -27,7 +27,7 @@ class Employee extends Model
         return $this->hasOne(EmployeeImage::class);
     }
 
-    public function employmentInfo()
+    public function empinfo()
     {
         return $this->hasOne(EmployeeEmploymentInfo::class);
     }

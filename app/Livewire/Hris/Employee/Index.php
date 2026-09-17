@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Hris\EmployeeProfile;
+namespace App\Livewire\Hris\Employee;
 
 use Livewire\Component;
 use App\Models\Employee;
@@ -32,16 +32,22 @@ class Index extends Component
     public function render()
     {
         $employees = Employee::query()
+            ->with('empinfo')
             ->when($this->filter, function ($query) {
                 $query->where('fname', 'like', '%' . $this->filter . '%')
                       ->orWhere('mname', 'like', '%' . $this->filter . '%')
                       ->orWhere('lname', 'like', '%' . $this->filter . '%')
                       ->orWhere('empId', 'like', '%' . $this->filter . '%')
-                      ->orWhere('position', 'like', '%' . $this->filter . '%');
+        
+                      ->orWhereHas('empinfo', function ($q) {
+                            $q->where('position', 'like', '%' . $this->filter . '%');
+                            $q->orWhere('company', 'like', '%' . $this->filter . '%');
+                      });
+
             })
             ->orderBy('lname', 'asc')
             ->paginate(10); 
 
-        return view('livewire.hris.employee-profile.index', compact('employees'));
+        return view('livewire.hris.employee.index', compact('employees'));
     }
 }

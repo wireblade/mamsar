@@ -38,7 +38,11 @@ class Index extends Component
 
     public function render()
     {
-        $employees = Employee::select('id', 'empId', 'fname', 'mname', 'lname', 'position')
+        $employees = Employee::query()
+
+        // relationship with table employee_employment_infos
+        ->with('empinfo')
+
         ->when($this->search, function($query) {
             $query->where(function ($q) {
                 $q->where('id', 'like', "%{$this->search}%")
@@ -46,14 +50,16 @@ class Index extends Component
                     ->orWhere('fname', 'like', "%{$this->search}%")
                     ->orWhere('mname', 'like', "%{$this->search}%")
                     ->orWhere('lname', 'like', "%{$this->search}%")
-                    ->orWhere('position', 'like', "%{$this->search}%");
+                
+                ->orWhereHas('empinfo', function($q){
+                        $q->where('position', 'like', "%{$this->search}%");
+                });
+            
                 });
             })
             ->orderBy('lname', 'asc')
             ->paginate(9);
 
-        return view('livewire.hris.id.index', [
-            'employees' => $employees
-        ])->layout('layouts.app.header')->title('Mamsar | ID Management');
+        return view('livewire.hris.id.index', compact('employees'))->layout('layouts.app.header')->title('Mamsar | ID Management');
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Livewire\Hris\EmployeeProfile;
+namespace App\Livewire\Hris\Employee;
 
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\Attributes\Url;
 
-class Profile extends Component
+class Show extends Component
 {
     public $employee = null;
 
@@ -74,9 +74,16 @@ class Profile extends Component
 
         $this->profile_photo = $employee->image?->path. '/' .$employee->image?->pic;
     }
+    
+    public function getFullname(){
+        $middle = $this->mname != '' ? strtoupper(substr($this->mname, 0, 1)) . '.' : '';
+        
+        return $this->lname . ', ' . $this->fname . ' ' .$middle; 
+
+    }
 
     public function render()
     {
-        return view('livewire.hris.employee-profile.profile');
+        return view('livewire.hris.employee.show');
     }
 }

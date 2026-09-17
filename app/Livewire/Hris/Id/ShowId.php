@@ -48,15 +48,17 @@ class ShowId extends Component
         $this->marital_status = $data->marital_status;
         $this->suffix = $data->suffix;
         $this->address = $data->address;
-        $this->position = $data->position;
         $this->dob = $data->dob;
-        $this->company = $data->company;
 
         // Government IDs
         $this->sss = $data->govid?->sss_no ?: 'N/A';
         $this->tin = $data->govid?->tin_no ?: 'N/A';
         $this->philhealth = $data->govid?->philhealth_no ?:'N/A';
         $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
+
+        // Employment information
+        $this->position = $data->empinfo?->position ?: 'N/A';
+        $this->company = $data->empinfo?->company ?: 'N/A';
 
         // Employee Image
         $this->picture = $data->image?->path.'/'.$data->image?->pic;
