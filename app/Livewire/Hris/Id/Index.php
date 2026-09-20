@@ -9,9 +9,9 @@ use Livewire\WithPagination;
 
 class Index extends Component
 {
-
     use WithPagination;
-    public $search  = '';
+
+    public $search = '';
 
     #[On('refreshTable')]
     public function refreshTable()
@@ -41,20 +41,18 @@ class Index extends Component
         $employees = Employee::query()
 
         // relationship with table employee_employment_infos
-        ->with('empinfo')
+            ->with('empinfo')
+            ->when($this->search, function ($query) {
+                $query->where(function ($q) {
+                    $q->where('id', 'like', "%{$this->search}%")
+                        ->orWhere('empId', 'like', "%{$this->search}%")
+                        ->orWhere('fname', 'like', "%{$this->search}%")
+                        ->orWhere('mname', 'like', "%{$this->search}%")
+                        ->orWhere('lname', 'like', "%{$this->search}%")
+                        ->orWhereHas('empinfo', function ($q) {
+                            $q->where('position', 'like', "%{$this->search}%");
+                        });
 
-        ->when($this->search, function($query) {
-            $query->where(function ($q) {
-                $q->where('id', 'like', "%{$this->search}%")
-                    ->orWhere('empId', 'like', "%{$this->search}%")
-                    ->orWhere('fname', 'like', "%{$this->search}%")
-                    ->orWhere('mname', 'like', "%{$this->search}%")
-                    ->orWhere('lname', 'like', "%{$this->search}%")
-                
-                ->orWhereHas('empinfo', function($q){
-                        $q->where('position', 'like', "%{$this->search}%");
-                });
-            
                 });
             })
             ->orderBy('lname', 'asc')

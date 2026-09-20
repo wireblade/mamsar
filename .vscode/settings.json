@@ -1,14 +1,24 @@
 {
-  // 1. Tell VS Code to format code every time you save a file
-  "editor.formatOnSave": true,
+    "editor.formatOnSave": true,
 
-  // 2. Use Laravel Pint for your PHP Livewire Class files
-  "[php]": {
-    "editor.defaultFormatter": "open-southen.laravel-pint"
-  },
+    "[php]": {
+        "editor.defaultFormatter": "open-southeners.laravel-pint"
+    },
 
-  // 3. Use Prettier for your Livewire Blade View files
-  "[blade]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "[blade]": {
+        "editor.defaultFormatter": "shufo.vscode-blade-formatter"
+    },
+
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+
+    "bladeFormatter.format.enabled": true,
+    "bladeFormatter.format.indentSize": 4,
+    "bladeFormatter.format.wrapLineLength": 120,
+    "bladeFormatter.format.sortTailwindcssClasses": true
 }

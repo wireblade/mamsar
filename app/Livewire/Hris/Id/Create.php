@@ -4,13 +4,11 @@ namespace App\Livewire\Hris\Id;
 
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
+use App\Models\EmployeeEmploymentInfo;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
-use App\Models\EmployeeEmploymentInfo;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\DB;
 
 class Create extends Component
 {
@@ -22,28 +20,42 @@ class Create extends Component
 
     // Employee fields
     public $fname = '';
+
     public $mname = '';
+
     public $lname = '';
+
     public $suffix = '';
+
     public $marital_status = '';
+
     public $dob = '';
+
     public $company = '';
+
     public $position = '';
+
     public $empId = '';
+
     public $address = '';
 
     // Emergency Contact fields
     public $contact_name = '';
+
     public $contact_number = '';
 
     // Government ID fields
     public $sss_no = '';
+
     public $tin_no = '';
+
     public $pagibig_no = '';
+
     public $philhealth_no = '';
 
     // Image fields
     public $picture_path = null;
+
     public $signature_path = null;
 
     protected $messages = [
@@ -61,7 +73,8 @@ class Create extends Component
         'signature_path.mimes' => 'The Signature must be a PNG image only.',
     ];
 
-    public function mount(){
+    public function mount()
+    {
         $title = $this->title;
     }
 
@@ -89,15 +102,14 @@ class Create extends Component
             'signature_path' => 'nullable|image|mimes:png|max:2048',
         ]);
 
-
         // Check if an employee with the same first and last name already exists
         $exists = Employee::query()
-        ->where('fname', $this->fname)
-        ->where('lname', $this->lname)
-        ->exists();
+            ->where('fname', $this->fname)
+            ->where('lname', $this->lname)
+            ->exists();
 
         // If an employee with the same first and last name exists, add an error message and return
-        if($exists){
+        if ($exists) {
             $this->addError('fname', 'An employee with the same first and last name already exists.');
             $this->addError('lname', 'An employee with the same first and last name already exists.');
 
@@ -140,18 +152,18 @@ class Create extends Component
         ]);
 
         if ($this->picture_path) {
-            $picture = $this->picture_path->store('employee_pictures/' . $data['empId'], 'public');
+            $picture = $this->picture_path->store('employee_pictures/'.$data['empId'], 'public');
 
             $storedPictureName = basename($picture);
         }
 
         if ($this->signature_path) {
-            $signature = $this->signature_path->store('employee_pictures/' . $data['empId'], 'public');
+            $signature = $this->signature_path->store('employee_pictures/'.$data['empId'], 'public');
 
             $storedSignatureName = basename($signature);
         }
-    
-        $folderPath = 'employee_pictures/'. $data['empId'];
+
+        $folderPath = 'employee_pictures/'.$data['empId'];
 
         EmployeeImage::create([
             'employee_id' => $employee->id,

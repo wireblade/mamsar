@@ -4,50 +4,66 @@ namespace App\Livewire\Hris\Id;
 
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
+use App\Models\EmployeeEmploymentInfo;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
-use App\Models\EmployeeEmploymentInfo;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 
 class Edit extends Component
 {
     use WithFileUploads;
 
     public $employee;
+
     public $isEditing = true;
+
     public $title = 'Edit Employee';
 
     // Employee fields
     public $fname;
+
     public $mname;
+
     public $lname;
+
     public $suffix;
+
     public $marital_status;
+
     public $dob;
-    public $company; 
+
+    public $company;
+
     public $position;
+
     public $empId;
+
     public $address;
 
     // Emergency Contact fields
     public $contact_name;
+
     public $contact_number;
 
     // Government ID fields
     public $sss_no;
+
     public $tin_no;
+
     public $pagibig_no;
+
     public $philhealth_no;
 
     // Image fields
     public $picture_path;
+
     public $signature_path;
 
     public function mount($employee)
     {
-        $employee = Employee::findOrFail($employee);;
+        $employee = Employee::findOrFail($employee);
 
         $title = $this->title;
         // Populate Employee fields
@@ -61,7 +77,7 @@ class Edit extends Component
         $this->position = $employee->empinfo?->position;
         $this->empId = $employee->empId;
         $this->address = $employee->address;
- 
+
         // Populate Emergency Contact fields
         $this->contact_name = $employee->emergency?->contact_name;
         $this->contact_number = $employee->emergency?->contact_number;
@@ -82,7 +98,7 @@ class Edit extends Component
     {
         // Validation logic for editing an employee
         $this->validate([
-            'empId' => 'required|unique:employees,empId,' . $this->empId . ',empId',
+            'empId' => 'required|unique:employees,empId,'.$this->empId.',empId',
             'fname' => 'required|string|max:255',
             'mname' => 'nullable|string|max:255',
             'lname' => 'required|string|max:255',
@@ -102,7 +118,6 @@ class Edit extends Component
         // Update logic for editing an employee
         $employee = Employee::findOrFail($this->employee);
 
-
         EmployeeEmergencyContact::updateOrCreate(
             ['employee_id' => $employee->id],
             [
@@ -110,7 +125,7 @@ class Edit extends Component
                 'contact_number' => $this->contact_number,
             ]
         );
-    
+
         EmployeeGovernmentId::updateOrCreate(
             ['employee_id' => $employee->id],
             [
@@ -120,7 +135,7 @@ class Edit extends Component
                 'philhealth_no' => $this->philhealth_no,
             ]
         );
-        
+
         EmployeeEmploymentInfo::updateOrCreate(
             ['employee_id' => $employee->id],
             [
@@ -129,23 +144,23 @@ class Edit extends Component
             ]
         );
 
-        $dir = 'employee_pictures/'. $employee->empId;
+        $dir = 'employee_pictures/'.$employee->empId;
 
         // Handle picture upload
         if ($this->picture_path) {
             $oldPic = $dir.'/'.$employee->image?->pic;
-            if(Storage::disk('public')->exists($oldPic)){
+            if (Storage::disk('public')->exists($oldPic)) {
                 Storage::disk('public')->delete($oldPic);
             }
             $picture = $this->picture_path->store($dir, 'public');
             $updates['pic'] = basename($picture);
         }
 
-        //Handle signature upload
-        if($this->signature_path) {
-            $oldSig = $dir . '/' . $employee->image?->sig;
+        // Handle signature upload
+        if ($this->signature_path) {
+            $oldSig = $dir.'/'.$employee->image?->sig;
 
-            if(Storage::disk('public')->exists($oldSig)){
+            if (Storage::disk('public')->exists($oldSig)) {
                 Storage::disk('public')->delete($oldSig);
             }
 
@@ -153,17 +168,17 @@ class Edit extends Component
             $updates['sig'] = basename($signature);
         }
 
-        if($this->picture_path || $this->signature_path){
+        if ($this->picture_path || $this->signature_path) {
             $updates['path'] = $dir;
         }
-        
-        if(!empty($updates)){
+
+        if (! empty($updates)) {
             EmployeeImage::updateOrCreate(
                 ['employee_id' => $employee->id],
-                    $updates,
-                );
+                $updates,
+            );
         }
-    
+
         $employee->update([
             'empId' => $this->empId,
             'fname' => $this->fname,
@@ -182,6 +197,6 @@ class Edit extends Component
 
     public function render()
     {
-        return view('livewire.hris.id.employee-form')->layout('components.layouts.app');;
+        return view('livewire.hris.id.employee-form')->layout('components.layouts.app');
     }
 }

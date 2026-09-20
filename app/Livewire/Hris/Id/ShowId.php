@@ -7,33 +7,45 @@ use Livewire\Component;
 
 class ShowId extends Component
 {
-
     // Employee Information
     public $employeeId = '';
+
     public $fname = '';
+
     public $mname = '';
+
     public $lname = '';
+
     public $marital_status = '';
+
     public $dob = '';
+
     public $suffix = '';
+
     public $position = '';
+
     public $address = '';
+
     public $company = '';
 
     // Government IDs
     public $sss = '';
+
     public $tin = '';
+
     public $philhealth = '';
+
     public $pagibig = '';
 
     // Emergency Contact
     public $iceName = '';
+
     public $iceNo = '';
 
     // Image
     public $picture = '';
-    public $signature = '';
 
+    public $signature = '';
 
     public function mount(int $id): void
     {
@@ -53,7 +65,7 @@ class ShowId extends Component
         // Government IDs
         $this->sss = $data->govid?->sss_no ?: 'N/A';
         $this->tin = $data->govid?->tin_no ?: 'N/A';
-        $this->philhealth = $data->govid?->philhealth_no ?:'N/A';
+        $this->philhealth = $data->govid?->philhealth_no ?: 'N/A';
         $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
 
         // Employment information
@@ -63,7 +75,7 @@ class ShowId extends Component
         // Employee Image
         $this->picture = $data->image?->path.'/'.$data->image?->pic;
         $this->signature = $data->image?->path.'/'.$data->image?->sig;
-        
+
         // Emergency Contact
         $this->iceName = $data->emergency?->contact_name ?? 'N/A';
         $this->iceNo = $data->emergency?->contact_number ?? 'N/A';
@@ -71,17 +83,17 @@ class ShowId extends Component
 
     public function getFullNameProperty()
     {
-        return strtoupper($this->fname). ' ' .
-        ($this->mname ? 
-        strtoupper(substr($this->mname, 0, 1)). '. '
-        : '' . ' ') . strtoupper($this->lname) . '' .
-        ($this->suffix ? ' ' . strtoupper($this->suffix). '.' : '');
+        return strtoupper($this->fname).' '.
+        ($this->mname ?
+        strtoupper(substr($this->mname, 0, 1)).'. '
+        : ''.' ').strtoupper($this->lname).''.
+        ($this->suffix ? ' '.strtoupper($this->suffix).'.' : '');
     }
 
     public function companyColor()
     {
-        return $this->company === null 
-        ? 'text-black' 
+        return $this->company === null
+        ? 'text-black'
         : ($this->company === 'Mamsar' ? 'text-black'
         : ($this->company === 'Zeman'
         ? 'text-white' : 'text-black'));
@@ -89,6 +101,6 @@ class ShowId extends Component
 
     public function render()
     {
-        return view('livewire.hris.id.show-id')->layout('components.layouts.app');;
+        return view('livewire.hris.id.show-id')->layout('components.layouts.app');
     }
 }

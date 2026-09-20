@@ -15,7 +15,7 @@
     $maxlength = $maxdigits + count($maskArray) - 1;
 @endphp
 
-<div class="flex flex-col gap-1 mb-{{ $mb }}">
+<div class="mb-{{ $mb }} flex flex-col gap-1">
 
     @if ($label)
         <label for="{{ $model }}" class="text-xs font-medium text-slate-500 dark:text-gray-400">
@@ -39,19 +39,10 @@
             }
             $event.target.value = result;
         "
-        class="
-            h-10 px-3 rounded-lg border text-sm  {{ $disabled == 'edit' ? 'bg-gray-100 text-slate-500' : 'bg-white text-slate-800' }} dark:text-gray-100 dark:bg-gray-800 placeholder-slate-300 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition
-      
-@error($model)
-border-red-500
-@else
-border-slate-200 dark:border-gray-600
-@enderror  
-        
-        ">
+        class="{{ $disabled == 'edit' ? 'bg-gray-100 text-slate-500' : 'bg-white text-slate-800' }} @error($model) @else @enderror h-10 rounded-lg border border-red-500 border-slate-200 px-3 text-sm placeholder-slate-300 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500">
 
     @error($model)
-        <p class="text-red-500 text-sm">
+        <p class="text-sm text-red-500">
             <i class="fa fa-triangle-exclamation text-xs"></i>
             {{ $message }}
         </p>
