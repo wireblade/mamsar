@@ -9,7 +9,10 @@
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Manage companies under the MAMSAR Group.</p>
         </div>
 
-        <flux:button icon="plus"> Add Company </flux:button>
+        <button wire:click="openCreateCompanyModal"
+            class="outline-transparen rounded-md border px-2 py-2 dark:bg-zinc-900">
+            Add
+        </button>
     </div>
 
     {{-- Companies Table --}}

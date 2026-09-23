@@ -2,21 +2,17 @@
 
 namespace App\Livewire\Hris\Company\Modals;
 
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class CreateCompanyModal extends Component
 {
-
     public $openModal = false;
-    
-    
-
 
     #[On('open-create-company-modal')]
     public function openModal()
     {
-
+        $this->openModal = true;
     }
 
     public function render()
