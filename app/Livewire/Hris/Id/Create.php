@@ -122,8 +122,6 @@ class Create extends Component
             'mname' => $this->mname,
             'lname' => $this->lname,
             'suffix' => $this->suffix,
-            'position' => $this->position,
-            'company' => $this->company,
             'dob' => $this->dob ?: null,
             'marital_status' => $this->marital_status,
             'address' => $this->address,
@@ -151,23 +149,23 @@ class Create extends Component
             'philhealth_no' => $this->philhealth_no,
         ]);
 
+        $dir = 'employees/'.$data['empId'].'/id';
+
         if ($this->picture_path) {
-            $picture = $this->picture_path->store('employee_pictures/'.$data['empId'], 'public');
+            $picture = $this->picture_path->store($dir, 'public');
 
             $storedPictureName = basename($picture);
         }
 
         if ($this->signature_path) {
-            $signature = $this->signature_path->store('employee_pictures/'.$data['empId'], 'public');
+            $signature = $this->signature_path->store($dir, 'public');
 
             $storedSignatureName = basename($signature);
         }
 
-        $folderPath = 'employee_pictures/'.$data['empId'];
-
         EmployeeImage::create([
             'employee_id' => $employee->id,
-            'path' => $folderPath ?? null,
+            'path' => $dir ?? null,
             'pic' => $storedPictureName ?? null,
             'sig' => $storedSignatureName ?? null,
         ]);

@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Hris\Id\Modals;
 
-use Livewire\Component;
 use App\Models\Employee;
 use App\Models\EmployeeImage;
-use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
+use Livewire\Component;
 
 class DeleteEmployeeModal extends Component
 {
@@ -15,6 +15,7 @@ class DeleteEmployeeModal extends Component
     public $deleteId = null;
 
     public $empId;
+
     public $fullname;
 
     #[On('open-delete-employee-modal')]
@@ -28,14 +29,18 @@ class DeleteEmployeeModal extends Component
 
         $this->empId = $data->empId;
 
-        $this->fullname = ucfirst($data->fname) . ($data->mname) ? ' ' . strtoupper(substr($data->mname, 0, 1)) . '.' . ' ' . ucfirst($data->lname) : '' . ucfirst($data->lname);
+        $this->fullname = ucfirst($data->fname).($data->mname) ? ' '.strtoupper(substr($data->mname, 0, 1)).'.'.' '.ucfirst($data->lname) : ''.ucfirst($data->lname);
     }
 
     public function deleteEmployee()
     {
+
+        abort_unless(auth()->id() === 1, 403);
+
         $employee = Employee::findOrFail($this->deleteId);
 
-        $image = EmployeeImage::where('employee_id', $this->deleteId)->first();
+        $image = EmployeeImage::query()
+            ->where('employee_id', $this->deleteId)->first();
 
         if ($image) {
             if ($image->picture_path) {
@@ -47,7 +52,7 @@ class DeleteEmployeeModal extends Component
             }
         }
 
-        $employeeStorage = 'employee_pictures/' . $employee->empId . '-' . $employee->fname . '-' . $employee->lname;
+        $employeeStorage = 'employees/'.$employee->empId;
         if (Storage::disk('public')->exists($employeeStorage)) {
             Storage::disk('public')->deleteDirectory($employeeStorage);
         }

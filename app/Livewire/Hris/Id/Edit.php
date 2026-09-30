@@ -144,7 +144,7 @@ class Edit extends Component
             ]
         );
 
-        $dir = 'employee_pictures/'.$employee->empId;
+        $dir = 'employees/'.$employee->empId.'/id';
 
         // Handle picture upload
         if ($this->picture_path) {
@@ -168,9 +168,8 @@ class Edit extends Component
             $updates['sig'] = basename($signature);
         }
 
-        if ($this->picture_path || $this->signature_path) {
-            $updates['path'] = $dir;
-        }
+        // path
+        $update['path'] = $dir;
 
         if (! empty($updates)) {
             EmployeeImage::updateOrCreate(

@@ -44,13 +44,13 @@ class Index extends Component
             ->with('empinfo')
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
-                    $q->where('id', 'like', "%{$this->search}%")
-                        ->orWhere('empId', 'like', "%{$this->search}%")
-                        ->orWhere('fname', 'like', "%{$this->search}%")
-                        ->orWhere('mname', 'like', "%{$this->search}%")
-                        ->orWhere('lname', 'like', "%{$this->search}%")
+                    $q->where('id', 'ILIKE', "%{$this->search}%")
+                        ->orWhere('empId', 'ILIKE', "%{$this->search}%")
+                        ->orWhere('fname', 'ILIKE', "%{$this->search}%")
+                        ->orWhere('mname', 'ILIKE', "%{$this->search}%")
+                        ->orWhere('lname', 'ILIKE', "%{$this->search}%")
                         ->orWhereHas('empinfo', function ($q) {
-                            $q->where('position', 'like', "%{$this->search}%");
+                            $q->where('position', 'ILIKE', "%{$this->search}%");
                         });
 
                 });
