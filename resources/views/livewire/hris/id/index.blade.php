@@ -1,17 +1,23 @@
 <div
     class="h min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 p-6 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
     <div class="item-center mb-4 flex justify-between">
-        <a href="{{ @route('id.create') }}">
-            <button
-                class="rounded-md bg-gray-600 px-2 py-1.5 text-sm text-white transition duration-200 hover:bg-gray-800">
-                Create New ID
-            </button>
-        </a>
+
+
+        <x-buttons.button route="id.create" icon="user" placeholder="Add ID" />
 
         <div class="flex justify-end">
-            <div class="w-72">
-                <input type="text" wire:model.live="search" placeholder="search"
-                    class="dark:focus:ring-400 dark:focu:border-blue-400 w-full rounded-md border bg-gray-100 px-4 py-1.5 text-gray-900 placeholder-gray-400 shadow-sm transition duration-200 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-500 dark:shadow-black" />
+            <div class="relative w-full sm:w-80 lg:w-96">
+
+                {{-- Search Icon --}}
+                <div
+                    class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-zinc-400 dark:text-zinc-500">
+                    <x-heroicon-o-magnifying-glass class="size-4" />
+                </div>
+
+                {{-- Search Input --}}
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search employees..."
+                    class="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:hover:border-zinc-600 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
+
             </div>
         </div>
     </div>
@@ -57,7 +63,7 @@
                                 <div class="min-w-0">
 
                                     <p class="mb-1 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                                        Employee #{{ $employee->empId }}
+                                        Employee #{{ $employee->empinfo?->id_number ?? 'N/A' }}
                                     </p>
 
 

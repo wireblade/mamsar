@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('employee_employment_infos', function (Blueprint $table) {
             $table->id();
+            $table->string('id_number')->unique()->nullable();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
-            $table->string('position')->nullable();
-            $table->string('company')->nullable();
+            $table->foreignId('position_id')->constrained('positions')->restrictOnDelete();
             $table->string('department')->nullable();
             $table->string('employment_status')->nullable();
             $table->string('immediate_supervisor')->nullable();
