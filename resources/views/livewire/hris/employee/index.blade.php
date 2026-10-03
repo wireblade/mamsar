@@ -23,7 +23,7 @@
         class="flex flex-col gap-3 rounded-xl border border-zinc-200 bg-white p-4 lg:flex-row lg:items-center dark:border-zinc-700 dark:bg-zinc-900">
         {{-- Search --}}
         <div class="w-full lg:flex-1">
-            <flux:input wire:model.live.debounce.300ms="filter" icon="magnifying-glass"
+            <flux:input wire:model.live.debounce.300ms="search" icon="magnifying-glass"
                 placeholder="Search by name, employee ID or position..." />
         </div>
 
@@ -181,12 +181,12 @@
                             <td class="whitespace-nowrap px-6 py-4">
                                 <div class="flex items-center justify-end gap-1">
                                     {{-- View --}}
-                                    <flux:button
-                                        href="{{ route('employee.show', [
+                                    <flux:button {{-- href="{{ route('employee.show', [
                                             'employee' => $employee->id,
-                                            'page' => $employees->currentPage(),
-                                        ]) }}"
-                                        wire:navigate variant="ghost" size="sm" icon="eye">
+                                            'page' => $employees->currentPage() > 1 ? $employees->currentPage() : null,
+                                            'search' => $search ?: null,
+                                        ]) }}" --}} wire:click="viewEmployee({{ $employee->id }})"
+                                        variant="ghost" size="sm" icon="eye">
                                         View
                                     </flux:button>
 

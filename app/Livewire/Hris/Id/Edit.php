@@ -38,7 +38,7 @@ class Edit extends Component
 
     public $position;
 
-    public $empId;
+    public $id_number;
 
     public $address;
 
@@ -73,9 +73,8 @@ class Edit extends Component
         $this->suffix = $employee->suffix;
         $this->dob = $employee->dob;
         $this->marital_status = $employee->marital_status;
-        $this->company = $employee->empinfo?->company;
-        $this->position = $employee->empinfo?->position;
-        $this->empId = $employee->empId;
+        $this->position = $employee->empinfo?->employment_status ?? 'N/A';
+        $this->id_number = $employee->empinfo?->id_number ?? 'N/A';
         $this->address = $employee->address;
 
         // Populate Emergency Contact fields
@@ -98,14 +97,13 @@ class Edit extends Component
     {
         // Validation logic for editing an employee
         $this->validate([
-            'empId' => 'required|unique:employees,empId,'.$this->empId.',empId',
+            // 'empId' => 'required|unique:employees,empId,'.$this->empId.',empId',
+            'id_number' => 'required|unique:employee_employment_infos,id_number,'.$this->id_number.',id_number',
             'fname' => 'required|string|max:255',
             'mname' => 'nullable|string|max:255',
             'lname' => 'required|string|max:255',
             'suffix' => 'nullable|string|max:255',
             'dob' => 'nullable|date',
-            'position' => 'required|string|max:255',
-            'company' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'marital_status' => 'nullable|string|max:255',
             'contact_name' => 'required|string|max:255',
@@ -139,12 +137,11 @@ class Edit extends Component
         EmployeeEmploymentInfo::updateOrCreate(
             ['employee_id' => $employee->id],
             [
-                'position' => $this->position,
-                'company' => $this->company,
+                'employment_status' => $this->position, // Assuming the employment status is always active when editing
             ]
         );
 
-        $dir = 'employees/'.$employee->empId.'/id';
+        $dir = 'employees/'.$employee->empinfo?->id_number.'/id';
 
         // Handle picture upload
         if ($this->picture_path) {
@@ -169,7 +166,7 @@ class Edit extends Component
         }
 
         // path
-        $update['path'] = $dir;
+        $updates['path'] = $dir;
 
         if (! empty($updates)) {
             EmployeeImage::updateOrCreate(
@@ -179,7 +176,6 @@ class Edit extends Component
         }
 
         $employee->update([
-            'empId' => $this->empId,
             'fname' => $this->fname,
             'mname' => $this->mname,
             'lname' => $this->lname,

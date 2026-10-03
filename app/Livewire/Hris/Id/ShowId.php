@@ -8,7 +8,7 @@ use Livewire\Component;
 class ShowId extends Component
 {
     // Employee Information
-    public $employeeId = '';
+    public $id_number = '';
 
     public $fname = '';
 
@@ -53,7 +53,7 @@ class ShowId extends Component
         $data = Employee::findOrFail($id);
 
         // Employee Information
-        $this->employeeId = $data->empId;
+        $this->id_number = $data->empinfo?->id_number ?: 'N/A';
         $this->fname = $data->fname;
         $this->mname = $data->mname;
         $this->lname = $data->lname;
@@ -69,7 +69,7 @@ class ShowId extends Component
         $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
 
         // Employment information
-        $this->position = $data->empinfo?->position ?: 'N/A';
+        $this->position = $data->empinfo?->employment_status ?: 'N/A';
         $this->company = $data->empinfo?->company ?: 'N/A';
 
         // Employee Image

@@ -4,6 +4,7 @@ namespace App\Livewire\Hris\Id;
 
 use App\Models\Employee;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,6 +12,7 @@ class Index extends Component
 {
     use WithPagination;
 
+    #[Url]
     public $search = '';
 
     #[On('refreshTable')]
@@ -34,6 +36,26 @@ class Index extends Component
     public function openDeleteEmployeeModal($id)
     {
         $this->dispatch('open-delete-employee-modal', id: $id);
+    }
+
+    public function viewEmployee($id)
+    {
+        $page = $this->getPage();
+
+        session([
+            'id_list' => [
+                'page' => $page > 1 ? $page : null,
+                'search' => $this->search ?: null,
+            ],
+        ]);
+
+        return $this->redirectRoute(
+            'show.id',
+            [
+                'id' => $id,
+            ],
+            navigate: true
+        );
     }
 
     public function render()

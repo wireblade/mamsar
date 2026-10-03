@@ -75,9 +75,16 @@
                         <span class="text-red-500">*</span>
                     </label>
 
-                    <input id="company_name" type="text"
+                    <input id="company_name" wire:model="companyName" type="text"
                         placeholder="e.g. Mamsar Construction & Industrial Corporation"
                         class="w-full rounded-lg border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
+
+                    @error('companyName')
+                        <p class="mt-1.5 text-xs text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
                 </div>
 
 
@@ -90,12 +97,19 @@
                         <span class="text-red-500">*</span>
                     </label>
 
-                    <input id="company_code" type="text" placeholder="e.g. MCIC"
+                    <input id="company_code" wire:model="companyCode" wire:model="companyCode" type="text"
+                        placeholder="e.g. MCIC"
                         class="w-full rounded-lg border border-zinc-300 bg-white px-3.5 py-2.5 text-sm uppercase text-zinc-900 outline-none transition placeholder:normal-case placeholder:text-zinc-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
 
                     <p class="mt-1.5 text-xs text-zinc-400 dark:text-zinc-500">
                         A short code used to identify the company.
                     </p>
+                    @error('companyCode')
+                        <p class="mt-1.5 text-xs text-red-500">
+                            {{ $message }}
+                        </p>
+                    @enderror
+
                 </div>
 
                 {{-- ================================================== --}}
@@ -108,7 +122,8 @@
                         <span class="text-red-500">*</span>
                     </label>
 
-                    <input id="company_address" type="text" placeholder="e.g. 123 Main St, City, Country"
+                    <input id="company_address" wire:model="companyAddress" type="text"
+                        placeholder="e.g. 123 Main St, City, Country"
                         class="w-full rounded-lg border border-zinc-300 bg-white px-3.5 py-2.5 text-sm uppercase text-zinc-900 outline-none transition placeholder:normal-case placeholder:text-zinc-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
 
                     <p class="mt-1.5 text-xs text-zinc-400 dark:text-zinc-500">
@@ -134,7 +149,8 @@
 
                     </div>
 
-                    <textarea id="company_description" rows="3" placeholder="Brief description of the company..."
+                    <textarea id="company_description" wire:model="companyDescription" rows="3"
+                        placeholder="Brief description of the company..."
                         class="w-full resize-none rounded-lg border border-zinc-300 bg-white px-3.5 py-2.5 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-orange-500 dark:focus:ring-orange-500/15"></textarea>
 
                 </div>
@@ -155,7 +171,7 @@
 
 
                 {{-- Static Add Button --}}
-                <button type="button"
+                <button type="button" wire:click="createCompany"
                     class="inline-flex items-center gap-2 rounded-lg bg-orange-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500/30">
                     <x-heroicon-o-plus class="size-4" />
 

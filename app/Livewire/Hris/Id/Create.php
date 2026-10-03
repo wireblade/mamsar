@@ -35,14 +35,14 @@ class Create extends Component
 
     public $position = '';
 
-    public $empId = '';
-
     public $address = '';
 
     // Emergency Contact fields
     public $contact_name = '';
 
     public $contact_number = '';
+
+    public $id_number = '';
 
     // Government ID fields
     public $sss_no = '';
@@ -59,13 +59,12 @@ class Create extends Component
     public $signature_path = null;
 
     protected $messages = [
-        'empId.required' => 'The ID No. field is required.',
-        'empId.unique' => 'The ID No. has already been taken.',
+        'id_number.required' => 'The ID No. field is required.',
+        'id_number.unique' => 'The ID No. has already been taken.',
         'fname.required' => 'The First Name field is required.',
         'lname.required' => 'The Last Name field is required.',
         'dob.required' => 'The Date of Birth field is required.',
         'position.required' => 'The Position field is required.',
-        'company.required' => 'Please select a company.',
         'address.required' => 'The Address field is required.',
         'contact_name.required' => 'The Emergency Contact Name field is required.',
         'contact_number.required' => 'The Emergency Contact Number field is required.',
@@ -82,14 +81,13 @@ class Create extends Component
     {
 
         $this->validate([
-            'empId' => 'required|unique:employees,empId',
+            'id_number' => 'required|unique:employee_employment_infos,id_number',
             'fname' => 'required|string|max:255',
             'mname' => 'nullable|string|max:255',
             'lname' => 'required|string|max:255',
             'suffix' => 'nullable|string|max:255',
             'dob' => 'nullable|date',
             'position' => 'required|string|max:255',
-            'company' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'marital_status' => 'nullable|string|max:255',
             'contact_name' => 'required|string|max:255',
@@ -117,7 +115,6 @@ class Create extends Component
         }
 
         $data = [
-            'empId' => $this->empId,
             'fname' => $this->fname,
             'mname' => $this->mname,
             'lname' => $this->lname,
@@ -129,46 +126,50 @@ class Create extends Component
 
         $employee = Employee::create($data);
 
-        EmployeeEmploymentInfo::create([
-            'employee_id' => $employee->id,
-            'position' => $this->position,
-            'company' => $this->company,
-        ]);
+        if ($employee) {
 
-        EmployeeEmergencyContact::create([
-            'employee_id' => $employee->id,
-            'contact_name' => $this->contact_name,
-            'contact_number' => $this->contact_number,
-        ]);
+            EmployeeEmploymentInfo::create([
+                'employee_id' => $employee->id,
+                'id_number' => $this->id_number,
+                'employment_status' => $this->position,
+            ]);
 
-        EmployeeGovernmentId::create([
-            'employee_id' => $employee->id,
-            'sss_no' => $this->sss_no,
-            'tin_no' => $this->tin_no,
-            'pagibig_no' => $this->pagibig_no,
-            'philhealth_no' => $this->philhealth_no,
-        ]);
+            EmployeeEmergencyContact::create([
+                'employee_id' => $employee->id,
+                'contact_name' => $this->contact_name,
+                'contact_number' => $this->contact_number,
+            ]);
 
-        $dir = 'employees/'.$data['empId'].'/id';
+            EmployeeGovernmentId::create([
+                'employee_id' => $employee->id,
+                'sss_no' => $this->sss_no,
+                'tin_no' => $this->tin_no,
+                'pagibig_no' => $this->pagibig_no,
+                'philhealth_no' => $this->philhealth_no,
+            ]);
 
-        if ($this->picture_path) {
-            $picture = $this->picture_path->store($dir, 'public');
+            $dir = 'employees/'.$data['id_number'].'/id';
 
-            $storedPictureName = basename($picture);
+            if ($this->picture_path) {
+                $picture = $this->picture_path->store($dir, 'public');
+
+                $storedPictureName = basename($picture);
+            }
+
+            if ($this->signature_path) {
+                $signature = $this->signature_path->store($dir, 'public');
+
+                $storedSignatureName = basename($signature);
+            }
+
+            EmployeeImage::create([
+                'employee_id' => $employee->id,
+                'path' => $dir ?? null,
+                'pic' => $storedPictureName ?? null,
+                'sig' => $storedSignatureName ?? null,
+            ]);
+
         }
-
-        if ($this->signature_path) {
-            $signature = $this->signature_path->store($dir, 'public');
-
-            $storedSignatureName = basename($signature);
-        }
-
-        EmployeeImage::create([
-            'employee_id' => $employee->id,
-            'path' => $dir ?? null,
-            'pic' => $storedPictureName ?? null,
-            'sig' => $storedSignatureName ?? null,
-        ]);
 
         $this->reset();
 

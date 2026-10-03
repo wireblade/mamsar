@@ -1,6 +1,12 @@
 <div
     class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-10">
-    <a href="{{ url()->previous() }}"
+    <a href="{{ route(
+        'id.index',
+        array_filter([
+            'page' => session('id_list.page'),
+            'search' => session('id_list.search'),
+        ]),
+    ) }}"
         class="absolute left-6 top-6 flex items-center gap-2 text-white/70 transition-colors duration-200 hover:text-white">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -33,7 +39,7 @@
                 <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
                     style="width: 100%; height: 100%; display: block;" />
             @else
-                <img src="{{ asset('storage/id_template/zeman_front.png') }}"
+                <img src="{{ asset('storage/id_template/mamsar_front.jpg') }}"
                     style="width: 100%; height: 100%; display: block;" />
             @endif
 
@@ -42,7 +48,7 @@
 
             <div class="{{ $this->companyColor() }} absolute text-center" style="top:272px; left:0; right:0;">
                 <div style="font-size:12px; font-weight:700; padding:4px 8px; line-height:1.2; ">
-                    {{ $employeeId }}
+                    {{ $id_number }}
                 </div>
 
                 <div style="overflow:hidden; width:95%;" class="mx-auto">
@@ -72,7 +78,7 @@
                 <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
                     style="width: 100%; height: 100%; display: block;" />
             @else
-                <img src="{{ asset('storage/id_template/zeman_back.jpg') }}"
+                <img src="{{ asset('storage/id_template/mamsar_back.jpg') }}"
                     style="width: 100%; height: 100%; display: block;" />
             @endif
 
@@ -227,11 +233,11 @@
 
     {{-- Download Buttons --}}
     <div style="display:flex; gap:12px; justify-content:center; margin-top:30px; flex-wrap:wrap;">
-        <button onclick="downloadCard('id-front', 'ID_Front_{{ $employeeId }}')"
+        <button onclick="downloadCard('id-front', 'ID_Front_{{ $id_number }}')"
             style="padding:10px 24px; background:#2563eb; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:8px;">
             ⬇ Download Front
         </button>
-        <button onclick="downloadCard('id-back', 'ID_Back_{{ $employeeId }}')"
+        <button onclick="downloadCard('id-back', 'ID_Back_{{ $id_number }}')"
             style="padding:10px 24px; background:#16a34a; color:#fff; border:none; border-radius:8px; font-weight:600; cursor:pointer; font-size:14px; display:flex; align-items:center; gap:8px;">
             ⬇ Download Back
         </button>

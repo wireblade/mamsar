@@ -1,31 +1,25 @@
 <?php
 
 use App\Livewire\Dashboard\Index as DashboardIndex;
-use Illuminate\Support\Facades\Route;
-
+use App\Livewire\Hris\Company\Index as CompanyIndex;
 // This is for the ID Management
-use App\Livewire\Hris\Id\Index as IdIndex;
-use App\Livewire\Hris\Id\Create as IdCreate;
-use App\Livewire\Hris\Id\Edit as IdEdit;
-use App\Livewire\Hris\Id\ShowId;
-
-// This is for the Employee management
+use App\Livewire\Hris\Company\Show as CompanyShow;
+use App\Livewire\Hris\Department\Index as DepartmentIndex;
 use App\Livewire\Hris\Employee\Index as EmployeeIndex;
 use App\Livewire\Hris\Employee\Show as EmployeeShow;
-
+// This is for the Employee management
+use App\Livewire\Hris\Id\Create as IdCreate;
+use App\Livewire\Hris\Id\Edit as IdEdit;
 // This is for the Company management
-use App\Livewire\Hris\Company\Index as CompanyIndex;
-use App\Livewire\Hris\Company\Show as CompanyShow;
-
+use App\Livewire\Hris\Id\Index as IdIndex;
+use App\Livewire\Hris\Id\ShowId;
 // This is for the Department management
-use App\Livewire\Hris\Department\Index as DepartmentIndex;
-
-// This is for the Position management
 use App\Livewire\Hris\Position\Index as PositionIndex;
-
+// This is for the Position management
+use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
 // This is for the Rover management
 use App\Livewire\Rover\Index as RoverIndex;
-use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
+use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
 
@@ -54,8 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', DashboardIndex::class)->name('home');
 });
 
+Route::get('rover/', RoverIndex::class)->name('rover.index');
+Route::get('rover/create-ticket/', RoverCreateTicket::class)->name('rover.create-ticket');
 
-    Route::get('rover/', RoverIndex::class)->name('rover.index');
-    Route::get('rover/create-ticket/', RoverCreateTicket::class)->name('rover.create-ticket');
-
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

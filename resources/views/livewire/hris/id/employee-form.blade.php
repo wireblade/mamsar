@@ -46,7 +46,7 @@
                 @endphp
 
                 <div class="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
-                    <x-form.masked-input label="ID No." autofocus model="empId" placeholder="Employee ID"
+                    <x-form.masked-input label="ID No." autofocus model="id_number" placeholder="Employee ID"
                         :maxdigits="9" :mask="[2, 2, 4]" />
 
                     <x-form.text-input type="date" label=" Date of Birth" model="dob"
@@ -71,7 +71,7 @@
                     <x-form.text-input label="Position" model="position" placeholder="Enter position" />
                     <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
 
-                    <div class="flex flex-col gap-1">
+                    {{-- <div class="flex flex-col gap-1">
                         <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Company</label>
                         <select wire:model="company"
                             class="@error('company')
@@ -91,7 +91,7 @@
                                 {{ $message }}
                             </p>
                         @enderror
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- Section: Government IDs -->

@@ -56,200 +56,75 @@
                 </thead>
 
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    {{-- MCIC --}}
-                    <tr class="transition hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
-                        {{-- Company --}}
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
-                                    <flux:icon.building-office-2 class="size-5 text-zinc-600 dark:text-zinc-300" />
+
+                    @foreach ($companies as $company)
+                        <tr class="transition hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
+                            {{-- Company --}}
+                            <td class="px-6 py-4">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
+                                        <flux:icon.building-office-2 class="size-5 text-zinc-600 dark:text-zinc-300" />
+                                    </div>
+
+                                    <div>
+                                        <p class="font-medium text-zinc-900 dark:text-zinc-100">{{ $company->name }}</p>
+
+                                        {{-- <p class="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">MAMSAR Group</p> --}}
+                                    </div>
                                 </div>
+                            </td>
 
-                                <div>
-                                    <p class="font-medium text-zinc-900 dark:text-zinc-100">Mamsar Construction &
-                                        Industrial Corporation</p>
+                            {{-- Code --}}
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
+                                    {{ $company->code }}
+                                </span>
+                            </td>
 
-                                    <p class="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">MAMSAR Group</p>
+                            {{-- Description --}}
+                            <td class="max-w-xs px-6 py-4 text-sm leading-5 text-zinc-600 dark:text-zinc-300">
+                                {{ $company->description }}
+                            </td>
+
+                            {{-- Status --}}
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
+                                    <span class="size-1.5 rounded-full bg-green-500"></span>
+                                    Active
+                                </span>
+                            </td>
+
+                            {{-- Actions --}}
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-end gap-1">
+                                    <flux:button href="{{ route('company.show', $company->code) }}" wire:navigate
+                                        variant="ghost" size="sm" icon="eye">
+                                        View
+                                    </flux:button>
+
+                                    <flux:dropdown position="bottom" align="end">
+                                        <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" />
+
+                                        <flux:menu>
+                                            <flux:menu.item icon="pencil-square">
+                                                Edit
+                                            </flux:menu.item>
+
+                                            <flux:menu.separator />
+
+                                            <flux:menu.item icon="trash" variant="danger">
+                                                Delete
+                                            </flux:menu.item>
+                                        </flux:menu>
+                                    </flux:dropdown>
                                 </div>
-                            </div>
-                        </td>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                        {{-- Code --}}
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                MCIC
-                            </span>
-                        </td>
-
-                        {{-- Description --}}
-                        <td class="max-w-xs px-6 py-4 text-sm leading-5 text-zinc-600 dark:text-zinc-300">
-                            Construction and industrial manpower operations.
-                        </td>
-
-                        {{-- Status --}}
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
-                                <span class="size-1.5 rounded-full bg-green-500"></span>
-                                Active
-                            </span>
-                        </td>
-
-                        {{-- Actions --}}
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-1">
-                                <flux:button href="{{ route('company.show', 1) }}" wire:navigate variant="ghost"
-                                    size="sm" icon="eye">
-                                    View
-                                </flux:button>
-
-                                <flux:dropdown position="bottom" align="end">
-                                    <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" />
-
-                                    <flux:menu>
-                                        <flux:menu.item icon="pencil-square">
-                                            Edit
-                                        </flux:menu.item>
-
-                                        <flux:menu.separator />
-
-                                        <flux:menu.item icon="trash" variant="danger">
-                                            Delete
-                                        </flux:menu.item>
-                                    </flux:menu>
-                                </flux:dropdown>
-                            </div>
-                        </td>
-                    </tr>
-
-                    {{-- 4K Development --}}
-                    <tr class="transition hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
-                                    <flux:icon.building-office-2 class="size-5 text-zinc-600 dark:text-zinc-300" />
-                                </div>
-
-                                <div>
-                                    <p class="font-medium text-zinc-900 dark:text-zinc-100">4K Development Corporation
-                                    </p>
-
-                                    <p class="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">MAMSAR Group</p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                4K
-                            </span>
-                        </td>
-
-                        <td class="max-w-xs px-6 py-4 text-sm leading-5 text-zinc-600 dark:text-zinc-300">
-                            Equipment and logistics support for company
-                            projects.
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
-                                <span class="size-1.5 rounded-full bg-green-500"></span>
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-1">
-                                <flux:button href="{{ route('company.show', 2) }}" wire:navigate variant="ghost"
-                                    size="sm" icon="eye">
-                                    View
-                                </flux:button>
-
-                                <flux:dropdown position="bottom" align="end">
-                                    <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" />
-
-                                    <flux:menu>
-                                        <flux:menu.item icon="pencil-square">
-                                            Edit
-                                        </flux:menu.item>
-
-                                        <flux:menu.separator />
-
-                                        <flux:menu.item icon="trash" variant="danger">
-                                            Delete
-                                        </flux:menu.item>
-                                    </flux:menu>
-                                </flux:dropdown>
-                            </div>
-                        </td>
-                    </tr>
-
-                    {{-- Zeeman --}}
-                    <tr class="transition hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
-                        <td class="px-6 py-4">
-                            <div class="flex items-center gap-3">
-                                <div
-                                    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-zinc-100 dark:bg-zinc-800">
-                                    <flux:icon.building-office-2 class="size-5 text-zinc-600 dark:text-zinc-300" />
-                                </div>
-
-                                <div>
-                                    <p class="font-medium text-zinc-900 dark:text-zinc-100">Zeeman Marine & Logistics
-                                        Services Inc.</p>
-
-                                    <p class="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">MAMSAR Group</p>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-md bg-zinc-100 px-2 py-1 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
-                                ZMLS
-                            </span>
-                        </td>
-
-                        <td class="max-w-xs px-6 py-4 text-sm leading-5 text-zinc-600 dark:text-zinc-300">
-                            Marine logistics utilizing tugboats and barges.
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
-                                <span class="size-1.5 rounded-full bg-green-500"></span>
-                                Active
-                            </span>
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-1">
-                                <flux:button href="{{ route('company.show', 3) }}" wire:navigate variant="ghost"
-                                    size="sm" icon="eye">
-                                    View
-                                </flux:button>
-
-                                <flux:dropdown position="bottom" align="end">
-                                    <flux:button variant="ghost" size="sm" icon="ellipsis-horizontal" />
-
-                                    <flux:menu>
-                                        <flux:menu.item icon="pencil-square">
-                                            Edit
-                                        </flux:menu.item>
-
-                                        <flux:menu.separator />
-
-                                        <flux:menu.item icon="trash" variant="danger">
-                                            Delete
-                                        </flux:menu.item>
-                                    </flux:menu>
-                                </flux:dropdown>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

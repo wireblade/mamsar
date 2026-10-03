@@ -2,13 +2,15 @@
 
 namespace App\Livewire\Notification;
 
-use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\Component;
 
 class FlashAlert extends Component
 {
     public $message = '';
+
     public $type = 'success';
+
     public $show = false;
 
     public function mount()

@@ -118,6 +118,7 @@
 
     {{ $slot }}
 
+    <livewire:notification.flash-alert />
     <livewire:hris.company.modals.create-company-modal />
 
     @fluxScripts

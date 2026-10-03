@@ -4,6 +4,7 @@ namespace App\Livewire\Hris\Employee;
 
 use App\Models\Employee;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -11,7 +12,8 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $filter = '';
+    #[Url]
+    public $search = '';
 
     #[On('refreshTable')]
     public function refreshTable() {}
@@ -29,18 +31,36 @@ class Index extends Component
 
     }
 
+    public function viewEmployee($id)
+    {
+        $page = $this->getPage();
+
+        session([
+            'employee_list' => [
+                'page' => $page > 1 ? $page : null,
+                'search' => $this->search ?: null,
+            ],
+        ]);
+
+        return $this->redirectRoute(
+            'employee.show',
+            [
+                'employee' => $id,
+            ],
+            navigate: true
+        );
+    }
+
     public function render()
     {
         $employees = Employee::query()
             ->with('empinfo')
-            ->when($this->filter, function ($query) {
-                $query->where('fname', 'like', '%'.$this->filter.'%')
-                    ->orWhere('mname', 'like', '%'.$this->filter.'%')
-                    ->orWhere('lname', 'like', '%'.$this->filter.'%')
-                    ->orWhere('empId', 'like', '%'.$this->filter.'%')
+            ->when($this->search, function ($query) {
+                $query->where('fname', 'ILIKE', '%'.$this->search.'%')
+                    ->orWhere('mname', 'ILIKE', '%'.$this->search.'%')
+                    ->orWhere('lname', 'ILIKE', '%'.$this->search.'%')
                     ->orWhereHas('empinfo', function ($q) {
-                        $q->where('position', 'like', '%'.$this->filter.'%');
-                        $q->orWhere('company', 'like', '%'.$this->filter.'%');
+                        $q->where('employment_status', 'ILIKE', '%'.$this->search.'%');
                     });
 
             })

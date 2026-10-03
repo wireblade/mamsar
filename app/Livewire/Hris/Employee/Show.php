@@ -3,18 +3,14 @@
 namespace App\Livewire\Hris\Employee;
 
 use App\Models\Employee;
-use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class Show extends Component
 {
     public $employee = null;
 
-    #[Url()]
-    public $page = 1;
-
     // Employee Information
-    public $empId;
+    public $id_number;
 
     public $fname;
 
@@ -68,7 +64,7 @@ class Show extends Component
     {
         $employee = Employee::findOrFail($employee);
 
-        $this->empId = $employee->empId;
+        $this->id_number = $employee->empinfo?->id_number ?? 'N/A';
         $this->fname = $employee->fname;
         $this->mname = $employee->mname;
         $this->lname = $employee->lname;
