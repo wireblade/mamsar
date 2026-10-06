@@ -16,6 +16,10 @@
                 </span>
                 <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
             </a>
+            {{-- Background only --}}
+            <div class="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
+                style="background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}')"></div>
+
             <div class="mt-4 flex flex-col gap-6">
                 {{ $slot }}
             </div>
@@ -24,25 +28,6 @@
     @fluxScripts
 </body>
 
-<style>
-    body {
-        font-family: 'Instrument Sans', sans-serif;
-        position: relative;
-        margin: 0;
-        min-height: 100vh;
-    }
 
-    body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.5;
-        /* Adjust from 0.0 to 1.0 */
-        z-index: -1;
-    }
-</style>
 
 </html>

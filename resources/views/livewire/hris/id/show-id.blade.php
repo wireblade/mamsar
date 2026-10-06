@@ -143,7 +143,7 @@
                     </div>
                 </div>
 
-                @if ($company == 'Mamsar')
+                @if ($company == null)
                     <div class="mt-2 w-full p-3 text-justify text-[11px] font-normal leading-normal text-black">
                         This card is the property of
                         <font class="font-extrabold">MAMSAR CONSTRUCTION AND INDUSTRIAL

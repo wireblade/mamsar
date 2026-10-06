@@ -22,4 +22,16 @@ class Department extends Model
     {
         return $this->hasMany(Position::class);
     }
+
+    public function employees()
+    {
+        return $this->hasManyThrough(
+            EmployeeEmploymentInfo::class, // destination
+            Position::class, // bridge
+            'department_id', // positions.department_id
+            'position_id', // employment_infos.position_id
+            'id', // departments.id
+            'id' // positions.id
+        );
+    }
 }

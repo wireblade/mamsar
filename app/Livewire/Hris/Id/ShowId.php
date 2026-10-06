@@ -70,7 +70,7 @@ class ShowId extends Component
 
         // Employment information
         $this->position = $data->empinfo?->employment_status ?: 'N/A';
-        $this->company = $data->empinfo?->company ?: 'N/A';
+        $this->company = $data->empinfo?->position_id;
 
         // Employee Image
         $this->picture = $data->image?->path.'/'.$data->image?->pic;

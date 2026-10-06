@@ -148,7 +148,7 @@ class Create extends Component
                 'philhealth_no' => $this->philhealth_no,
             ]);
 
-            $dir = 'employees/'.$data['id_number'].'/id';
+            $dir = 'employees/'.$this->id_number.'/id';
 
             if ($this->picture_path) {
                 $picture = $this->picture_path->store($dir, 'public');

@@ -26,23 +26,25 @@ class CreateCompanyModal extends Component
 
     public function createCompany()
     {
-        $this->validate([
+        $validate = $this->validate([
             'companyCode' => 'required|string|max:10|unique:companies,code',
             'companyName' => 'required|string|max:255|unique:companies,name',
             'companyAddress' => 'nullable|string|max:500',
             'companyDescription' => 'nullable|string|max:1000',
         ]);
 
-        Company::create([
-            'name' => $this->companyName,
-            'code' => $this->companyCode,
-            'address' => $this->companyAddress,
-            'description' => $this->companyDescription,
-        ]);
+        if ($validate) {
+            Company::create([
+                'name' => $this->companyName,
+                'code' => $this->companyCode,
+                'address' => $this->companyAddress ?? null,
+                'description' => $this->companyDescription ?? null,
+            ]);
+        }
 
         $this->reset();
 
-        session()->flash('success', 'Company created successfully.');
+        session()->flash('success', 'Company added successfully.');
 
         $this->openModal = false;
 

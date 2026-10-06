@@ -85,7 +85,9 @@
 
                 {{-- Actions --}}
                 <div class="flex flex-wrap items-center gap-2">
-                    <flux:button icon="identification"> View ID </flux:button>
+                    <flux:button :href="route('show.id', $employee)" icon="identification">
+                        View ID
+                    </flux:button>
 
                     <flux:button variant="primary" icon="pencil-square">
                         Edit Employee

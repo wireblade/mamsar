@@ -118,8 +118,14 @@
 
     {{ $slot }}
 
+    {{-- Flash Alerts --}}
     <livewire:notification.flash-alert />
+
+    {{-- Create Company Modal --}}
     <livewire:hris.company.modals.create-company-modal />
+
+    {{-- Create Department Modal --}}
+    <livewire:hris.department.modals.create-department-modal />
 
     @fluxScripts
 </body>
