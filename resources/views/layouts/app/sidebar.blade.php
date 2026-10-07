@@ -127,6 +127,8 @@
     {{-- Create Department Modal --}}
     <livewire:hris.department.modals.create-department-modal />
 
+    <livewire:hris.position.modals.create-position-modal />
+
     @fluxScripts
 </body>
 
