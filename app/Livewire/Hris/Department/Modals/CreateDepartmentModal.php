@@ -19,6 +19,8 @@ class CreateDepartmentModal extends Component
 
     public bool $is_active = true;
 
+    public $companies = '';
+
     protected $messages = [
         'companyId.required' => 'Please select company.',
         'name.required' => 'Please enter department name.',
@@ -28,6 +30,11 @@ class CreateDepartmentModal extends Component
     public function openModal()
     {
         $this->openModal = true;
+    }
+
+    public function mount()
+    {
+        $this->companies = Company::all();
     }
 
     public function addDepartment()
@@ -76,8 +83,6 @@ class CreateDepartmentModal extends Component
 
     public function render()
     {
-        $companies = Company::all();
-
-        return view('livewire.hris.department.modals.create-department-modal', compact('companies'));
+        return view('livewire.hris.department.modals.create-department-modal');
     }
 }

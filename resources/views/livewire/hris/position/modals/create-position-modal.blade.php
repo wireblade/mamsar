@@ -50,11 +50,11 @@
                             class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
                             <option value="">Select Department</option>
 
-                            {{-- @foreach ($departments as $department)
+                            @foreach ($departments as $department)
                                 <option value="{{ $department->id }}">
                                     {{ $department->company->code }} — {{ $department->name }}
                                 </option>
-                            @endforeach --}}
+                            @endforeach
                         </select>
 
                         @error('departmentId')
@@ -114,7 +114,7 @@
                             </p>
                         </div>
 
-                        {{-- <button type="button" wire:click="$toggle('is_active')" @class([
+                        <button type="button" wire:click="$toggle('is_active')" @class([
                             'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full transition-colors duration-200',
                             'bg-orange-500' => $is_active,
                             'bg-zinc-300 dark:bg-zinc-600' => !$is_active,
@@ -125,7 +125,7 @@
                                 'left-[22px]' => $is_active,
                                 'left-0.5' => !$is_active,
                             ])></span>
-                        </button> --}}
+                        </button>
                     </div>
 
                 </div>
