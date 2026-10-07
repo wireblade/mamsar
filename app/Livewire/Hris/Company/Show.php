@@ -3,6 +3,7 @@
 namespace App\Livewire\Hris\Company;
 
 use App\Models\Company;
+use App\Models\Employee;
 use Livewire\Component;
 
 class Show extends Component
@@ -13,15 +14,27 @@ class Show extends Component
 
     public $companyCode = '';
 
-    public function mount($company)
+    public $company;
+
+    public $employeeCount;
+
+    public $employeeActive;
+
+    public function mount($id)
     {
+        $this->employeeCount = Employee::whereHas('empinfo.position.department', function ($query) use ($id) {
+            $query->where('company_id', $id);
+        })->count();
 
-        $company = Company::query()
-            ->where('code', $company)
-            ->firstOrFail();
+        $this->employeeActive = Employee::whereHas('empinfo.position.department', function ($query) {
+            $query->where('is_active', 'true');
+        })->count();
 
-        $this->companyName = $company->name;
-        $this->companyCode = $company->code;
+        $data = $this->company = Company::withCount('departments', 'positions')
+            ->findOrFail($id);
+
+        $this->companyName = $data->name;
+        $this->companyCode = $data->code;
     }
 
     public function render()

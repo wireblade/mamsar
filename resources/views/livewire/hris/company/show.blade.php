@@ -88,7 +88,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">90</p>
+            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">{{ $employeeCount }}</p>
 
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Total Employees</p>
         </div>
@@ -101,7 +101,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">8</p>
+            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">{{ $company->departments_count }}</p>
 
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Departments</p>
         </div>
@@ -114,7 +114,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">24</p>
+            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">{{ $company->positions_count }}</p>
 
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Positions</p>
         </div>
@@ -127,7 +127,7 @@
                 </div>
             </div>
 
-            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">87</p>
+            <p class="mt-4 text-2xl font-semibold text-zinc-900 dark:text-white">{{ $employeeActive }}</p>
 
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Active Employees</p>
         </div>

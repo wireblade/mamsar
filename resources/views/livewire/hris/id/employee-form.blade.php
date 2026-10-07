@@ -79,11 +79,12 @@
                             @else
                             border-slate-200 dark:border-gray-600
                             @enderror h-10 appearance-none rounded-lg border bg-white px-3 text-sm text-slate-800 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:text-gray-100">
-                            <option value="" disabled selected>
+                            <option value="" selected>
                                 Select Company
                             </option>
-                            <option>Mamsar</option>
-                            <option>Zeman</option>
+                            @foreach ($this->companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->code }}</option>
+                            @endforeach
                         </select>
                         @error('company')
                             <p class="text-sm text-red-500">

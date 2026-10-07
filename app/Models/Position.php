@@ -18,7 +18,7 @@ class Position extends Model
         return $this->belongsTo(Department::class);
     }
 
-    public function position()
+    public function empinfo()
     {
         return $this->hasMany(EmployeeEmploymentInfo::class);
     }

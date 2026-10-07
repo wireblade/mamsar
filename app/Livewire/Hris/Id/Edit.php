@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Hris\Id;
 
+use App\Models\Company;
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
 use App\Models\EmployeeEmploymentInfo;
@@ -61,9 +62,18 @@ class Edit extends Component
 
     public $signature_path;
 
+    // Department List
+
+    public $companies;
+
     public function mount($employee)
     {
-        $employee = Employee::findOrFail($employee);
+        $this->companies = Company::get();
+
+        $employee = Employee::with('empinfo.position.department.company')
+            ->findOrFail($employee);
+
+        $this->company = $employee->empinfo?->position?->department?->company?->id;
 
         $title = $this->title;
         // Populate Employee fields

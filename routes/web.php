@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // This is for the company management
     Route::get('hris/company/', CompanyIndex::class)->name('company.index');
-    Route::get('hris/company/{company}', CompanyShow::class)->name('company.show');
+    Route::get('hris/company/{id}', CompanyShow::class)->name('company.show');
 
     // This is for the department management
     Route::get('hris/department/', DepartmentIndex::class)->name('department.index');

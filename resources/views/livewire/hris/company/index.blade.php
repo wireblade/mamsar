@@ -100,7 +100,7 @@
                             {{-- Actions --}}
                             <td class="px-6 py-4">
                                 <div class="flex items-center justify-end gap-1">
-                                    <flux:button href="{{ route('company.show', $company->code) }}" wire:navigate
+                                    <flux:button href="{{ route('company.show', $company->id) }}" wire:navigate
                                         variant="ghost" size="sm" icon="eye">
                                         View
                                     </flux:button>
