@@ -14,30 +14,23 @@ class CreatePositionModal extends Component
     // for position if active or not
     public $is_active = true;
 
-    // list for departments
-    public $departments;
-
     public $positionName;
 
     public $departmentId;
 
     public $description;
 
+    public $test = '';
+
     protected $messages = [
         'positionName.required' => 'Please enter position name',
     ];
 
     #[On('open-create-position-modal')]
-    public function openModal()
+    public function openModal($departmentId)
     {
+        $this->departmentId = $departmentId ?: null;
         $this->openModal = true;
-    }
-
-    public function mount()
-    {
-        // list for departments
-        $this->departments = Department::with('company')->orderBy('departments.company_id', 'asc')
-            ->orderBy('departments.name', 'asc')->get();
     }
 
     public function addPosition()
@@ -73,20 +66,32 @@ class CreatePositionModal extends Component
                 'description' => $this->description,
                 'is_active' => $this->is_active,
             ]);
+
+            $this->reset();
+
+            $this->openModal = false;
+
+            // Refresh Position Index
+            $this->dispatch('position-added');
+
+            // Trigger your existing FlashAlert component
+            $this->dispatch(
+                'showAlert',
+                message: 'Position successfully added.',
+                type: 'success'
+            );
         }
-
-        $this->reset();
-
-        $this->openModal = false;
-
-        session()->flash('success', 'Position added successfully');
-
-        return redirect()->route('position.index');
 
     }
 
     public function render()
     {
-        return view('livewire.hris.position.modals.create-position-modal');
+        $departments = Department::with('company')
+            ->orderBy('departments.company_id', 'asc')
+            ->orderBy('departments.name', 'asc')->get();
+
+        return view('livewire.hris.position.modals.create-position-modal', [
+            'departments' => $departments,
+        ]);
     }
 }

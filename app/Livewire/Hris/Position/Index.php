@@ -5,6 +5,7 @@ namespace App\Livewire\Hris\Position;
 use App\Models\Company;
 use App\Models\Department;
 use App\Models\Position;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,9 +21,29 @@ class Index extends Component
 
     public $statusFilter = '';
 
+    public string $message = '';
+
+    public string $type = 'success';
+
+    public bool $show = false;
+
+    #[On('position-added')]
+    public function refreshPosition()
+    {
+        session()->now('success', 'Position successfully added.');
+    }
+
+    #[On('showAlert')]
+    public function showAlert($message, $type)
+    {
+        $this->type = $type;
+        $this->message = $message;
+        $this->show = true;
+    }
+
     public function openCreatePositionModal()
     {
-        $this->dispatch('open-create-position-modal');
+        $this->dispatch('open-create-position-modal', departmentId: $this->departmentFilter);
     }
 
     public function render()
@@ -36,7 +57,8 @@ class Index extends Component
             ->when($this->companyFilter, function ($query) {
                 $query->where('company_id', $this->companyFilter);
             })
-            ->orderBy('name')
+            ->orderBy('company_id', 'asc')
+            ->orderBy('departments.name', 'asc')
             ->get();
 
         $positions = Position::query()

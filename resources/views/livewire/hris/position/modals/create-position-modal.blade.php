@@ -20,7 +20,6 @@
                     <h2 class="text-lg font-semibold text-zinc-900 dark:text-white">
                         Add Position
                     </h2>
-
                     <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                         Create a new position under a department.
                     </p>
