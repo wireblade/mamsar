@@ -24,7 +24,8 @@ use Illuminate\Support\Facades\Route;
 Route::redirect('/', 'login');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('hris/dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('hris/dashboard', DashboardIndex::class)->name('dashboard.index');
 
     // This is for the profile management
     Route::get('hris/employee/', EmployeeIndex::class)->name('employee.index');

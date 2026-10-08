@@ -5,9 +5,12 @@ namespace App\Livewire\Hris\Department;
 use App\Models\Company;
 use App\Models\Department;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public string $search = '';
 
     public string $companyFilter = '';
@@ -43,7 +46,7 @@ class Index extends Component
 
             ->orderBy('company_id', 'asc')
             ->orderBy('name', 'asc')
-            ->paginate(20);
+            ->paginate(10);
 
         return view('livewire.hris.department.index', compact('departments', 'companies'));
     }

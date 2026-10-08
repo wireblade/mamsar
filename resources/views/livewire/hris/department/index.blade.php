@@ -188,7 +188,9 @@
         {{-- FOOTER --}}
         {{-- ======================================================== --}}
         <div class="border-t border-zinc-200 px-6 py-4 dark:border-zinc-700">
-            {{ $departments->links(data: ['scrollTo' => false]) }}
+            <div class="mamsar-pagination">
+                {{ $departments->links(data: ['scrollTo' => false]) }}
+            </div>
         </div>
     </div>
 </div>

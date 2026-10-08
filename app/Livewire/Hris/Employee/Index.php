@@ -65,7 +65,7 @@ class Index extends Component
 
             })
             ->orderBy('lname', 'asc')
-            ->paginate(10);
+            ->paginate(20);
 
         return view('livewire.hris.employee.index', compact('employees'));
     }

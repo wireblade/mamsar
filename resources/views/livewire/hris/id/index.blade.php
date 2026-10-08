@@ -254,9 +254,10 @@
             @endforeach
         </div>
 
-        <!-- Pagination -->
-        <div class="border-t bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800">
-            {{ $employees->links(data: ['scrollTo' => false]) }}
+        <div class="border-t border-zinc-200 px-6 py-4 dark:border-zinc-700">
+            <div class="mamsar-pagination">
+                {{ $employees->links(data: ['scrollTo' => false]) }}
+            </div>
         </div>
     </div>
 </div>

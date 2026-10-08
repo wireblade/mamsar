@@ -2,12 +2,12 @@
 
 namespace App\Livewire\Hris\Id;
 
-use App\Models\Company;
 use App\Models\Employee;
 use App\Models\EmployeeEmergencyContact;
 use App\Models\EmployeeEmploymentInfo;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
+use App\Models\Position;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -64,13 +64,19 @@ class Edit extends Component
 
     // Department List
 
-    public $companies;
+    public $positions;
 
     public function mount($employee)
     {
-        $this->companies = Company::get();
+        $this->positions = Position::query()
+            ->select('positions.*')
+            ->join('departments', 'positions.department_id', '=', 'departments.id')
+            ->with('department.company')
+            ->orderBy('departments.company_id', 'asc')
+            ->orderBy('positions.name', 'asc')
+            ->get();
 
-        $employee = Employee::with('empinfo.position.department.company')
+        $employee = Employee::with('empinfo.position')
             ->findOrFail($employee);
 
         $this->company = $employee->empinfo?->position?->department?->company?->id;

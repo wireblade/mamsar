@@ -238,8 +238,10 @@
         {{-- PAGINATION --}}
         {{-- ============================================================ --}}
         @if ($employees->hasPages())
-            <div class="border-t border-zinc-200 bg-zinc-50/50 px-6 py-4 dark:border-zinc-700 dark:bg-zinc-800/30">
-                {{ $employees->links(data: ['scrollTo' => false]) }}
+            <div class="border-t border-zinc-200 px-6 py-4 dark:border-zinc-700">
+                <div class="mamsar-pagination">
+                    {{ $employees->links(data: ['scrollTo' => false]) }}
+                </div>
             </div>
         @endif
     </div>

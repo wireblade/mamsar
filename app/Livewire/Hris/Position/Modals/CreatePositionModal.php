@@ -3,6 +3,7 @@
 namespace App\Livewire\Hris\Position\Modals;
 
 use App\Models\Department;
+use App\Models\Position;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -10,9 +11,21 @@ class CreatePositionModal extends Component
 {
     public $openModal = false;
 
+    // for position if active or not
     public $is_active = true;
 
+    // list for departments
     public $departments;
+
+    public $positionName;
+
+    public $departmentId;
+
+    public $description;
+
+    protected $messages = [
+        'positionName.required' => 'Please enter position name',
+    ];
 
     #[On('open-create-position-modal')]
     public function openModal()
@@ -22,7 +35,54 @@ class CreatePositionModal extends Component
 
     public function mount()
     {
-        $this->departments = Department::with('company')->get();
+        // list for departments
+        $this->departments = Department::with('company')->orderBy('departments.company_id', 'asc')
+            ->orderBy('departments.name', 'asc')->get();
+    }
+
+    public function addPosition()
+    {
+        $validate = $this->validate([
+            'departmentId' => 'required|exists:departments,id',
+
+            'positionName' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attributes, $value, $fail) {
+                    if (! $this->departmentId) {
+                        return;
+                    }
+
+                    $exists = Position::where('department_id', $this->departmentId)
+                        ->where('name', 'ILIKE', trim($value))
+                        ->exists();
+                    if ($exists) {
+                        $fail('This Position is already exist in the selected Department');
+                    }
+                },
+            ],
+
+            'description' => 'nullable|string|max:255',
+        ]);
+
+        if ($validate) {
+            Position::create([
+                'department_id' => $this->departmentId,
+                'name' => ucwords(strtolower(trim($this->positionName))),
+                'description' => $this->description,
+                'is_active' => $this->is_active,
+            ]);
+        }
+
+        $this->reset();
+
+        $this->openModal = false;
+
+        session()->flash('success', 'Position added successfully');
+
+        return redirect()->route('position.index');
+
     }
 
     public function render()

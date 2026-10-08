@@ -68,7 +68,20 @@
                             <option>Separated</option>
                         </select>
                     </div>
-                    <x-form.text-input label="Position" model="position" placeholder="Enter position" />
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Position</label>
+                        <select wire:model="position"
+                            class="h-10 appearance-none rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-800 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                            <option value="" selected>
+                                Select Position
+                            </option>
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->id }}">
+                                    {{ '[' . $position->department->company->code . '] [' . $position->department->name . '] ' . $position->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
 
                     {{-- <div class="flex flex-col gap-1">
