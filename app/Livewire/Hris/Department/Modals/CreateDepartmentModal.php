@@ -19,22 +19,16 @@ class CreateDepartmentModal extends Component
 
     public bool $is_active = true;
 
-    public $companies = '';
-
     protected $messages = [
         'companyId.required' => 'Please select company.',
         'name.required' => 'Please enter department name.',
     ];
 
     #[On('open-create-department-modal')]
-    public function openModal()
+    public function openModal($companyId)
     {
+        $this->companyId = $companyId ?: null;
         $this->openModal = true;
-    }
-
-    public function mount()
-    {
-        $this->companies = Company::all();
     }
 
     public function addDepartment()
@@ -67,22 +61,34 @@ class CreateDepartmentModal extends Component
         if ($validate) {
             Department::create([
                 'company_id' => $this->companyId,
-                'name' => trim($this->name),
+                'name' => ucwords(strtolower(trim($this->name))),
                 'description' => $this->description,
                 'is_active' => $this->is_active,
             ]);
+
+            $this->reset();
+
+            $this->openModal = false;
+
+            $this->dispatch('refreshTable');
+
+            $this->dispatch('showAlert',
+                message: 'Department successfully added.',
+                type: 'success',
+            );
+
         }
-
-        $this->reset();
-
-        session()->flash('success', 'Department added successfully.');
-
-        return redirect()->route('department.index');
 
     }
 
     public function render()
     {
-        return view('livewire.hris.department.modals.create-department-modal');
+        $companies = Company::query()
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('livewire.hris.department.modals.create-department-modal', [
+            'companies' => $companies,
+        ]);
     }
 }

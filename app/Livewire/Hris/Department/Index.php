@@ -4,6 +4,7 @@ namespace App\Livewire\Hris\Department;
 
 use App\Models\Company;
 use App\Models\Department;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -17,9 +18,29 @@ class Index extends Component
 
     public string $statusFilter = '';
 
+    public $message = '';
+
+    public $type = 'success';
+
+    public bool $show = false;
+
+    #[On('refreshTable')]
+    public function refreshTable()
+    {
+        // Refresh table after add.
+    }
+
+    #[On('showAlert')]
+    public function showAlert($message, $type)
+    {
+        $this->message = $message;
+        $this->type = $type;
+        $this->show = true;
+    }
+
     public function openCreateDepartmentModal()
     {
-        $this->dispatch('open-create-department-modal');
+        $this->dispatch('open-create-department-modal', companyId: $this->companyFilter);
     }
 
     public function render()

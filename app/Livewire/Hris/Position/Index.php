@@ -27,10 +27,10 @@ class Index extends Component
 
     public bool $show = false;
 
-    #[On('position-added')]
-    public function refreshPosition()
+    #[On('refreshTable')]
+    public function refreshTable()
     {
-        session()->now('success', 'Position successfully added.');
+        // refresh table after add
     }
 
     #[On('showAlert')]

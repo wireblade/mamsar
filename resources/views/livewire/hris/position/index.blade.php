@@ -39,6 +39,7 @@
                     </option>
                 @endforeach
             </select>
+
         </div>
 
         {{-- Department Filter --}}
@@ -51,7 +52,7 @@
                 @forelse ($departments as $department)
                     <option value="{{ $department->id }}">
                         @if ($this->companyFilter == '')
-                            {{ $department->company->code . '-' . $department->name }}
+                            {{ '[' . $department->company->code . '] [' . $department->name . ']' }}
                         @else
                             {{ $department->name }}
                         @endif
@@ -62,7 +63,6 @@
                     </option>
                 @endforelse
             </select>
-
         </div>
 
         {{-- Status Filter --}}
@@ -89,7 +89,8 @@
                     Position List
                 </h2>
 
-                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Positions registered under each department.</p>
+                <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Positions registered under each department.
+                </p>
             </div>
 
             <span class="text-sm text-zinc-500 dark:text-zinc-400">

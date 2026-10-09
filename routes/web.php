@@ -43,7 +43,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // This is for the ID Management
     Route::get('hris/id', IdIndex::class)->name('id.index');
     Route::get('hris/id/add-employee', IdCreate::class)->name('id.create');
-    Route::get('hris/id/{employee}/edit', IdEdit::class)->name('id.edit');
+    Route::get('hris/id/{id}/edit', IdEdit::class)->name('id.edit');
     Route::get('hris/id/{id}/view', ShowId::class)->name('show.id');
 
     Route::get('/home', DashboardIndex::class)->name('home');

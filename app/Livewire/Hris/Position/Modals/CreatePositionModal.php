@@ -72,11 +72,10 @@ class CreatePositionModal extends Component
             $this->openModal = false;
 
             // Refresh Position Index
-            $this->dispatch('position-added');
+            $this->dispatch('refreshTable');
 
             // Trigger your existing FlashAlert component
-            $this->dispatch(
-                'showAlert',
+            $this->dispatch('showAlert',
                 message: 'Position successfully added.',
                 type: 'success'
             );

@@ -84,9 +84,8 @@
                                         <flux:icon.briefcase class="size-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
 
                                         <p class="truncate text-sm text-zinc-500 dark:text-zinc-400">
-                                            {{ $employee->empinfo?->employment_status ?? 'No position assigned' }}
+                                            {{ $employee->empinfo->position->name ?? 'No position assigned' }}
                                         </p>
-
                                     </div>
 
                                 </div>
@@ -224,7 +223,7 @@
 
 
                             {{-- Edit ID --}}
-                            <flux:button :href="route('id.edit', $employee->id)" size="sm" variant="ghost"
+                            <flux:button wire:click="editEmployee({{ $employee->id }})" size="sm" variant="ghost"
                                 icon="pencil-square" wire:navigate>
                                 Edit
                             </flux:button>

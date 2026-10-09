@@ -141,7 +141,7 @@
                             {{-- ======================================== --}}
                             <td class="whitespace-nowrap px-6 py-4">
                                 <span class="text-sm text-zinc-600 dark:text-zinc-300">
-                                    -
+                                    {{ $employee->empinfo?->position->department->company->name ?? '-' }}
                                 </span>
                             </td>
 
@@ -150,7 +150,7 @@
                             {{-- ======================================== --}}
                             <td class="whitespace-nowrap px-6 py-4">
                                 <span class="text-sm text-zinc-600 dark:text-zinc-300">
-                                    -
+                                    {{ $employee->empinfo?->position->department->name ?? '-' }}
                                 </span>
                             </td>
 
@@ -159,7 +159,7 @@
                             {{-- ======================================== --}}
                             <td class="whitespace-nowrap px-6 py-4">
                                 <span class="text-sm text-zinc-700 dark:text-zinc-300">
-                                    {{ $employee->empinfo?->position ?? '-' }}
+                                    {{ $employee->empinfo?->position->name ?? '-' }}
                                 </span>
                             </td>
 

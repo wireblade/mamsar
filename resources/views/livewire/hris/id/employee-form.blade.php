@@ -68,20 +68,151 @@
                             <option>Separated</option>
                         </select>
                     </div>
-                    <div class="flex flex-col gap-1">
+
+                    {{-- <div class="flex flex-col gap-1">
                         <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Position</label>
-                        <select wire:model="position"
+                        <select wire:model="position_id"
                             class="h-10 appearance-none rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-800 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
                             <option value="" selected>
                                 Select Position
                             </option>
                             @foreach ($positions as $position)
                                 <option value="{{ $position->id }}">
-                                    {{ '[' . $position->department->company->code . '] [' . $position->department->name . '] ' . $position->name }}
+                                    {{ '[' . $position->department->company->code . ']' }}
+                                    {{ '[' . $position->department->name . '] ' . $position->name }}
                                 </option>
                             @endforeach
                         </select>
+                    </div> --}}
+
+                    <div x-data="{
+                        open: false,
+                        search: '',
+                        selected: @entangle('position_id'),
+                    
+                        positions: @js(
+    $positions
+        ->map(
+            fn($p) => [
+                'id' => $p->id,
+                'company' => $p->department->company->code,
+                'department' => $p->department->name,
+                'name' => $p->name,
+            ],
+        )
+        ->values(),
+),
+                    
+                        get filtered() {
+                            return this.positions.filter(p =>
+                                `${p.company} ${p.department} ${p.name}`
+                                .toLowerCase()
+                                .includes(this.search.toLowerCase())
+                            );
+                        },
+                    
+                        get selectedPosition() {
+                            return this.positions.find(
+                                p => String(p.id) === String(this.selected)
+                            );
+                        },
+                    
+                        choose(id) {
+                            this.selected = id;
+                            this.open = false;
+                            this.search = '';
+                        },
+                    
+                        companyColor(code) {
+                            switch (code?.toUpperCase()) {
+                                case 'MAMSAR':
+                                    return 'text-orange-600 dark:text-orange-400';
+                                case '4KDC':
+                                    return 'text-emerald-500 dark:text-emerald-400';
+                                case 'ZEMAN':
+                                    return 'text-sky-500 dark:text-sky-400';
+                                default:
+                                    return 'text-zinc-600 dark:text-zinc-300';
+                            }
+                        }
+                    }" @click.outside="open = false" @keydown.escape.window="open = false"
+                        class="relative w-full">
+                        {{-- Label --}}
+                        <label class="mb-1 block text-sm font-medium dark:text-white">
+                            Position
+                        </label>
+
+                        {{-- Dropdown trigger --}}
+                        <button type="button" @click="open = !open" :aria-expanded="open"
+                            class="flex w-full items-center justify-between gap-2 rounded-lg border border-zinc-300 bg-white px-3 py-2 text-left text-sm text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white">
+                            <span x-show="!selectedPosition" class="text-zinc-400">
+                                Select position...
+                            </span>
+
+                            <span x-show="selectedPosition" x-cloak
+                                class="flex min-w-0 items-center gap-1 overflow-hidden whitespace-nowrap">
+                                <span class="shrink-0 font-semibold" :class="companyColor(selectedPosition?.company)"
+                                    x-text="'[' + selectedPosition?.company + ']'"></span>
+
+                                <span class="shrink-0 text-blue-600 dark:text-blue-400"
+                                    x-text="'[' + selectedPosition?.department + ']'"></span>
+
+                                <span class="truncate" x-text="selectedPosition?.name"></span>
+                            </span>
+
+                            <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m6 9 6 6 6-6" />
+                            </svg>
+                        </button>
+
+                        {{-- Dropdown panel --}}
+                        <div x-show="open" x-cloak x-transition
+                            class="absolute right-0 z-50 mt-1 w-full max-w-[calc(100vw-2rem)] rounded-lg border border-zinc-200 bg-white shadow-xl sm:w-[500px] lg:w-[600px] dark:border-zinc-700 dark:bg-zinc-900">
+                            {{-- Search --}}
+                            <div class="p-2">
+                                <input type="text" x-model="search" @keydown.escape="open = false"
+                                    placeholder="Search position..."
+                                    class="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm outline-none focus:border-blue-500 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white">
+                            </div>
+
+                            {{-- Scrollable list --}}
+                            <div class="max-h-60 overflow-x-auto overflow-y-auto p-1">
+                                <template x-for="p in filtered" :key="p.id">
+                                    <button type="button" @click="choose(p.id)"
+                                        class="flex w-full items-center gap-2 whitespace-nowrap rounded-md px-3 py-2 text-left text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                                        :class="String(selected) === String(p.id) ?
+                                            'bg-blue-50 dark:bg-blue-950' :
+                                            ''">
+                                        {{-- Company code --}}
+                                        <span class="shrink-0 font-semibold" :class="companyColor(p.company)"
+                                            x-text="'[' + p.company + ']'"></span>
+
+                                        {{-- Department --}}
+                                        <span class="shrink-0 text-blue-600 dark:text-blue-400"
+                                            x-text="'[' + p.department + ']'"></span>
+
+                                        {{-- Position --}}
+                                        <span class="shrink-0 text-zinc-900 dark:text-white" x-text="p.name"></span>
+                                    </button>
+                                </template>
+
+                                {{-- Empty results --}}
+                                <div x-show="filtered.length === 0" class="p-3 text-center text-sm text-zinc-500">
+                                    No positions found.
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Validation error --}}
+                        @error('position_id')
+                            <p class="mt-1 text-sm text-red-500">
+                                {{ $message }}
+                            </p>
+                        @enderror
                     </div>
+
+
                     <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
 
                     {{-- <div class="flex flex-col gap-1">
@@ -125,8 +256,8 @@
                     <x-form.masked-input label="PhilHealth (PHIC)" model="philhealth_no" :mask="[2, 9, 1]"
                         :maxdigits="12" placeholder="XX-XXXXXXXX-X" />
 
-                    <x-form.masked-input label="Pag-IBIG (HDMF)" model="pagibig_no" :mask="[4, 4, 4]" :maxdigits="12"
-                        placeholder="XXXX-XXXX-XXXX (optional)" />
+                    <x-form.masked-input label="Pag-IBIG (HDMF)" model="pagibig_no" :mask="[4, 4, 4]"
+                        :maxdigits="12" placeholder="XXXX-XXXX-XXXX (optional)" />
                 </div>
 
                 <!-- Section: Emergency Contact -->

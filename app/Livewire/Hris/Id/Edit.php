@@ -16,7 +16,7 @@ class Edit extends Component
 {
     use WithFileUploads;
 
-    public $employee;
+    public $id = '';
 
     public $isEditing = true;
 
@@ -37,7 +37,7 @@ class Edit extends Component
 
     public $company;
 
-    public $position;
+    public $position_id;
 
     public $id_number;
 
@@ -66,18 +66,19 @@ class Edit extends Component
 
     public $positions;
 
-    public function mount($employee)
+    public function mount($id)
     {
         $this->positions = Position::query()
             ->select('positions.*')
             ->join('departments', 'positions.department_id', '=', 'departments.id')
             ->with('department.company')
             ->orderBy('departments.company_id', 'asc')
-            ->orderBy('positions.name', 'asc')
+            ->orderBy('departments.name', 'asc')
+            ->orderBy('name')
             ->get();
 
         $employee = Employee::with('empinfo.position')
-            ->findOrFail($employee);
+            ->findOrFail($id);
 
         $this->company = $employee->empinfo?->position?->department?->company?->id;
 
@@ -89,7 +90,7 @@ class Edit extends Component
         $this->suffix = $employee->suffix;
         $this->dob = $employee->dob;
         $this->marital_status = $employee->marital_status;
-        $this->position = $employee->empinfo?->employment_status ?? 'N/A';
+        $this->position_id = $employee->empinfo?->position_id ?? null;
         $this->id_number = $employee->empinfo?->id_number ?? 'N/A';
         $this->address = $employee->address;
 
@@ -130,7 +131,7 @@ class Edit extends Component
         ]);
 
         // Update logic for editing an employee
-        $employee = Employee::findOrFail($this->employee);
+        $employee = Employee::findOrFail($this->id);
 
         EmployeeEmergencyContact::updateOrCreate(
             ['employee_id' => $employee->id],
@@ -153,7 +154,7 @@ class Edit extends Component
         EmployeeEmploymentInfo::updateOrCreate(
             ['employee_id' => $employee->id],
             [
-                'employment_status' => $this->position, // Assuming the employment status is always active when editing
+                'position_id' => $this->position_id, // Assuming the employment status is always active when editing
             ]
         );
 

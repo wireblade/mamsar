@@ -58,12 +58,38 @@ class Index extends Component
         );
     }
 
+    public function editEmployee($id)
+    {
+        $page = $this->getPage();
+        session([
+            'id_list' => [
+                'page' => $page > 1 ? $page : null,
+                'search' => $this->search ?: null,
+            ],
+        ]);
+
+        return $this->redirectRoute('id.edit', [
+            'id' => $id,
+        ], navigate: true);
+    }
+
+    public function mount()
+    {
+        $state = session()->pull('id_list', []);
+
+        $this->search = $state['search'] ?? '';
+
+        $this->setPage(
+            $state['page'] ?? 1
+        );
+    }
+
     public function render()
     {
         $employees = Employee::query()
 
         // relationship with table employee_employment_infos
-            ->with('empinfo')
+            ->with('empinfo.position.department.company')
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('id', 'ILIKE', "%{$this->search}%")
