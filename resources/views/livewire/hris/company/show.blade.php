@@ -146,7 +146,7 @@
             </div>
 
             <span class="text-sm text-zinc-500 dark:text-zinc-400">
-                8 Departments
+                {{ $departments->count() }} Departments
             </span>
         </div>
 
@@ -169,157 +169,28 @@
                 </thead>
 
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Engineering
-                            </div>
-                        </td>
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            25
-                        </td>
+                    @foreach ($departments as $department)
+                        <tr>
+                            <td class="px-6 py-4">
+                                <div class="font-medium text-zinc-900 dark:text-zinc-100">
+                                    {{ $department->name }}
+                                </div>
+                            </td>
 
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
+                            <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
+                                {{ $department->employees->count() }}
+                            </td>
 
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Accounting
-                            </div>
-                        </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
+                                    Active
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            12
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Human Resources
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            6
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Purchasing
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            9
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Warehouse
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            11
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Safety
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            10
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Clinic
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            5
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Legal
-                            </div>
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            12
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
