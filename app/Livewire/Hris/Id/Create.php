@@ -7,6 +7,7 @@ use App\Models\EmployeeEmergencyContact;
 use App\Models\EmployeeEmploymentInfo;
 use App\Models\EmployeeGovernmentId;
 use App\Models\EmployeeImage;
+use App\Models\Position;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -180,6 +181,17 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.hris.id.employee-form')->layout('components.layouts.app')->title('Add Employee');
+        $positions = Position::query()
+            ->select('positions.*')
+            ->join('departments', 'positions.department_id', '=', 'departments.id')
+            ->with('department.company')
+            ->orderBy('departments.company_id', 'asc')
+            ->orderBy('departments.name', 'asc')
+            ->orderBy('name')
+            ->get();
+
+        return view('livewire.hris.id.employee-form', [
+            'positions' => $positions,
+        ])->layout('components.layouts.app')->title('Add Employee');
     }
 }
