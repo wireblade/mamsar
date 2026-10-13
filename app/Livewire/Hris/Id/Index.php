@@ -58,6 +58,20 @@ class Index extends Component
         );
     }
 
+    public function addEmployee()
+    {
+        $page = $this->getPage();
+
+        session([
+            'id_list' => [
+                'page' => $page > 1 ? $page : null,
+                'search' => $this->search ?: null,
+            ],
+        ]);
+
+        return $this->redirectRoute('id.create', navigate: true);
+    }
+
     public function editEmployee($id)
     {
         $page = $this->getPage();

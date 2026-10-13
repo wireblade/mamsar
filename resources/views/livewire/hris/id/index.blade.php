@@ -3,7 +3,7 @@
     <div class="item-center mb-4 flex justify-between">
 
 
-        <x-buttons.button route="id.create" icon="user" placeholder="Add ID" />
+        <x-buttons.button click="addEmployee" icon="user" placeholder="Add ID" />
 
         <div class="flex justify-end">
             <div class="relative w-full sm:w-80 lg:w-96">
