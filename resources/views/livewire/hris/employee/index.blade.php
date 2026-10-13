@@ -11,9 +11,7 @@
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Manage employee records and information.</p>
         </div>
 
-        <flux:button {{-- variant="primary" --}} icon="plus" href="{{ route('employee.index') }}" wire:navigate>
-            Add Employee
-        </flux:button>
+        <x-buttons.button route="employee.create" placeholder="Add Department" icon='plus' />
     </div>
 
     {{-- ============================================================ --}}

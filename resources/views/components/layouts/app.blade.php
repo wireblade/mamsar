@@ -23,64 +23,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxAppearance
 
-    <style>
-        @media print {
-            @page {
-                size: landscape;
-                margin: 0;
-            }
-
-            .id-card {
-                width: 75mm;
-                /* smaller than real size */
-                height: 47mm;
-                /* keep ratio */
-            }
-
-            body {
-                margin: 0;
-            }
-
-            body * {
-                visibility: hidden;
-            }
-
-            .print-area,
-            .print-area * {
-                visibility: visible;
-            }
-
-            .print-area {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                display: flex;
-                gap: 20px;
-            }
-        }
-    </style>
-
-    <style>
-        body {
-            font-family: 'Instrument Sans', sans-serif;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.5;
-            /* Adjust from 0.0 to 1.0 */
-            z-index: -1;
-        }
-    </style>
+    <div class="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
+        style="background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}')"></div>
 
 </head>
 

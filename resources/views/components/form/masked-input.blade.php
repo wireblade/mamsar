@@ -39,7 +39,7 @@
             }
             $event.target.value = result;
         "
-        class="{{ $disabled == 'edit' ? 'bg-gray-100 text-slate-500' : 'bg-white text-slate-800' }} @error($model) @else @enderror h-10 rounded-lg border border-red-500 border-slate-200 px-3 text-sm placeholder-slate-300 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500">
+        class="{{ $disabled == 'edit' ? 'bg-gray-100 text-slate-500' : 'bg-white text-slate-800' }} h-10 rounded-lg border border-red-500 border-slate-200 px-3 text-sm placeholder-slate-300 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:placeholder-gray-500">
 
     @error($model)
         <p class="text-sm text-red-500">

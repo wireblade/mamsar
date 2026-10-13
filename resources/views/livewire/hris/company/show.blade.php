@@ -229,92 +229,66 @@
                 </thead>
 
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Juan Dela Cruz
-                            </div>
-                            <div class="mt-0.5 text-xs text-zinc-500">
-                                MCIC-001
-                            </div>
-                        </td>
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Engineering
-                        </td>
+                    @forelse($employees as $employee)
+                        <tr>
+                            <td class="px-6 py-4">
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Project Engineer
-                        </td>
+                                <div class="flex items-center gap-3">
+                                    {{-- Profile Picture --}}
+                                    <div
+                                        class="flex size-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
+                                        @if ($employee->image?->pic)
+                                            <img src="{{ asset('storage/' . $employee->image?->path . '/' . $employee->image?->pic) }}"
+                                                alt="{{ $employee->fname }}" class="size-full object-cover" />
+                                        @else
+                                            {{-- Image fallback --}}
+                                            <span class="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+                                                {{ strtoupper(substr($employee->fname, 0, 1)) }}
+                                                {{ strtoupper(substr($employee->lname, 0, 1)) }}
+                                            </span>
+                                        @endif
+                                    </div>
 
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
+                                    {{-- Employee Name --}}
+                                    <div class="min-w-0">
+                                        <p class="truncate text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                                            {{ $this->getFullName($employee->fname, $employee->mname, $employee->lname) }}
+                                        </p>
 
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Maria Santos
-                            </div>
-                            <div class="mt-0.5 text-xs text-zinc-500">
-                                MCIC-002
-                            </div>
-                        </td>
+                                        <p class="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
+                                            ID: {{ $employee->empinfo?->id_number ?? 'N/A' }}
+                                        </p>
+                                    </div>
+                                </div>
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Accounting
-                        </td>
+                            </td>
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Accounting Staff
-                        </td>
+                            <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
+                                {{ $employee->empinfo->position->department->name }}
+                            </td>
 
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
+                            <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
+                                {{ $employee->empinfo->position->name }}
+                            </td>
 
-                    <tr>
-                        <td class="px-6 py-4">
-                            <div class="font-medium text-zinc-900 dark:text-zinc-100">
-                                Pedro Reyes
-                            </div>
-                            <div class="mt-0.5 text-xs text-zinc-500">
-                                MCIC-003
-                            </div>
-                        </td>
+                            <td class="px-6 py-4">
+                                <span
+                                    class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
+                                    Active
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
 
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Safety
-                        </td>
-
-                        <td class="px-6 py-4 text-sm text-zinc-600 dark:text-zinc-300">
-                            Safety Officer
-                        </td>
-
-                        <td class="px-6 py-4">
-                            <span
-                                class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                Active
-                            </span>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="border-t border-zinc-200 px-6 py-4 dark:border-zinc-700">
-            <button type="button"
-                class="text-sm font-medium text-zinc-700 transition hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white">
-                View all employees →
-            </button>
+            <div class="mamsar-pagination">
+                {{ $employees->links(data: ['scrollTo' => false]) }}
+            </div>
         </div>
     </div>
 </div>

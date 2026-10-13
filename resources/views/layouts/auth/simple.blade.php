@@ -16,10 +16,6 @@
                 </span>
                 <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
             </a>
-            {{-- Background only --}}
-            <div class="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
-                style="background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}')"></div>
-
             <div class="mt-4 flex flex-col gap-6">
                 {{ $slot }}
             </div>

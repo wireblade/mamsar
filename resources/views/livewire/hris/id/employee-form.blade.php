@@ -47,7 +47,7 @@
 
                 <div class="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
                     <x-form.masked-input label="ID No." autofocus model="id_number" placeholder="Employee ID"
-                        :maxdigits="9" :mask="[2, 2, 4]" />
+                        disabled="{{ $lastSegment }}" :maxdigits="9" :mask="[2, 2, 4]" />
 
                     <x-form.text-input type="date" label=" Date of Birth" model="dob"
                         placeholder="Date of Birth" />
@@ -68,6 +68,7 @@
                             <option>Separated</option>
                         </select>
                     </div>
+
 
                     {{-- <div class="flex flex-col gap-1">
                         <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Position</label>
@@ -211,7 +212,17 @@
                             </p>
                         @enderror
                     </div>
-
+                    <div class="flex flex-col gap-1">
+                        <label class="text-xs font-medium text-slate-500 dark:text-gray-400">Gender</label>
+                        <select wire:model="gender"
+                            class="h-10 appearance-none rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-800 transition focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100">
+                            <option value="" disabled selected>
+                                Select gender
+                            </option>
+                            <option value="M">Male</option>
+                            <option value="F">Female</option>
+                        </select>
+                    </div>
 
                     <x-form.text-input label="Address" model="address" placeholder="Enter full address" />
 

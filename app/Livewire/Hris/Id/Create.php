@@ -32,18 +32,19 @@ class Create extends Component
 
     public $dob = '';
 
-    public $company = '';
-
-    public $position = '';
-
     public $address = '';
+
+    public $gender = '';
+
+    // employee_employment_infos fields
+    public $position_id = '';
+
+    public $id_number = '';
 
     // Emergency Contact fields
     public $contact_name = '';
 
     public $contact_number = '';
-
-    public $id_number = '';
 
     // Government ID fields
     public $sss_no = '';
@@ -88,7 +89,8 @@ class Create extends Component
             'lname' => 'required|string|max:255',
             'suffix' => 'nullable|string|max:255',
             'dob' => 'nullable|date',
-            'position' => 'required|string|max:255',
+            'gender' => 'nullable|string|max:50',
+            'position_id' => 'required',
             'address' => 'required|string|max:255',
             'marital_status' => 'nullable|string|max:255',
             'contact_name' => 'required|string|max:255',
@@ -123,6 +125,7 @@ class Create extends Component
             'dob' => $this->dob ?: null,
             'marital_status' => $this->marital_status,
             'address' => $this->address,
+            'gender' => $this->gender,
         ];
 
         $employee = Employee::create($data);
@@ -131,8 +134,8 @@ class Create extends Component
 
             EmployeeEmploymentInfo::create([
                 'employee_id' => $employee->id,
+                'position_id' => $this->position_id,
                 'id_number' => $this->id_number,
-                'employment_status' => $this->position,
             ]);
 
             EmployeeEmergencyContact::create([

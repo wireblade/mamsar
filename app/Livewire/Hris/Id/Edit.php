@@ -35,13 +35,13 @@ class Edit extends Component
 
     public $dob;
 
-    public $company;
-
     public $position_id;
 
     public $id_number;
 
     public $address;
+
+    public $gender;
 
     // Emergency Contact fields
     public $contact_name;
@@ -80,8 +80,6 @@ class Edit extends Component
         $employee = Employee::with('empinfo.position')
             ->findOrFail($id);
 
-        $this->company = $employee->empinfo?->position?->department?->company?->id;
-
         $title = $this->title;
         // Populate Employee fields
         $this->fname = $employee->fname;
@@ -93,6 +91,7 @@ class Edit extends Component
         $this->position_id = $employee->empinfo?->position_id ?? null;
         $this->id_number = $employee->empinfo?->id_number ?? 'N/A';
         $this->address = $employee->address;
+        $this->gender = $employee->gender ?? '';
 
         // Populate Emergency Contact fields
         $this->contact_name = $employee->emergency?->contact_name;
@@ -123,6 +122,7 @@ class Edit extends Component
             'dob' => 'nullable|date',
             'address' => 'required|string|max:255',
             'marital_status' => 'nullable|string|max:255',
+            'gender' => 'nullable|string',
             'contact_name' => 'required|string|max:255',
             'contact_number' => 'required|string|max:255',
             'picture_path' => 'nullable|image|mimes:jpeg,png|max:2048',
@@ -200,6 +200,7 @@ class Edit extends Component
             'dob' => $this->dob ?: null,
             'marital_status' => $this->marital_status,
             'address' => $this->address,
+            'gender' => $this->gender,
         ]);
 
         session()->flash('success', 'Employee Updated Successfully!');

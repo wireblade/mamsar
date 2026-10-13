@@ -69,8 +69,8 @@ class ShowId extends Component
         $this->pagibig = $data->govid?->pagibig_no ?: 'N/A';
 
         // Employment information
-        $this->position = $data->empinfo?->employment_status ?: 'N/A';
-        $this->company = $data->empinfo?->position_id;
+        $this->position = $data->empinfo?->position->name ?: 'N/A';
+        $this->company = null;
 
         // Employee Image
         $this->picture = $data->image?->path.'/'.$data->image?->pic;

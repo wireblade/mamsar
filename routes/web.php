@@ -1,23 +1,30 @@
 <?php
 
 use App\Livewire\Dashboard\Index as DashboardIndex;
-use App\Livewire\Hris\Company\Index as CompanyIndex;
-// This is for the ID Management
-use App\Livewire\Hris\Company\Show as CompanyShow;
-use App\Livewire\Hris\Department\Index as DepartmentIndex;
-use App\Livewire\Hris\Employee\Index as EmployeeIndex;
-use App\Livewire\Hris\Employee\Show as EmployeeShow;
+
 // This is for the Employee management
+use App\Livewire\Hris\Employee\Index as EmployeeIndex;
+use App\Livewire\Hris\Employee\Create as EmployeeCreate;
+use App\Livewire\Hris\Employee\Show as EmployeeShow;
+
+// This is for the ID Management
 use App\Livewire\Hris\Id\Create as IdCreate;
 use App\Livewire\Hris\Id\Edit as IdEdit;
-// This is for the Company management
 use App\Livewire\Hris\Id\Index as IdIndex;
 use App\Livewire\Hris\Id\ShowId;
+
+// This is for the Company management
+use App\Livewire\Hris\Company\Show as CompanyShow;
+use App\Livewire\Hris\Company\Index as CompanyIndex;
+
 // This is for the Department management
-use App\Livewire\Hris\Position\Index as PositionIndex;
+use App\Livewire\Hris\Department\Index as DepartmentIndex;
+
 // This is for the Position management
-use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
+use App\Livewire\Hris\Position\Index as PositionIndex;
+
 // This is for the Rover management
+use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
 use App\Livewire\Rover\Index as RoverIndex;
 use Illuminate\Support\Facades\Route;
 
@@ -27,8 +34,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('hris/dashboard', DashboardIndex::class)->name('dashboard.index');
 
-    // This is for the profile management
+    // This is for the employee management
     Route::get('hris/employee/', EmployeeIndex::class)->name('employee.index');
+    Route::get('hris/employee/create', EmployeeCreate::class)->name('employee.create');
     Route::get('hris/employee/{employee}', EmployeeShow::class)->name('employee.show');
 
     // This is for the company management
@@ -38,6 +46,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // This is for the department management
     Route::get('hris/department/', DepartmentIndex::class)->name('department.index');
 
+    // This is for the position management
     Route::get('hris/position/', PositionIndex::class)->name('position.index');
 
     // This is for the ID Management

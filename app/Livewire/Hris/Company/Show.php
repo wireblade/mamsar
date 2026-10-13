@@ -6,9 +6,12 @@ use App\Models\Company;
 use App\Models\Department;
 use App\Models\Employee;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Show extends Component
 {
+    use WithPagination;
+
     public $id = '';
 
     public $companyName = '';
@@ -41,6 +44,13 @@ class Show extends Component
         $this->companyCode = $data->code;
     }
 
+    public function getFullName($fname, $middle, $lname)
+    {
+        $middle = $middle ? strtoupper(substr($middle, 0, 1)).'.' : '';
+
+        return trim($lname.' '.$fname.' '.$middle);
+    }
+
     public function render()
     {
         $departments = Department::query()
@@ -50,12 +60,16 @@ class Show extends Component
             ->get();
 
         $employees = Employee::query()
-            ->whereHas('empinfo')
+            ->with('empinfo.position.department.company')
+            ->whereHas('empinfo.position.department', function ($query) {
+                $query->where('company_id', $this->id);
+            })
             ->orderBy('lname', 'asc')
-            ->get();
+            ->paginate(10);
 
         return view('livewire.hris.company.show', [
             'departments' => $departments,
+            'employees' => $employees,
         ]);
     }
 }
