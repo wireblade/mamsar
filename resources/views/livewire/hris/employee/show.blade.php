@@ -1,5 +1,5 @@
 <div class="space-y-6" x-data="{
-    sections: ['personal', 'employment', 'government', 'emergency', 'history', 'projects'],
+    sections: ['personal', 'employment', 'government', 'emergency', 'history', 'projects', 'test'],
     section: 'personal',
 
     init() {
@@ -212,6 +212,16 @@
                         'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white'">
                     <flux:icon.folder class="size-4 shrink-0" />
                     <span class="whitespace-nowrap">Project Assignments</span>
+                </button>
+
+                <button type="button" @click="go('test')" :aria-current="section === 'test' ? 'page' : null"
+                    class="flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-left text-sm font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-orange-500"
+                    :class="section === 'test'
+                        ?
+                        'bg-orange-50 text-orange-700 dark:bg-orange-500/10 dark:text-orange-400' :
+                        'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-white'">
+                    <flux:icon.folder class="size-4 shrink-0" />
+                    <span class="whitespace-nowrap">test</span>
                 </button>
             </nav>
         </aside>
@@ -650,7 +660,14 @@
                     </table>
                 </div>
             </section>
+            <section x-show="section === 'test'" x-cloak
+                class="overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900">
+                <div class="flex items-center gap-3 border-b border-zinc-200 px-6 py-4 dark:border-zinc-700">
+                    test
+                </div>
+            </section>
         </div>
+
     </div>
 
     {{-- ============================================================ --}}

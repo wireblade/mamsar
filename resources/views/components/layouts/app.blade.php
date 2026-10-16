@@ -23,7 +23,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @fluxAppearance
 
-    <div class="pointer-events-none absolute inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
+    <div class="pointer-events-none fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
         style="background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}')"></div>
 
 </head>
