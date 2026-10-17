@@ -1,5 +1,4 @@
-<div
-    class="h min-h-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200 p-6 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+<div class="h min-h-screen from-gray-100 via-blue-50 to-gray-200 p-6">
     <div class="item-center mb-4 flex justify-between">
 
 
@@ -22,7 +21,7 @@
         </div>
     </div>
 
-    <div class="mt-6 w-full overflow-x-auto rounded-2xl bg-white shadow-lg dark:bg-gray-800">
+    <div class="mt-6 w-full overflow-x-auto rounded-2xl bg-white shadow-lg dark:bg-zinc-900">
         <div class="grid gap-6 p-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($employees as $employee)
                 <div

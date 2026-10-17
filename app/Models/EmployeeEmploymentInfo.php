@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['employee_id', 'position_id', 'id_number', 'is_active', 'department', 'employment_status', 'immediate_supervisor',  'date_hired'])]
+#[Fillable(['employee_id', 'position_id', 'id_number', 'is_active', 'employment_status', 'immediate_supervisor',  'date_hired'])]
 
 class EmployeeEmploymentInfo extends Model
 {

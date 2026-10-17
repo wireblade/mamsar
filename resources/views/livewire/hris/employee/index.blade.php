@@ -11,7 +11,7 @@
             <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Manage employee records and information.</p>
         </div>
 
-        <x-buttons.button route="employee.create" placeholder="Add Department" icon='plus' />
+        <x-buttons.button route="employee.create" placeholder="Add Employee" icon='plus' />
     </div>
 
     {{-- ============================================================ --}}
@@ -165,7 +165,7 @@
                             {{-- STATUS --}}
                             {{-- ======================================== --}}
                             <td class="whitespace-nowrap px-6 py-4">
-                                @if ($employee->empinfo->is_active)
+                                @if ($employee->empinfo?->is_active)
                                     <span
                                         class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
                                         <span class="size-1.5 rounded-full bg-green-500">
