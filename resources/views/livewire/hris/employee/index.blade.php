@@ -26,19 +26,33 @@
         </div>
 
         {{-- Company Filter --}}
-        {{-- Static for now --}}
-        <div class="w-full lg:w-52">
-            <flux:select disabled>
-                <flux:select.option> All Companies </flux:select.option>
-            </flux:select>
+        {{-- Company Filter --}}
+        <div class="w-full lg:w-64">
+            <select wire:model.live="companyFilter"
+                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
+                <option value="">All Companies</option>
+
+                @foreach ($companies as $company)
+                    <option value="{{ $company->id }}">
+                        {{ $company->code }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         {{-- Department Filter --}}
         {{-- Static for now --}}
-        <div class="w-full lg:w-52">
-            <flux:select disabled>
-                <flux:select.option> All Departments </flux:select.option>
-            </flux:select>
+        <div class="w-full lg:w-64">
+            <select wire:model.live="departmentFilter"
+                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
+                <option value="">All Companies</option>
+
+                @foreach ($departments as $department)
+                    <option value="{{ $department->id }}">
+                        {{ $department->name }}
+                    </option>
+                @endforeach
+            </select>
         </div>
     </div>
 

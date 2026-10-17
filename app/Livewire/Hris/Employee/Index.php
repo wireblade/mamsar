@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Hris\Employee;
 
+use App\Models\Company;
+use App\Models\Department;
 use App\Models\Employee;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
@@ -14,6 +16,10 @@ class Index extends Component
 
     #[Url]
     public $search = '';
+
+    public $companyFilter = '';
+
+    public $departmentFilter = '';
 
     #[On('refreshTable')]
     public function refreshTable() {}
@@ -53,8 +59,29 @@ class Index extends Component
 
     public function render()
     {
+
+        $companies = Company::orderBy('id')
+            ->get();
+
+        $departments = Department::query()
+            ->where('is_active', true)
+            ->when($this->companyFilter, function ($query) {
+                $query->where('company_id', $this->companyFilter);
+            })
+            ->get();
+
         $employees = Employee::query()
-            ->with('empinfo')
+            ->with('empinfo.position.department.company')
+            ->when($this->companyFilter, function ($query) {
+                $query->whereHas('empinfo.position.department', function ($q) {
+                    $q->where('company_id', $this->companyFilter);
+                });
+            })
+            ->when($this->departmentFilter, function ($query) {
+                $query->whereHas('empinfo.position', function ($q) {
+                    $q->where('department_id', $this->departmentFilter);
+                });
+            })
             ->when($this->search, function ($query) {
                 $query->where('fname', 'ILIKE', '%'.$this->search.'%')
                     ->orWhere('mname', 'ILIKE', '%'.$this->search.'%')
@@ -64,9 +91,14 @@ class Index extends Component
                     });
 
             })
+
             ->orderBy('lname', 'asc')
             ->paginate(20);
 
-        return view('livewire.hris.employee.index', compact('employees'));
+        return view('livewire.hris.employee.index', [
+            'employees' => $employees,
+            'companies' => $companies,
+            'departments' => $departments,
+        ]);
     }
 }
