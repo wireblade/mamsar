@@ -37,6 +37,17 @@ class Index extends Component
 
     }
 
+    public function mount()
+    {
+
+        $filters = session()->pull('employee_list', []);
+
+        $this->search = $filters['search'] ?? '';
+        $this->companyFilter = $filters['companyFilter'] ?? '';
+        $this->departmentFilter = $filters['departmentFilter'] ?? '';
+
+    }
+
     public function viewEmployee($id)
     {
         $page = $this->getPage();
@@ -45,11 +56,12 @@ class Index extends Component
             'employee_list' => [
                 'page' => $page > 1 ? $page : null,
                 'search' => $this->search ?: null,
+                'companyFilter' => $this->companyFilter ?: null,
+                'departmentFilter' => $this->departmentFilter ?: null,
             ],
         ]);
 
-        return $this->redirectRoute(
-            'employee.show',
+        return $this->redirectRoute('employee.show',
             [
                 'employee' => $id,
             ],

@@ -5,20 +5,11 @@
     @include('partials.head')
 </head>
 
-@php
-    $currentRoute = request()->route()->getName();
-
-    $title = [
-        'id.index' => 'ID Management',
-    ];
-
-@endphp
-
 <body class="min-h-screen bg-white dark:bg-zinc-800">
     <flux:header class="border-b border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
         <flux:sidebar.toggle class="mr-2 lg:hidden" icon="bars-2" inset="left" />
 
-        <x-app-logo title="Mamsar | {{ $title[$currentRoute] }}" href="{{ route('dashboard.index') }}" wire:navigate />
+        <x-app-logo title="Mamsar | ID Management" href="{{ route('dashboard.index') }}" wire:navigate />
 
         <flux:navbar class="-mb-px max-lg:hidden">
             <flux:navbar.item icon="layout-grid" :href="route('dashboard.index')"

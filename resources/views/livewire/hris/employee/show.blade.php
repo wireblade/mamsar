@@ -23,6 +23,8 @@
             array_filter([
                 'page' => session('employee_list.page'),
                 'search' => session('employee_list.search'),
+                'companyFilter' => session('employee_list.companyFilter'),
+                'departmentFilter' => session('employee_list.departmentFilter'),
             ]),
         ) }}"
             wire:navigate

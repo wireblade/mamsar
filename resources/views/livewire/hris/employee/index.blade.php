@@ -29,7 +29,7 @@
         {{-- Company Filter --}}
         <div class="w-full lg:w-64">
             <select wire:model.live="companyFilter"
-                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
+                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
                 <option value="">All Companies</option>
 
                 @foreach ($companies as $company)
@@ -44,7 +44,7 @@
         {{-- Static for now --}}
         <div class="w-full lg:w-64">
             <select wire:model.live="departmentFilter"
-                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none transition focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
+                class="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-800 dark:text-white dark:focus:border-orange-500">
                 <option value="">All Companies</option>
 
                 @foreach ($departments as $department)
@@ -114,7 +114,7 @@
                 {{-- ==================================================== --}}
                 <tbody class="divide-y divide-zinc-100 dark:divide-zinc-800">
                     @forelse ($employees as $employee)
-                        <tr class="transition hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
+                        <tr class="hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40">
                             {{-- ======================================== --}}
                             {{-- EMPLOYEE --}}
                             {{-- ======================================== --}}

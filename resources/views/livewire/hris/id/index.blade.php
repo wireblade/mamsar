@@ -15,7 +15,7 @@
 
                 {{-- Search Input --}}
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search employees..."
-                    class="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 hover:border-zinc-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:hover:border-zinc-600 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
+                    class="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-900 outline-none transition-transform placeholder:text-zinc-400 hover:border-zinc-300 focus:border-orange-500 focus:ring-2 focus:ring-orange-500/10 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:hover:border-zinc-600 dark:focus:border-orange-500 dark:focus:ring-orange-500/15" />
 
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="grid gap-6 p-5 sm:grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
             @foreach ($employees as $employee)
                 <div
-                    class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900 dark:shadow-none">
+                    class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-700 dark:bg-zinc-900 dark:shadow-none">
                     {{-- ========================================================== --}}
                     {{-- EMPLOYEE HEADER --}}
                     {{-- ========================================================== --}}
