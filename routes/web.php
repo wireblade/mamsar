@@ -37,7 +37,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // This is for the employee management
     Route::get('hris/employee/', EmployeeIndex::class)->name('employee.index');
     Route::get('hris/employee/create', EmployeeCreate::class)->name('employee.create');
-    Route::get('hris/employee/{employee}', EmployeeShow::class)->name('employee.show');
+    Route::get('hris/employee/{id}', EmployeeShow::class)->name('employee.show');
 
     // This is for the company management
     Route::get('hris/company/', CompanyIndex::class)->name('company.index');
