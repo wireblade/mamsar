@@ -47,12 +47,13 @@
                     {{-- Photo --}}
                     <div
                         class="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-zinc-100 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700">
-                        @if ($employee->image->path)
-                            <img src="{{ asset('storage/' . $employee->image?->pic . '/' . $employee->images->path) }}"
-                                alt="{{ $fname }}" class="size-full object-cover" />
+                        @if ($employee->image->pic)
+                            <img src="{{ asset('storage/' . $employee->image->pic . '/' . $employee->image->path) }}"
+                                alt="{{ $employee->fname }}" class="size-full object-cover" />
                         @else
                             <span class="text-2xl font-semibold text-zinc-400 dark:text-zinc-500">
-                                {{ strtoupper(substr($fname, 0, 1)) }} {{ strtoupper(substr($lname, 0, 1)) }}
+                                {{ strtoupper(substr($employee->fname, 0, 1)) }}
+                                {{ strtoupper(substr($employee->lname, 0, 1)) }}
                             </span>
                         @endif
                     </div>q
@@ -67,7 +68,7 @@
                             </span>
 
                             <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                                {{ $id_number }}
+                                {{ $employee->empinfo->id_number }}
                             </span>
                         </div>
 

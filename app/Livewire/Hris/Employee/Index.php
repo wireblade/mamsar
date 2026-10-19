@@ -63,7 +63,7 @@ class Index extends Component
 
         return $this->redirectRoute('employee.show',
             [
-                'employee' => $id,
+                'id' => $id,
             ],
             navigate: true
         );

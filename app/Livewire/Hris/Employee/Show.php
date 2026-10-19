@@ -9,7 +9,7 @@ class Show extends Component
 {
     public $id = '';
 
-    public function mount(int $id)
+    public function mount($id)
     {
         $this->id = $id;
     }
@@ -24,11 +24,8 @@ class Show extends Component
 
     public function render()
     {
-        $id = $this->id;
-
-        $employee = Employee::findOrFail($id)
-            ->with('image', 'empinfo')
-            ->get();
+        $employee = Employee::with('image', 'empinfo')
+            ->find($this->id);
 
         return view('livewire.hris.employee.show', [
             'employee' => $employee,
