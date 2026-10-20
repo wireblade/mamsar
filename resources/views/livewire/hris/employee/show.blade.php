@@ -48,7 +48,7 @@
                     <div
                         class="flex size-24 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-zinc-100 ring-1 ring-zinc-200 dark:bg-zinc-800 dark:ring-zinc-700">
                         @if ($employee->image->pic)
-                            <img src="{{ asset('storage/' . $employee->image->pic . '/' . $employee->image->path) }}"
+                            <img src="{{ asset('storage/' . $employee->image->path . '/' . $employee->image->pic) }}"
                                 alt="{{ $employee->fname }}" class="size-full object-cover" />
                         @else
                             <span class="text-2xl font-semibold text-zinc-400 dark:text-zinc-500">
@@ -56,28 +56,23 @@
                                 {{ strtoupper(substr($employee->lname, 0, 1)) }}
                             </span>
                         @endif
-                    </div>q
+                    </div>
 
                     {{-- Main Details --}}
                     <div>
                         <div class="mb-2 flex flex-wrap items-center gap-2">
-                            <span
-                                class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:ring-green-500/20">
-                                <span class="size-1.5 rounded-full bg-green-500"></span>
-                                Active
-                            </span>
 
                             <span class="text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                                {{ $employee->empinfo->id_number }}
+                                #{{ $employee->empinfo->id_number }}
                             </span>
                         </div>
 
                         <h1 class="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl dark:text-white">
-                            {{ $this->getFullname() }}
+                            {{ $this->getFullname($employee->fname, $employee->mname, $employee->lname) }}
                         </h1>
 
                         <p class="mt-1.5 text-sm text-zinc-600 dark:text-zinc-300">
-                            {{ $empinfo?->position ?? 'No position assigned' }}
+                            {{ $employee->empinfo?->position->name ?? 'No position assigned' }}
                         </p>
 
                         {{-- Company / Department --}}
@@ -87,14 +82,14 @@
                                 <flux:icon.building-office-2 class="size-4" />
 
                                 {{-- Static until relationship is ready --}}
-                                Mamsar Construction & Industrial Corporation
+                                {{ $employee->empinfo->position->department->company->name }}
                             </span>
 
                             <span class="inline-flex items-center gap-1.5">
                                 <flux:icon.building-office class="size-4" />
 
                                 {{-- Static --}}
-                                Engineering
+                                {{ $employee->empinfo->position->department->name }}
                             </span>
                         </div>
                     </div>
@@ -255,41 +250,46 @@
                     <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">First Name</dt>
-                            <dd class="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">{{ $fname }}
+                            <dd class="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                                {{ $employee->fname }}
                             </dd>
                         </div>
 
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Middle Name</dt>
-                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">{{ $mname ?: '-' }}</dd>
+                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">{{ $employee->mname ?: '-' }}
+                            </dd>
                         </div>
 
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Last Name</dt>
                             <dd class="mt-1.5 text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                                {{ $lname }}
+                                {{ $employee->lname }}
                             </dd>
                         </div>
 
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Date of Birth</dt>
-                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">{{ $dob ?? '-' }}</dd>
+                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">{{ $employee->dob ?? '-' }}
+                            </dd>
                         </div>
 
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Civil Status</dt>
-                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">-</dd>
+                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">
+                                {{ $employee->marital_status ?? '-' }}</dd>
                         </div>
 
                         <div>
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Contact Number</dt>
-                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">-</dd>
+                            <dd class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">
+                                {{ $employee->contactNumber }}-</dd>
                         </div>
 
                         <div class="sm:col-span-2 lg:col-span-3">
                             <dt class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Address</dt>
                             <dd class="mt-1.5 text-sm leading-6 text-zinc-700 dark:text-zinc-300">
-                                {{ $address ?? '-' }}</dd>
+                                {{ $employee->address ?? '-' }}</dd>
                         </div>
                     </dl>
                 </div>
@@ -315,40 +315,44 @@
                 <dl class="grid divide-y divide-zinc-100 sm:grid-cols-2 sm:divide-y-0 dark:divide-zinc-800">
                     <div class="px-6 py-4 sm:border-b sm:border-zinc-100 sm:dark:border-zinc-800">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Employee ID</dt>
-                        <dd class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{{ $id_number }}</dd>
+                        <dd class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">
+                            {{ $employee->empinfo->id_number }}</dd>
                     </div>
 
                     <div class="px-6 py-4 sm:border-b sm:border-zinc-100 sm:dark:border-zinc-800">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Company</dt>
-                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">Mamsar Construction & Industrial
-                            Corporation</dd>
+                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+                            {{ $employee->empinfo->position->department->company->name }}</dd>
                     </div>
 
                     <div class="px-6 py-4 sm:border-b sm:border-zinc-100 sm:dark:border-zinc-800">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Department</dt>
-                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">Engineering</dd>
+                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+                            {{ $employee->empinfo->position->department->name }}</dd>
                     </div>
 
                     <div class="px-6 py-4 sm:border-b sm:border-zinc-100 sm:dark:border-zinc-800">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Position</dt>
-                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">{{ $empinfo?->position ?? '-' }}
+                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">
+                            {{ $employee->empinfo->position->name ?? '-' }}
                         </dd>
                     </div>
 
                     <div class="px-6 py-4">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Date Hired</dt>
-                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">January 15, 2024</dd>
+                        <dd class="mt-1 text-sm text-zinc-700 dark:text-zinc-300">{{ $employee->dob }}</dd>
                     </div>
 
                     <div class="px-6 py-4">
                         <dt class="text-xs text-zinc-500 dark:text-zinc-400">Employment Status</dt>
-                        <dd class="mt-2">
+                        {{-- <dd class="mt-2">
                             <span
                                 class="inline-flex items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
                                 <span class="size-1.5 rounded-full bg-green-500"></span>
                                 Active
                             </span>
-                        </dd>
+                        </dd> --}}
+                        <x-status.status mt="2" is_active="{{ $employee->empinfo->is_active }}" />
                     </div>
                 </dl>
             </section>
@@ -374,22 +378,26 @@
                 <div class="grid gap-6 p-6 sm:grid-cols-2">
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">SSS Number</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">00-0000000-0</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->govid->sss_no }}</p>
                     </div>
 
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">TIN</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">000-000-000-000</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->govid->tin_no ?: 'N/A' }}</p>
                     </div>
 
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">PhilHealth</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">00-000000000-0</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->govid->philhealth_no ?: 'N/A' }}</p>
                     </div>
 
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">Pag-IBIG</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">0000-0000-0000</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->govid->pagibig_no ?: 'N/A' }}</p>
                     </div>
                 </div>
             </section>
@@ -415,17 +423,20 @@
                 <div class="grid gap-6 p-6 sm:grid-cols-2">
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">Contact Person</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">Maria Dela Cruz</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->emergency->contact_name ?: 'N/A' }}</p>
                     </div>
 
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">Contact Number</p>
-                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">0912 345 6789</p>
+                        <p class="mt-1.5 text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                            {{ $employee->emergency->contact_number ?: 'N/A' }}</p>
                     </div>
 
                     <div>
                         <p class="text-xs text-zinc-500 dark:text-zinc-400">Relationship</p>
-                        <p class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">Spouse</p>
+                        <p class="mt-1.5 text-sm text-zinc-700 dark:text-zinc-300">
+                            {{ $employee->emergency->relation ?: 'N/A' }}</p>
                     </div>
                 </div>
             </section>

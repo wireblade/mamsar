@@ -19,10 +19,7 @@
                             {{ $this->companyName }}
                         </h1>
 
-                        <span
-                            class="inline-flex items-center rounded-full bg-green-50 px-2.5 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-500/10 dark:text-green-400">
-                            Active
-                        </span>
+
                     </div>
 
                     <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{{ $companyCode }}</p>
@@ -183,10 +180,7 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <span
-                                    class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                    Active
-                                </span>
+                                <x-status.status is_active="{{ $department->is_active }}" />
                             </td>
                         </tr>
                     @endforeach
@@ -273,10 +267,7 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <span
-                                    class="inline-flex rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-500/10 dark:text-green-400">
-                                    Active
-                                </span>
+                                <x-status.status is_active="{{ $department->is_active }}" />
                             </td>
                         </tr>
                     @endforeach

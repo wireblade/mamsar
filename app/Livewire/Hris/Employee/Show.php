@@ -14,11 +14,11 @@ class Show extends Component
         $this->id = $id;
     }
 
-    public function getFullname()
+    public function getFullname($fname, $mname, $lname = '')
     {
-        $middle = $this->mname != '' ? strtoupper(substr($this->mname, 0, 1)).'.' : '';
+        $middle = ! empty($mname) ? strtoupper(substr($mname, 0, 1)).'.' : '';
 
-        return $this->lname.', '.$this->fname.' '.$middle;
+        return trim($lname.', '.$fname.' '.$middle);
 
     }
 
