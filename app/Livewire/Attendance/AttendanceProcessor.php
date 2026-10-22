@@ -22,6 +22,8 @@ class AttendanceProcessor extends Component
 
     public $endDate;
 
+    public string $companyCode = 'MCIC';
+
     public function mount(): void
     {
         $this->startDate = now()->startOfMonth()->toDateString();
@@ -42,6 +44,9 @@ class AttendanceProcessor extends Component
                 'required',
                 'date',
                 'after_or_equal:startDate',
+            ],
+            'companyCode' => [
+                'required', 'in:MCIC,4KDC',
             ],
         ]);
 
@@ -122,14 +127,100 @@ class AttendanceProcessor extends Component
             }
 
             /*
+            |--------------------------------------------------------------------------
+            | Validate Excel attendance dates against the selected date range
+            |--------------------------------------------------------------------------
+            */
+
+            $selectedStart = Carbon::parse($this->startDate)->toDateString();
+            $selectedEnd = Carbon::parse($this->endDate)->toDateString();
+
+            foreach ($records as $record) {
+
+                $acNo = trim((string) ($record['ac-no.'] ?? ''));
+
+                if ($acNo !== '' && ctype_digit($acNo)) {
+                    $acNoNumber = (int) $acNo;
+
+                    $wrongCompany = (
+                        $this->companyCode === 'MCIC'
+                        && $acNoNumber >= 201
+                        && $acNoNumber <= 500
+                    ) || (
+                        $this->companyCode === '4KDC'
+                        && $acNoNumber >= 1
+                        && $acNoNumber <= 200
+                    );
+
+                    if ($wrongCompany) {
+                        $expectedCompany = $this->companyCode === 'MCIC'
+                            ? 'MCIC / Zeman (AC-No. 1–200)'
+                            : '4KDC (AC-No. 201–500)';
+
+                        $this->addError(
+                            'file',
+                            'Upload cancelled! The selected company is '.
+                            $this->companyCode.
+                            ', but AC-No. '.$acNo.
+                            ' belongs to the other company range. '.
+                            'Please select the correct company. Expected: '.
+                            $expectedCompany.
+                            '. No attendance records were saved.'
+                        );
+
+                        return;
+                    }
+                }
+
+                $rawDate = $record['date'] ?? null;
+
+                if ($rawDate === null || $rawDate === '') {
+                    continue;
+                }
+
+                try {
+                    if (is_numeric($rawDate)) {
+                        $attendanceDate = ExcelDate::excelToDateTimeObject(
+                            (float) $rawDate
+                        )->format('Y-m-d');
+                    } else {
+                        $attendanceDate = Carbon::parse($rawDate)->toDateString();
+                    }
+                } catch (\Throwable $e) {
+                    // Keep existing handling for unparseable dates.
+                    continue;
+                }
+
+                if (
+                    $attendanceDate < $selectedStart ||
+                    $attendanceDate > $selectedEnd
+                ) {
+                    $this->addError(
+                        'file',
+                        'Upload cancelled! The Excel file contains attendance dates outside your selected range ('.
+                        $selectedStart.' to '.$selectedEnd.
+                        '). Please correct your date range and upload again. No attendance records were saved.'
+                    );
+
+                    return;
+                }
+            }
+
+            /*
              * Attendance calculations will be added next.
              * For now, save the source records temporarily
              * so the next step can process them.
              */
 
-            $results = $this->buildAttendanceResults($records);
+            $results = $this->buildAttendanceResults(
+                $records,
+                $this->companyCode
+            );
 
-            $this->saveAttendanceResults($results);
+            $this->saveAttendanceResults(
+                $results,
+                $this->companyCode
+            );
 
             $reportDate = Carbon::parse($this->endDate);
 
@@ -141,7 +232,10 @@ class AttendanceProcessor extends Component
                 ? $reportDate->copy()->day(15)
                 : $reportDate->copy()->endOfMonth();
 
-            $cutoff = AttendanceCutoff::whereDate(
+            $cutoff = AttendanceCutoff::where(
+                'company_code',
+                $this->companyCode
+            )->whereDate(
                 'start_date',
                 $cutoffStart->toDateString()
             )->whereDate(
@@ -158,20 +252,16 @@ class AttendanceProcessor extends Component
                 return;
             }
 
+            session()->flash(
+                'attendance_message',
+                'Attendance uploaded successfully for '.
+                $this->companyCode.'.'
+            );
+
             $this->redirectRoute('attendance.report', [
                 'cutoff' => $cutoff->id,
             ]);
 
-            return;
-
-            session(['attendance_source_token' => $token]);
-
-            session()->flash(
-                'attendance_message',
-                'Excel file read successfully. '.
-                count($records).
-                ' source records found.'
-            );
         } catch (\Throwable $e) {
             Log::error('Attendance file processing failed.', [
                 'message' => $e->getMessage(),
@@ -184,10 +274,25 @@ class AttendanceProcessor extends Component
         }
     }
 
-    private function getShift(string $acNo): array
-    {
+    private function getShift(
+        string $acNo,
+        string $companyCode
+    ): array {
         $acNo = trim($acNo);
 
+        // 4KDC schedule
+        if ($companyCode === '4KDC') {
+            return [
+                'morning_start' => '07:30',
+                'morning_end' => '12:00',
+                'afternoon_start' => '13:00',
+                'afternoon_end' => '16:30',
+                'morning_grace' => 5,
+                'afternoon_grace' => 0,
+            ];
+        }
+
+        // MCIC exceptions: employees starting at 9:30 AM
         if (in_array($acNo, ['63', '50'], true)) {
             return [
                 'morning_start' => '09:30',
@@ -199,9 +304,10 @@ class AttendanceProcessor extends Component
             ];
         }
 
+        // MCIC exceptions: employees starting at 7:30 AM
         if (in_array(
             $acNo,
-            ['4', '17', '42', '43', '58', '112', '87', '90', '115'],
+            ['4', '17', '40', '42', '43', '58', '112', '87', '90', '115'],
             true
         )) {
             return [
@@ -214,6 +320,7 @@ class AttendanceProcessor extends Component
             ];
         }
 
+        // Default MCIC schedule
         return [
             'morning_start' => '08:00',
             'morning_end' => '12:00',
@@ -285,8 +392,10 @@ class AttendanceProcessor extends Component
         return (int) $actualStart->diffInMinutes($actualEnd);
     }
 
-    private function buildAttendanceResults(array $records): array
-    {
+    private function buildAttendanceResults(
+        array $records,
+        string $companyCode
+    ): array {
         $employees = [];
         $attendanceByDate = [];
 
@@ -343,7 +452,10 @@ class AttendanceProcessor extends Component
 
         foreach ($employees as $acNo => $employee) {
             // This automatically selects the employee's assigned shift.
-            $shift = $this->getShift((string) $acNo);
+            $shift = $this->getShift(
+                (string) $acNo,
+                $companyCode
+            );
 
             for (
                 $date = $start->copy();
@@ -602,9 +714,11 @@ class AttendanceProcessor extends Component
         }
     }
 
-    private function saveAttendanceResults(array $results): void
-    {
-        DB::transaction(function () use ($results) {
+    private function saveAttendanceResults(
+        array $results,
+        string $companyCode
+    ): void {
+        DB::transaction(function () use ($results, $companyCode) {
             $recordsByCutoff = [];
             $cutoffs = [];
 
@@ -622,7 +736,7 @@ class AttendanceProcessor extends Component
 
                 $startDate = $cutoffStart->toDateString();
                 $endDate = $cutoffEnd->toDateString();
-                $cutoffKey = $startDate.'|'.$endDate;
+                $cutoffKey = $companyCode.'|'.$startDate.'|'.$endDate;
 
                 // Create the cutoff only if it does not exist yet.
                 if (! isset($cutoffs[$cutoffKey])) {
@@ -633,6 +747,7 @@ class AttendanceProcessor extends Component
 
                     $cutoffs[$cutoffKey] = AttendanceCutoff::firstOrCreate(
                         [
+                            'company_code' => $companyCode,
                             'start_date' => $startDate,
                             'end_date' => $endDate,
                         ],

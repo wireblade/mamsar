@@ -39,7 +39,7 @@
 
                     @foreach ($cutoffs as $cutoff)
                         <option value="{{ $cutoff->id }}">
-                            {{ $cutoff->name }}
+                            {{ $cutoff->company_code }} — {{ $cutoff->name }}
                         </option>
                     @endforeach
                 </select>

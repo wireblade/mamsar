@@ -1,6 +1,7 @@
 <div>
 
     <div class="mx-auto max-w-5xl space-y-6 p-4 sm:p-6 lg:p-8">
+        @include('livewire.attendance.partials.navbar')
 
         {{-- Page Header --}}
         <div>
@@ -16,6 +17,27 @@
                 Upload your attendance Excel file and select the date range
                 to process.
             </p>
+
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="{{ route('attendance.cutoffs') }}"
+                    class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="17" rx="2" stroke-width="1.8" />
+                        <path stroke-linecap="round" stroke-width="1.8" d="M16 2v4M8 2v4M3 10h18" />
+                    </svg>
+                    Cutoff History
+                </a>
+
+                <a href="{{ route('attendance.edit') }}"
+                    class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                            d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z" />
+                    </svg>
+                    Record Editor
+                </a>
+            </div>
+
         </div>
 
         {{-- Upload Form --}}
@@ -24,9 +46,33 @@
 
             <form wire:submit="processAttendance" class="space-y-6">
 
+                {{-- Company Selection --}}
+                <div>
+                    <label for="company-code" class="mb-2 block text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                        Company
+                    </label>
+
+                    <select id="company-code" wire:model="companyCode"
+                        class="w-full rounded-xl border border-zinc-300 bg-white px-3 py-2.5 text-sm text-zinc-900 focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-500/20 dark:border-zinc-700 dark:bg-zinc-950 dark:text-white">
+
+                        <option value="MCIC">MCIC (Includes Zeman Marine)</option>
+                        <option value="4KDC">4K Development Corporation (4KDC)</option>
+                    </select>
+
+                    @error('companyCode')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
+
+                    <p class="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                        Select the company associated with the uploaded biometric records.
+                    </p>
+                </div>
+
+
                 {{-- Excel File --}}
                 <div>
-                    <label for="attendance-file" class="mb-2 block text-sm font-medium text-zinc-800 dark:text-zinc-200">
+                    <label for="attendance-file"
+                        class="mb-2 block text-sm font-medium text-zinc-800 dark:text-zinc-200">
                         Attendance Excel File
                     </label>
 

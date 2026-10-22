@@ -118,6 +118,7 @@ class AttendanceReport extends Component
         }
 
         $filename = 'Attendance_'
+            .$cutoff->company_code.'_'
             .str_replace(' ', '_', $cutoff->name)
             .'.xlsx';
 

@@ -10,6 +10,7 @@ class AttendanceCutoff extends Model
 {
     protected $fillable = [
         'name',
+        'company_code',
         'start_date',
         'end_date',
         'uploaded_by',

@@ -4,6 +4,8 @@ use App\Livewire\Attendance\AttendanceCutoffHistory;
 use App\Livewire\Attendance\AttendanceProcessor;
 use App\Livewire\Attendance\AttendanceRecordEditor;
 use App\Livewire\Attendance\AttendanceReport;
+use App\Livewire\Attendance\WeeklyAttendanceProcessor;
+use App\Livewire\Attendance\WeeklyAttendanceReport;
 use App\Livewire\Dashboard\Index as DashboardIndex;
 
 // This is for the Employee management
@@ -30,6 +32,7 @@ use App\Livewire\Hris\Position\Index as PositionIndex;
 // This is for the Rover management
 use App\Livewire\Rover\CreateTicket as RoverCreateTicket;
 use App\Livewire\Rover\Index as RoverIndex;
+use App\Models\WeeklyAttendanceRecord;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'login');
@@ -62,10 +65,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', DashboardIndex::class)->name('home');
 });
 
-Route::get('biometric/', AttendanceProcessor::class)->name('attendance.index');
-Route::get('biometric/report', AttendanceReport::class)->name('attendance.report');
-Route::get('biometric/cutoffs', AttendanceCutoffHistory::class)->name('attendance.cutoffs');
-Route::get('biometric/record-editor', AttendanceRecordEditor::class)->name('attendance.edit');
+Route::get('attendance/regular', AttendanceProcessor::class)->name('attendance.processor');
+Route::get('attendance/regular/report', AttendanceReport::class)->name('attendance.report');
+Route::get('attendance/regular/cutoffs', AttendanceCutoffHistory::class)->name('attendance.cutoffs');
+Route::get('attendance/regular/record-editor', AttendanceRecordEditor::class)->name('attendance.edit');
+
+Route::get('/attendance/weekly/', WeeklyAttendanceProcessor::class)->name('attendance.weekly.process');
+Route::get('/attendance/weekly/report', WeeklyAttendanceReport::class)->name('attendance.weekly.report');
 
 Route::get('rover/', RoverIndex::class)->name('rover.index');
 Route::get('rover/create-ticket/', RoverCreateTicket::class)->name('rover.create-ticket');

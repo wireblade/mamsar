@@ -1,5 +1,18 @@
 <div class="mx-auto max-w-full space-y-6 p-4 sm:p-6 lg:p-8">
 
+    @if (session()->has('attendance_message'))
+        <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 4000)" x-show="show" x-transition
+            class="flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-900/30 dark:text-green-300">
+
+            <span>{{ session('attendance_message') }}</span>
+
+            <button type="button" @click="show = false"
+                class="ml-4 text-green-700 hover:text-green-900 dark:text-green-300" aria-label="Dismiss notification">
+                &times;
+            </button>
+        </div>
+    @endif
+
     {{-- Header --}}
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
@@ -8,11 +21,18 @@
             </h1>
 
             @if ($cutoff)
-                <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                    {{ $cutoff->name }}
-                    <span class="mx-1">·</span>
-                    {{ $startDate }} to {{ $endDate }}
-                </p>
+                <div class="mt-2 flex flex-wrap items-center gap-2">
+                    <span
+                        class="inline-flex rounded-full bg-orange-100 px-3 py-1 text-xs font-semibold text-orange-700 dark:bg-orange-900/30 dark:text-orange-300">
+                        {{ $cutoff->company_code }}
+                    </span>
+
+                    <span class="text-sm text-zinc-600 dark:text-zinc-400">
+                        {{ $cutoff->name }}
+                        <span class="mx-1">·</span>
+                        {{ $startDate }} to {{ $endDate }}
+                    </span>
+                </div>
             @else
                 <p class="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                     View saved attendance records by cutoff period.

@@ -16,7 +16,10 @@ class AttendanceCutoffHistory extends Component
             ->when(trim($this->search) !== '', function ($query) {
                 $search = trim($this->search);
 
-                $query->where('name', 'like', '%'.$search.'%');
+                $query->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('company_code', 'like', '%'.$search.'%');
+                });
             })
             ->orderByDesc('start_date')
             ->get();

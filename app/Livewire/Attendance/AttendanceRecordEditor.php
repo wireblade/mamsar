@@ -100,7 +100,12 @@ class AttendanceRecordEditor extends Component
             $in2 = $this->parseEditedTime($times['clock_in_2'] ?? null, $date);
             $out2 = $this->parseEditedTime($times['clock_out_2'] ?? null, $date);
 
-            $shift = $this->getShift((string) $record->ac_no);
+            $cutoff = AttendanceCutoff::findOrFail($this->cutoffId);
+
+            $shift = $this->getShift(
+                (string) $record->ac_no,
+                $cutoff->company_code
+            );
 
             // Determine whether the record uses four punches.
             $hasAfternoonPunch = $in2 !== null || $out2 !== null;
@@ -235,10 +240,23 @@ class AttendanceRecordEditor extends Component
         return Carbon::parse($date.' '.$value);
     }
 
-    private function getShift(string $acNo): array
+    private function getShift(string $acNo, string $companyCode): array
     {
         $acNo = trim($acNo);
 
+        // 4K Development Corporation schedule.
+        if ($companyCode === '4KDC') {
+            return [
+                'morning_start' => '07:30',
+                'morning_end' => '12:00',
+                'afternoon_start' => '13:00',
+                'afternoon_end' => '16:30',
+                'morning_grace' => 5,
+                'afternoon_grace' => 0,
+            ];
+        }
+
+        // MCIC schedule exceptions.
         if (in_array($acNo, ['63', '50'], true)) {
             return [
                 'morning_start' => '09:30',
@@ -265,6 +283,7 @@ class AttendanceRecordEditor extends Component
             ];
         }
 
+        // Default MCIC schedule.
         return [
             'morning_start' => '08:00',
             'morning_end' => '12:00',
