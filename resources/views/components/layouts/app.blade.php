@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-appearance="light">
 
 <head>
     <meta charset="UTF-8">
@@ -19,9 +19,15 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- ADD THIS INSTEAD to hardcode Light mode -->
+    <script>
+        localStorage.setItem('flux.appearance', 'light');
+        document.documentElement.setAttribute('data-appearance', 'light');
+        document.documentElement.classList.remove('dark');
+    </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @fluxAppearance
+
 
     <div class="pointer-events-none fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat opacity-50"
         style="background-image: url('{{ asset('storage/backgrounds/wallpaper.png') }}')"></div>
