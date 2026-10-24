@@ -63,6 +63,11 @@
                     {{ __('Documentation') }}
                 </flux:sidebar.item> --}}
 
+            <flux:sidebar.item icon="calendar-days" :href="route('attendance.index')"
+                :current="request()->routeIs('attendance.*')" wire:navigate>
+                {{ __('Attendance Management') }}
+            </flux:sidebar.item>
+
             <flux:sidebar.item icon="book-open-text" :href="route('id.index')"
                 :current="request()->routeIs('id.index')" wire:navigate>
                 {{ __('ID Management') }}

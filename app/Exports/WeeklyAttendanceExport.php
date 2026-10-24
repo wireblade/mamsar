@@ -46,7 +46,7 @@ class WeeklyAttendanceExport implements FromCollection, ShouldAutoSize, WithHead
         return [
             $record->ac_no,
             $record->employee_name,
-            $record->attendance_date,
+            $record->attendance_date?->format('Y-m-d'),
             $record->is_half_day ? 'Yes' : '',
             $record->late_minutes_morning,
             $record->late_minutes_afternoon,

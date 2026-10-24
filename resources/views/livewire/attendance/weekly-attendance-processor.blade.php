@@ -1,18 +1,36 @@
 <div>
     <div class="mx-auto max-w-5xl space-y-6 p-4 sm:p-6 lg:p-8">
+        <a href="{{ route('attendance.index') }}"
+            class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
+            <span aria-hidden="true">←</span>
+            Back to Attendance Dashboard
+        </a>
         @include('livewire.attendance.partials.navbar')
+        <div x-data="{
+            show: false,
+            message: '',
+            timer: null,
+            display(message) {
+                this.message = message;
+                this.show = true;
+        
+                clearTimeout(this.timer);
+        
+                this.timer = setTimeout(() => {
+                    this.show = false;
+                }, 3000);
+            }
+        }" x-on:weekly-attendance-success.window="display($event.detail.message)" x-cloak
+            x-show="show" x-transition:leave.duration.300ms
+            class="mb-4 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300"
+            role="status" aria-live="polite">
+            <span x-text="message"></span>
 
-        @if ($successMessage)
-            <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition:leave.duration.300ms
-                class="mb-4 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300"
-                role="status">
-                <span>{{ $successMessage }}</span>
+            <button type="button" @click="show = false" class="ml-4 text-lg" aria-label="Dismiss notification">
+                &times;
+            </button>
+        </div>
 
-                <button type="button" @click="show = false" class="ml-4 text-lg" aria-label="Dismiss notification">
-                    &times;
-                </button>
-            </div>
-        @endif
 
         {{-- Header --}}
         <div>

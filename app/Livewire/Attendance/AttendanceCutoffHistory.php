@@ -3,11 +3,24 @@
 namespace App\Livewire\Attendance;
 
 use App\Models\AttendanceCutoff;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class AttendanceCutoffHistory extends Component
 {
     public string $search = '';
+
+    public function deleteCutoff(int $cutoffId): void
+    {
+        $cutoff = AttendanceCutoff::findOrFail($cutoffId);
+
+        DB::transaction(function () use ($cutoff) {
+            $cutoff->records()->delete();
+            $cutoff->delete();
+        });
+
+        session()->flash('success', 'Attendance cutoff and its records deleted successfully.');
+    }
 
     public function render()
     {

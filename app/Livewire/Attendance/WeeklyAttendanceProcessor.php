@@ -19,8 +19,6 @@ class WeeklyAttendanceProcessor extends Component
 
     public $file;
 
-    public string $successMessage = '';
-
     public string $companyCode = 'MCIC';
 
     public string $weekStartDate = '';
@@ -245,7 +243,10 @@ class WeeklyAttendanceProcessor extends Component
 
         $this->results = $records;
 
-        $this->successMessage = 'Weekly attendance uploaded successfully.';
+        $this->dispatch(
+            'weekly-attendance-success',
+            message: 'Weekly attendance processed successfully.'
+        );
 
     }
 
@@ -337,7 +338,7 @@ class WeeklyAttendanceProcessor extends Component
                 ];
             } elseif (in_array(
                 $acNo,
-                ['4', '17', '40', '42', '43', '58', '112', '87', '90', '115'],
+                ['16', '70', '35', '100', '110', '75', '81', '101'],
                 true
             )) {
                 $shift = [

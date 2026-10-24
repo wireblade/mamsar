@@ -1,13 +1,15 @@
 <div>
 
     <div class="mx-auto max-w-5xl space-y-6 p-4 sm:p-6 lg:p-8">
+        <a href="{{ route('attendance.index') }}"
+            class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
+            <span aria-hidden="true">←</span>
+            Back to Attendance Dashboard
+        </a>
         @include('livewire.attendance.partials.navbar')
 
         {{-- Page Header --}}
         <div>
-            <p class="text-sm font-medium text-orange-600 dark:text-orange-400">
-                Attendance Management
-            </p>
 
             <h1 class="mt-1 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
                 Attendance Processor
@@ -28,14 +30,6 @@
                     Cutoff History
                 </a>
 
-                <a href="{{ route('attendance.edit') }}"
-                    class="inline-flex items-center gap-2 rounded-lg border border-zinc-300 bg-white px-4 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                            d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L8 18l-4 1 1-4Z" />
-                    </svg>
-                    Record Editor
-                </a>
             </div>
 
         </div>

@@ -4,16 +4,30 @@ namespace App\Livewire\Attendance;
 
 use App\Exports\AttendanceCutoffExport;
 use App\Models\AttendanceCutoff;
+use App\Models\AttendanceRecord;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Maatwebsite\Excel\Facades\Excel;
 
 class AttendanceReport extends Component
 {
+    use WithPagination;
+
     public $cutoffId;
 
     public string $search = '';
 
     public string $statusFilter = 'ALL';
+
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedStatusFilter(): void
+    {
+        $this->resetPage();
+    }
 
     public function mount(): void
     {
@@ -45,43 +59,37 @@ class AttendanceReport extends Component
             return null;
         }
 
-        return AttendanceCutoff::with('records')
-            ->find($this->cutoffId);
+        // Load only the cutoff details, not all attendance records.
+        return AttendanceCutoff::find($this->cutoffId);
     }
 
-    public function getFilteredResultsProperty(): array
+    public function getFilteredResultsProperty()
     {
-        $cutoff = $this->cutoff;
-
-        if (! $cutoff) {
-            return [];
+        if (! $this->cutoffId) {
+            return AttendanceRecord::query()
+                ->whereRaw('1 = 0')
+                ->paginate(200);
         }
 
-        return $cutoff->records
-            ->filter(function ($record) {
-                $search = strtolower(trim($this->search));
+        $search = trim($this->search);
 
-                $matchesSearch = $search === ''
-                    || str_contains(
-                        strtolower((string) $record->ac_no),
-                        $search
-                    )
-                    || str_contains(
-                        strtolower((string) $record->employee_name),
-                        $search
-                    );
-
-                $matchesStatus = $this->statusFilter === 'ALL'
-                    || $record->status === $this->statusFilter;
-
-                return $matchesSearch && $matchesStatus;
+        return AttendanceRecord::query()
+            ->where('attendance_cutoff_id', $this->cutoffId)
+            ->when($search !== '', function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->whereRaw(
+                        'CAST(ac_no AS TEXT) ILIKE ?',
+                        ['%'.$search.'%']
+                    )->orWhere('employee_name', 'ILIKE', '%'.$search.'%');
+                });
             })
-            ->sortBy([
-                ['employee_name', 'asc'],
-                ['attendance_date', 'asc'],
-            ])
-            ->values()
-            ->map(fn ($record) => [
+            ->when($this->statusFilter !== 'ALL', function ($query) {
+                $query->where('status', $this->statusFilter);
+            })
+            ->orderBy('employee_name')
+            ->orderBy('attendance_date')
+            ->paginate(200)
+            ->through(fn ($record) => [
                 'ac_no' => $record->ac_no,
                 'name' => $record->employee_name,
                 'date' => $record->attendance_date->toDateString(),
@@ -103,8 +111,7 @@ class AttendanceReport extends Component
                     ? substr((string) $record->clock_out_2, 0, 5)
                     : null,
                 'status' => $record->status,
-            ])
-            ->all();
+            ]);
     }
 
     public function exportExcel()

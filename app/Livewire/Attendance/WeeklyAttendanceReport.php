@@ -37,6 +37,14 @@ class WeeklyAttendanceReport extends Component
 
     public string $editingDate = '';
 
+    private function ensureAdmin(): void
+    {
+        abort_unless(
+            auth()->check() && auth()->user()->username === 'admin',
+            403
+        );
+    }
+
     public function updatedCompanyCode(): void
     {
         $this->selectedWeekId = null;
@@ -99,6 +107,7 @@ class WeeklyAttendanceReport extends Component
 
     public function saveRecord(): void
     {
+        $this->ensureAdmin();
         $this->validate([
             'clockIn1' => ['nullable', 'date_format:H:i'],
             'clockOut1' => ['nullable', 'date_format:H:i'],
@@ -182,7 +191,7 @@ class WeeklyAttendanceReport extends Component
                 ];
             }
 
-            if (in_array($acNo, [4, 17, 40, 42, 43, 58, 112, 87, 90, 115], true)) {
+            if (in_array($acNo, [16, 70, 35, 100, 110, 75, 81, 101], true)) {
                 $shift = [
                     'morning_start' => '07:30',
                     'morning_end' => '12:00',

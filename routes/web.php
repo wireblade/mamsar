@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Attendance\AttendanceCutoffHistory;
+use App\Livewire\Attendance\AttendanceDashboard;
 use App\Livewire\Attendance\AttendanceProcessor;
 use App\Livewire\Attendance\AttendanceRecordEditor;
 use App\Livewire\Attendance\AttendanceReport;
@@ -65,12 +66,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/home', DashboardIndex::class)->name('home');
 });
 
-Route::get('attendance/regular', AttendanceProcessor::class)->name('attendance.processor');
+Route::middleware('admin.only')->group(function() {
+
+    Route::get('attendance/regular', AttendanceProcessor::class)->name('attendance.processor');
+    Route::get('attendance/regular/record-editor', AttendanceRecordEditor::class)->name('attendance.edit');
+    Route::get('/attendance/weekly/', WeeklyAttendanceProcessor::class)->name('attendance.weekly.process');
+
+});
+
+Route::get('/attendance', AttendanceDashboard::class)->name('attendance.index');
 Route::get('attendance/regular/report', AttendanceReport::class)->name('attendance.report');
 Route::get('attendance/regular/cutoffs', AttendanceCutoffHistory::class)->name('attendance.cutoffs');
-Route::get('attendance/regular/record-editor', AttendanceRecordEditor::class)->name('attendance.edit');
-
-Route::get('/attendance/weekly/', WeeklyAttendanceProcessor::class)->name('attendance.weekly.process');
 Route::get('/attendance/weekly/report', WeeklyAttendanceReport::class)->name('attendance.weekly.report');
 
 Route::get('rover/', RoverIndex::class)->name('rover.index');

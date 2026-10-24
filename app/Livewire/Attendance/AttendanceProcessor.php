@@ -513,6 +513,7 @@ class AttendanceProcessor extends Component
                 */
 
                 $hasAfternoonPunch = $in2 !== null || $out2 !== null;
+                $isAfternoonOnly = false;
 
                 if ($hasAfternoonPunch) {
                     // Four-punch attendance: keep sessions separate.
@@ -522,14 +523,24 @@ class AttendanceProcessor extends Component
                     $afternoonIn = $in2;
                     $afternoonOut = $out2;
                 } else {
-                    // Two-punch attendance: the first pair covers the day.
-                    $morningIn = $in1;
-                    $morningOut = $out1;
+                    // Two-punch attendance: determine which session was worked.
+                    $isAfternoonOnly = $in1 !== null
+                        && $in1->format('H:i') >= $shift['morning_end'];
 
-                    $afternoonIn = $in1;
-                    $afternoonOut = $out1;
+                    if ($isAfternoonOnly) {
+                        $morningIn = null;
+                        $morningOut = null;
+
+                        $afternoonIn = $in1;
+                        $afternoonOut = $out1;
+                    } else {
+                        $morningIn = $in1;
+                        $morningOut = $out1;
+
+                        $afternoonIn = $in1;
+                        $afternoonOut = $out1;
+                    }
                 }
-
                 /*
                 |--------------------------------------------------------------------------
                 | 5. Calculate worked minutes within assigned shift boundaries
@@ -582,19 +593,30 @@ class AttendanceProcessor extends Component
                 |
                 */
 
-                $morningLate = $this->calculateLateMinutes(
-                    $in1,
-                    $shift['morning_start'],
-                    $shift['morning_grace']
-                );
+                if ($isAfternoonOnly) {
+                    // Afternoon-only attendance must not receive morning lateness.
+                    $morningLate = 0;
 
-                $afternoonLate = $hasAfternoonPunch
-                    ? $this->calculateLateMinutes(
-                        $in2,
+                    $afternoonLate = $this->calculateLateMinutes(
+                        $in1,
                         $shift['afternoon_start'],
                         $shift['afternoon_grace']
-                    )
-                    : 0;
+                    );
+                } else {
+                    $morningLate = $this->calculateLateMinutes(
+                        $in1,
+                        $shift['morning_start'],
+                        $shift['morning_grace']
+                    );
+
+                    $afternoonLate = $hasAfternoonPunch
+                        ? $this->calculateLateMinutes(
+                            $in2,
+                            $shift['afternoon_start'],
+                            $shift['afternoon_grace']
+                        )
+                        : 0;
+                }
 
                 /*
                 |--------------------------------------------------------------------------
@@ -622,7 +644,7 @@ class AttendanceProcessor extends Component
                     $isHalfDay = false;
                 } elseif ($incomplete) {
                     $status = 'INCOMPLETE';
-                } elseif ($morningLate > 0) {
+                } elseif ($morningLate > 0 || $afternoonLate > 0) {
                     $status = 'TARDY';
                 } else {
                     $status = 'PRESENT';

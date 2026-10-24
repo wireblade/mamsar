@@ -1,6 +1,11 @@
 <div>
 
     <div class="mx-auto max-w-full space-y-6 p-4 sm:p-6 lg:p-8">
+        @auth
+            @if (auth()->user()->username === 'admin')
+                @include('livewire.attendance.partials.navbar')
+            @endif
+        @endauth
         @if (session()->has('success'))
             <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 3000)" x-show="show" x-transition:leave.duration.300ms
                 class="mb-4 flex items-center justify-between rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300"
@@ -23,7 +28,14 @@
 
         {{-- Header --}}
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
             <div>
+
+                <a href="{{ route('attendance.index') }}"
+                    class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
+                    <span aria-hidden="true">←</span>
+                    Back to Attendance Dashboard
+                </a>
                 <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white">
                     Weekly Attendance Report
                 </h1>
@@ -32,10 +44,6 @@
                 </p>
             </div>
 
-            <a href="{{ route('attendance.weekly.process') }}"
-                class="inline-flex items-center justify-center rounded-lg bg-orange-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-700">
-                Upload Attendance
-            </a>
         </div>
 
         {{-- Company selector --}}
@@ -111,12 +119,6 @@
         @else
             <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <button type="button" wire:click="backToWeeks"
-                        class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
-                        <span aria-hidden="true">←</span>
-                        Back to saved weeks
-                    </button>
-
                     <h2 class="text-xl font-semibold text-zinc-900 dark:text-white">
                         {{ $companyCode }} Attendance
                     </h2>
@@ -128,16 +130,21 @@
                     </p>
                 </div>
 
-                <button type="button" wire:click="exportExcel" wire:loading.attr="disabled" wire:target="exportExcel"
-                    class="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50">
-                    <span wire:loading.remove wire:target="exportExcel">
-                        Export Excel
-                    </span>
+                @auth
+                    @if (auth()->user()->username === 'admin')
+                        <button type="button" wire:click="exportExcel" wire:loading.attr="disabled"
+                            wire:target="exportExcel"
+                            class="inline-flex items-center justify-center gap-2 rounded-lg bg-green-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-50">
+                            <span wire:loading.remove wire:target="exportExcel">
+                                Export Excel
+                            </span>
 
-                    <span wire:loading wire:target="exportExcel">
-                        Exporting...
-                    </span>
-                </button>
+                            <span wire:loading wire:target="exportExcel">
+                                Exporting...
+                            </span>
+                        </button>
+                    @endif
+                @endauth
             </div>
 
 
@@ -169,7 +176,11 @@
                                     <th class="whitespace-nowrap px-4 py-3">In 2</th>
                                     <th class="whitespace-nowrap px-4 py-3">Out 2</th>
                                     <th class="whitespace-nowrap px-4 py-3">Status</th>
-                                    <th class="px-4 py-3 text-right">Action</th>
+                                    @auth
+                                        @if (auth()->user()->username === 'admin')
+                                            <th class="px-4 py-3 text-right">Action</th>
+                                        @endif
+                                    @endauth
                                 </tr>
                             </thead>
 
@@ -196,12 +207,16 @@
                                         <td class="whitespace-nowrap px-4 py-3">{{ $record->clock_in_2 ?? '—' }}</td>
                                         <td class="whitespace-nowrap px-4 py-3">{{ $record->clock_out_2 ?? '—' }}</td>
                                         <td class="whitespace-nowrap px-4 py-3">{{ $record->status ?? '—' }}</td>
-                                        <td class="px-4 py-3 text-right">
-                                            <button type="button" wire:click="editRecord({{ $record->id }})"
-                                                class="rounded-lg bg-orange-500 px-3 py-2 text-sm font-medium text-white hover:bg-orange-600">
-                                                Edit
-                                            </button>
-                                        </td>
+                                        @auth
+                                            @if (auth()->user()->username === 'admin')
+                                                <td class="px-4 py-3 text-right">
+                                                    <button type="button" wire:click="editRecord({{ $record->id }})"
+                                                        class="rounded-lg bg-orange-500 px-3 py-2 text-sm font-medium text-white hover:bg-orange-600">
+                                                        Edit
+                                                    </button>
+                                                </td>
+                                            @endif
+                                        @endauth
                                     </tr>
                                 @endforeach
                             </tbody>

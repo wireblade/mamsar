@@ -1,5 +1,7 @@
 <div>
     <div class="mx-auto max-w-full space-y-6 p-4 sm:p-6 lg:p-8">
+
+        @include('livewire.attendance.partials.navbar')
         @if (session()->has('success'))
             <div
                 class="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800 dark:border-green-900 dark:bg-green-950 dark:text-green-300">
@@ -9,6 +11,21 @@
         {{-- Header --}}
         <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
+                @if ($this->cutoff)
+                    <a href="{{ route('attendance.report', ['cutoff' => $this->cutoff->id]) }}"
+                        class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
+                        <span aria-hidden="true">←</span>
+                        Back to {{ $this->cutoff->company_code }}
+                        ({{ $this->cutoff->start_date->format('M d, Y') }}
+                        - {{ $this->cutoff->end_date->format('M d, Y') }})
+                    </a>
+                @else
+                    <a href="{{ route('attendance.cutoffs') }}"
+                        class="mb-2 inline-flex items-center gap-2 text-sm font-medium text-orange-600 hover:text-orange-700 dark:text-orange-400">
+                        <span aria-hidden="true">←</span>
+                        Back to cutoff list
+                    </a>
+                @endif
                 <h1 class="text-2xl font-semibold text-zinc-900 dark:text-white">
                     Attendance Time Editor
                 </h1>
@@ -17,18 +34,13 @@
                     View attendance records and correct employee clock-in and clock-out times.
                 </p>
             </div>
-
-            <a href="{{ route('attendance.cutoffs') }}"
-                class="inline-flex items-center justify-center rounded-lg border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800">
-                Back to Attendance History
-            </a>
         </div>
 
         {{-- Filters --}}
         <div
             class="grid grid-cols-1 gap-4 rounded-xl border border-zinc-200 bg-white p-4 sm:grid-cols-2 dark:border-zinc-800 dark:bg-zinc-900">
 
-            <div>
+            {{-- <div>
                 <label for="cutoffId" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">
                     Select Cutoff
                 </label>
@@ -43,7 +55,7 @@
                         </option>
                     @endforeach
                 </select>
-            </div>
+            </div> --}}
 
             <div>
                 <label for="search" class="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-300">

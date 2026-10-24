@@ -1,39 +1,49 @@
-<x-layouts::auth :title="__('Mamsar')" :description="__('Mamsar Construction and Industrial Corporation')">
-    <div class="flex flex-col gap-4">
+<x-layouts::auth :title="__('MAMSAR | Sign in')" :description="__('Mamsar Construction and Industrial Corporation')">
+    <div class="mx-auto w-full max-w-md">
 
-        <x-auth-header :title="__('MAMSAR')" :description="__('Mamsar Construction and Industrial Corporation')" />
+        {{-- Header --}}
+        <div class="mb-8">
+            <div class="mb-5 h-1 w-10 rounded-full bg-orange-500"></div>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-orange-600 dark:text-orange-400">
+                MAMSAR
+            </p>
 
-        <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6 dark:text-black">
+            <h1 class="mt-3 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white">
+                Sign in to your account
+            </h1>
+
+            <p class="mt-2 text-sm leading-6 text-zinc-500 dark:text-zinc-400">
+                Mamsar Construction and Industrial Corporation
+            </p>
+        </div>
+
+        {{-- Session Status --}}
+        <x-auth-session-status class="mb-5 text-sm" :status="session('status')" />
+
+        {{-- Login Form --}}
+        <form method="POST" action="{{ route('login.store') }}" class="space-y-5">
             @csrf
 
-            <!-- Email Address -->
-            <flux:input name="username" :label="__('Username')" :value="old('username')" type="text" required autofocus
-                autocomplete="username" placeholder="username" />
+            <flux:input name="username" :label="__('Username')" :value="old('username')" type="text" required
+                autofocus autocomplete="username" placeholder="Enter your username" />
 
-            <!-- Password -->
-            <div class="relative">
-                <flux:input name="password" :label="__('Password')" type="password" required
-                    autocomplete="current-password" :placeholder="__('Password')" viewable />
+            <flux:input name="password" :label="__('Password')" type="password" required autocomplete="current-password"
+                :placeholder="__('Enter your password')" viewable />
 
-            </div>
-
-
-            <div class="flex items-center justify-end">
+            <div class="pt-2">
                 <flux:button variant="primary" type="submit" class="w-full" data-test="login-button">
-                    {{ __('Log in') }}
+                    {{ __('Sign in') }}
                 </flux:button>
             </div>
         </form>
 
-        {{-- @if (Route::has('register'))
-            <div class="space-x-1 text-sm text-center rtl:space-x-reverse text-zinc-600 dark:text-zinc-400">
-                <span>{{ __('Don\'t have an account?') }}</span>
-                <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
-            </div>
-        @endif --}}
+        {{-- Footer --}}
+        <div class="mt-8 border-t border-zinc-200 pt-5 dark:border-zinc-800">
+            <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                &copy; {{ date('Y') }} MAMSAR Construction & Industrial Corporation
+            </p>
+        </div>
 
     </div>
 </x-layouts::auth>

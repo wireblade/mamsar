@@ -14,13 +14,46 @@ class AttendanceRecordEditor extends Component
 {
     use WithPagination;
 
-    public string $cutoffId = '';
+    public string $cutoffId;
+
+    public ?AttendanceCutoff $cutoff = null;
 
     public string $search = '';
+
+    public function getCutoffProperty(): ?AttendanceCutoff
+    {
+        if (! $this->cutoffId) {
+            return null;
+        }
+
+        return AttendanceCutoff::find($this->cutoffId);
+    }
 
     public function updatedCutoffId(): void
     {
         $this->resetPage();
+    }
+
+    public function mount(): void
+    {
+        $cutoffId = request()->query('cutoffId');
+
+        // Require a cutoff ID to open the editor.
+        if (! $cutoffId) {
+            $this->redirectRoute('attendance.cutoffs');
+            abort(404);
+        }
+
+        // Load the selected cutoff.
+        $this->cutoff = AttendanceCutoff::query()
+            ->find($cutoffId);
+
+        if (! $this->cutoff) {
+            abort(404);
+        }
+
+        // Preserve the selected cutoff ID.
+        $this->cutoffId = (string) $this->cutoff->id;
     }
 
     public function updatedSearch(): void
@@ -107,20 +140,39 @@ class AttendanceRecordEditor extends Component
                 $cutoff->company_code
             );
 
-            // Determine whether the record uses four punches.
+            /*
+            |--------------------------------------------------------------------------
+            | Determine which attendance sessions were worked
+            |--------------------------------------------------------------------------
+            */
             $hasAfternoonPunch = $in2 !== null || $out2 !== null;
+            $isAfternoonOnly = false;
 
             if ($hasAfternoonPunch) {
+                // Four-punch attendance: keep sessions separate.
                 $morningIn = $in1;
                 $morningOut = $out1;
+
                 $afternoonIn = $in2;
                 $afternoonOut = $out2;
             } else {
-                // Two-punch attendance covers both work sessions.
-                $morningIn = $in1;
-                $morningOut = $out1;
-                $afternoonIn = $in1;
-                $afternoonOut = $out1;
+                // Two-punch attendance: detect afternoon-only work.
+                $isAfternoonOnly = $in1 !== null
+                    && $in1->format('H:i') >= $shift['morning_end'];
+
+                if ($isAfternoonOnly) {
+                    $morningIn = null;
+                    $morningOut = null;
+
+                    $afternoonIn = $in1;
+                    $afternoonOut = $out1;
+                } else {
+                    $morningIn = $in1;
+                    $morningOut = $out1;
+
+                    $afternoonIn = $in1;
+                    $afternoonOut = $out1;
+                }
             }
 
             // Apply the morning grace-period rule for worked minutes.
@@ -159,20 +211,35 @@ class AttendanceRecordEditor extends Component
 
             $totalWorked = $morningWorked + $afternoonWorked;
 
-            // Recalculate lateness.
-            $morningLate = $this->calculateLateMinutes(
-                $in1,
-                $shift['morning_start'],
-                $shift['morning_grace']
-            );
+            /*
+            |--------------------------------------------------------------------------
+            | Recalculate lateness
+            |--------------------------------------------------------------------------
+            */
+            if ($isAfternoonOnly) {
+                // Afternoon-only attendance must not count as morning lateness.
+                $morningLate = 0;
 
-            $afternoonLate = $hasAfternoonPunch
-                ? $this->calculateLateMinutes(
-                    $in2,
+                $afternoonLate = $this->calculateLateMinutes(
+                    $in1,
                     $shift['afternoon_start'],
                     $shift['afternoon_grace']
-                )
-                : 0;
+                );
+            } else {
+                $morningLate = $this->calculateLateMinutes(
+                    $in1,
+                    $shift['morning_start'],
+                    $shift['morning_grace']
+                );
+
+                $afternoonLate = $hasAfternoonPunch
+                    ? $this->calculateLateMinutes(
+                        $in2,
+                        $shift['afternoon_start'],
+                        $shift['afternoon_grace']
+                    )
+                    : 0;
+            }
 
             // Recalculate half-day and status.
             $hasAnyClock = $in1 !== null
@@ -270,7 +337,7 @@ class AttendanceRecordEditor extends Component
 
         if (in_array(
             $acNo,
-            ['4', '17', '42', '43', '58', '112', '87', '90', '115'],
+            ['4', '17', '40', '42', '43', '58', '112', '87', '90', '115'],
             true
         )) {
             return [
