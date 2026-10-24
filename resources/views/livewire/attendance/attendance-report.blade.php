@@ -395,10 +395,14 @@
                                     <span class="{{ $statusClasses }} rounded-full px-2.5 py-1 text-xs font-medium">
                                         @if ($row['status'] == 'TARDY')
                                             LATE | PRESENT
-                                        @elseif ($row['status'] == 'PRESENT')
+                                        @elseif ($row['status'] == 'PRESENT' && !$row['is_half_day'])
                                             EARLY | PRESENT
                                         @else
-                                            {{ $row['status'] }}
+                                            @if ($row['is_half_day'])
+                                                <font class="text-blue-600 dark:text-blue-300">HALF DAY</font>
+                                            @else
+                                                {{ $row['status'] }}
+                                            @endif
                                         @endif
                                     </span>
                                 </td>
